@@ -6,14 +6,18 @@
 \contentsline {chapter}{Introducción}{1}{chapter*.4}%
 \contentsline {chapter}{Objetivos del proyecto}{5}{chapter*.5}%
 \contentsline {chapter}{Conceptos teóricos}{7}{chapter*.6}%
-\contentsline {section}{\numberline {3.1}Secciones}{7}{section.3.1}%
-\contentsline {subsection}{Subsecciones}{7}{section*.7}%
-\contentsline {subsubsection}{Subsubsecciones}{7}{section*.8}%
-\contentsline {section}{\numberline {3.2}Referencias}{7}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Imágenes}{8}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Listas de items}{8}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Tablas}{9}{section.3.5}%
-\contentsline {chapter}{Técnicas y herramientas}{11}{chapter*.9}%
-\contentsline {chapter}{Aspectos relevantes del desarrollo del proyecto}{13}{chapter*.10}%
-\contentsline {chapter}{Trabajos relacionados}{15}{chapter*.11}%
-\contentsline {chapter}{Conclusiones y Líneas de trabajo futuras}{17}{chapter*.12}%
+\contentsline {section}{\numberline {3.1}Conceptos de la gestión de proyectos ágiles utilizados en el laboratorio virtual.}{7}{section.3.1}%
+\contentsline {subsection}{Historia de usuario.}{7}{section*.7}%
+\contentsline {subsection}{Sprint/Milestone/Hito.}{7}{section*.8}%
+\contentsline {subsection}{Tarea/Issue.}{8}{section*.9}%
+\contentsline {section}{\numberline {3.2}Secciones}{8}{section.3.2}%
+\contentsline {subsection}{Subsecciones}{8}{section*.10}%
+\contentsline {subsubsection}{Subsubsecciones}{8}{section*.11}%
+\contentsline {section}{\numberline {3.3}Referencias}{9}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Imágenes}{9}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Listas de items}{9}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Tablas}{10}{section.3.6}%
+\contentsline {chapter}{Técnicas y herramientas}{13}{chapter*.12}%
+\contentsline {chapter}{Aspectos relevantes del desarrollo del proyecto}{15}{chapter*.13}%
+\contentsline {chapter}{Trabajos relacionados}{17}{chapter*.14}%
+\contentsline {chapter}{Conclusiones y Líneas de trabajo futuras}{19}{chapter*.15}%
