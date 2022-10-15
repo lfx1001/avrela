@@ -7,24 +7,34 @@ La realización de este proyecto tiene como objetivo principal el desarrollo de 
 	\item Simulación de control de versiones de un proyecto open source.
 \end{enumerate}
 
-Para acometer lo anterior será necesario dotar al software de las siguientes funcionalidades:
+Para acometer lo anterior el software desarrollado deberá implementar las siguientes funcionalidades:
 
 \begin{enumerate}
-	\item Obtención de información de la gestión de tareas de un proyecto alojado en GitHub con la extensión ZenHub activada.	
-	\item Obtención de información del control de versiones de un proyecto alojado en GitHub.
+	\item Obtención de información de la gestión de tareas de un proyecto alojado en GitHub con la extensión ZenHub activada:
+	\begin{enumerate}
+		\item Sprints. 
+		\item Tareas.	
+	\end{enumerate}		
+	\item Obtención de información del control de versiones de un proyecto alojado en GitHub:
+	\begin{enumerate}
+		\item Commits. 	
+	\end{enumerate}
 	\item Comparación de la información de la gestión de tareas de dos proyectos.
-	\item Comparación de la información de del control de versiones de dos proyectos.			
-	\item Aplicación de rúbrica de evalución y de retroalimentación a partir de la información de gestión de tareas y control de versiones de un repositorio.
-	\item Aplicación de rúbrica de evalución y de retroalimentación a partir de la comparación de dos repositorios.	 		  
+	\item Comparación de la información del control de versiones de dos proyectos.			
+	\item Aplicación de rúbrica de evalución  sobre:
+	\begin{enumerate}
+		\item La información de gestión de tareas y de control de versiones de un repositorio. 
+		\item La comparación de la información de gestión de tareas y de control de versiones de dos repositorios, el original y el resultante de la simulación.	
+	\end{enumerate}			  
 \end{enumerate}
 
-Los objetivos de caracter técnico serán:
+Los objetivos  técnicos del desarrollo son:
 
 \begin{enumerate}
 	\item Uso de técnicas de gestión de proyectos ágiles.
-	\item Cumplimiento de estándares de calidad de software y aseguramiento mediante análisis automatizados.
+	\item Cumplimiento de estándares de calidad de software y aseguramiento de calidad mediante análisis automatizados con Sonarqube.
 	\item Integración con GitHub. 
 	\item Integración con ZenHub.
-	\item Uso de una arquitectura hexagonal que desacople la funcionalidad desarrollada de los orígenes de datos. Esto facilitará la extensibilidad de la funcionalidad simplifiando la  integración con otros gestores de tareas y gestores de repositorios Git.
+	\item Uso de una arquitectura hexagonal \cite{hexagonal-architecture} que desacople la funcionalidad desarrollada de los orígenes de datos. Esto facilitará la extensibilidad de la funcionalidad simplificando la  integración con otros gestores de tareas y gestores de repositorios Git.
 \end{enumerate}
 
