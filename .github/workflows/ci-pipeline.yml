@@ -18,4 +18,4 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Build & run tests tests
-        run: mvn --batch-mode --update-snapshots verify
+        run: mvn project/pom.xml --batch-mode --update-snapshots verify
