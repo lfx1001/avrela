@@ -47,5 +47,4 @@ public class Issue {
   /** Assignee. */
   private String assignee;
 
-
 }
