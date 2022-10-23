@@ -6,17 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import feign.Feign;
 import feign.Logger.Level;
-import feign.Response;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class GitHubClientTest {
@@ -26,6 +21,12 @@ class GitHubClientTest {
 
   /** Repository. */
   private final String repo = "go-bees";
+
+  /** Branch. */
+  private final String branch = "master";
+
+  /** Milestone. */
+  private final Integer milestone = 1;
 
   private GitHubClient  gitHubClient;
 
@@ -40,38 +41,28 @@ class GitHubClientTest {
   }
 
   @Test
-  public void shouldGetCommitsFromGitHub(){
+  public void shouldGetCommits(){
     // List<GitHubSprint> gitHubSprints = gitHubClient.findSprints(owner, repo);
-    List<GitHubCommit> commits = gitHubClient.findCommits(owner, repo, null, LocalDateTime.now(), 1, 1);
+    var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1, 1);
 
     assertNotNull(commits, "Commit list must be none null.");
     assertTrue(commits.size()>0, "Commit list length must be greater than zero");
   }
 
   @Test
-  public void shouldGetLinkHeaderFromGitHubRequest(){
-    Response response = gitHubClient.getFindCommitsResponse(owner, repo, null, LocalDateTime.now(), 1, 1);
-    Collection<String> links = response.headers().get("link");
+  public void shouldGetMilestones(){
+    var sprints = gitHubClient.findMilestones(owner, repo, 1, 1);
 
-    assertNotNull(links, "Link header should be none null");
-    assertEquals(1, links.size(), "Link header value should be unique");
+    assertNotNull(sprints, "Sprint list must be none null.");
+    assertTrue(sprints.size()>0, "Sprint list length must be greater than zero");
   }
 
   @Test
-  @Disabled("TODO: extract number of pages form response")
-  public void shouldExtractNumberOfPagesFromGithubRequest(){
-    // given
-    String sampleLinkResponse= "<https://api.github.com/repositories/543627276/commits?until=2022-10-22T21%3A38%3A54.136242&page=2&per_page=1>; rel=\"next\", <https://api.github.com/repositories/543627276/commits?until=2022-10-22T21%3A38%3A54.136242&page=13&per_page=1>; rel=\"last\"";
+  public void shouldGetIssues(){
+    var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1 ,1);
 
-    //TODO: implement extraction logic.
-    Pattern pattern = Pattern.compile("page=(.*?)");
-    //Pattern pattern = Pattern.compile("'(.*?)'");
-    Matcher matcher = pattern.matcher(sampleLinkResponse);
-    if (matcher.find())
-    {
-      System.out.println(matcher.group(0));
-    }else{
-      System.out.println("Not found");
-    }
+    assertNotNull(issues, "Issue list must be none null.");
+    assertTrue(issues.size()>0, "Issue list length must be greater than zero");
   }
+
 }
