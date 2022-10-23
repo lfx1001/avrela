@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Feign based GitHub client.
  *
+ * @see https://github.com/OpenFeign/feign
  * @see https://www.baeldung.com/intro-to-feign
  */
 public interface GitHubClient {
@@ -32,8 +33,19 @@ public interface GitHubClient {
       @Param("since") LocalDateTime since, @Param("until") LocalDateTime until,
       @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
+  /**
+   * Request full commits information, including HTTP response content.
+   *
+   * @param owner
+   * @param repo
+   * @param since
+   * @param until
+   * @param page
+   * @param pageSize
+   * @return full response including HTTP headers.
+   */
   @RequestLine("GET /repos/{owner}/{repo}/commits?since={since}&until={until}&page={page}&per_page={pageSize}")
-  Response countTotalCommits(@Param("owner") String owner, @Param("repo") String repo,
+  Response getFindCommitsResponse(@Param("owner") String owner, @Param("repo") String repo,
       @Param("since") LocalDateTime since, @Param("until") LocalDateTime until,
       @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 

@@ -1,5 +1,6 @@
 package es.ubu.lsi.avrela.client.github;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,18 +12,20 @@ import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class GitHubClientTest {
 
   /** Repository owner. */
-  private String owner = "lfx1001";
+  private final String owner = "davidmigloz";
 
-  /** Reporsitory. */
-  private String repo = "avrela";
+  /** Repository. */
+  private final String repo = "go-bees";
 
   private GitHubClient  gitHubClient;
 
@@ -36,19 +39,39 @@ class GitHubClientTest {
         .target(GitHubClient.class, "https://api.github.com");
   }
 
-  //@Test
+  @Test
   public void shouldGetCommitsFromGitHub(){
     // List<GitHubSprint> gitHubSprints = gitHubClient.findSprints(owner, repo);
     List<GitHubCommit> commits = gitHubClient.findCommits(owner, repo, null, LocalDateTime.now(), 1, 1);
 
-    assertNotNull(commits, "Commit list must not be null.");
+    assertNotNull(commits, "Commit list must be none null.");
     assertTrue(commits.size()>0, "Commit list length must be greater than zero");
   }
 
   @Test
-  public void shouldGetTotalCommitsFromGitHub(){
-    Response response = gitHubClient.countTotalCommits(owner, repo, null, LocalDateTime.now(), 1, 1);
+  public void shouldGetLinkHeaderFromGitHubRequest(){
+    Response response = gitHubClient.getFindCommitsResponse(owner, repo, null, LocalDateTime.now(), 1, 1);
     Collection<String> links = response.headers().get("link");
-    links.stream().forEach( link -> System.out.println(link));
+
+    assertNotNull(links, "Link header should be none null");
+    assertEquals(1, links.size(), "Link header value should be unique");
+  }
+
+  @Test
+  @Disabled("TODO: extract number of pages form response")
+  public void shouldExtractNumberOfPagesFromGithubRequest(){
+    // given
+    String sampleLinkResponse= "<https://api.github.com/repositories/543627276/commits?until=2022-10-22T21%3A38%3A54.136242&page=2&per_page=1>; rel=\"next\", <https://api.github.com/repositories/543627276/commits?until=2022-10-22T21%3A38%3A54.136242&page=13&per_page=1>; rel=\"last\"";
+
+    //TODO: implement extraction logic.
+    Pattern pattern = Pattern.compile("page=(.*?)");
+    //Pattern pattern = Pattern.compile("'(.*?)'");
+    Matcher matcher = pattern.matcher(sampleLinkResponse);
+    if (matcher.find())
+    {
+      System.out.println(matcher.group(0));
+    }else{
+      System.out.println("Not found");
+    }
   }
 }
