@@ -47,7 +47,7 @@ public interface GitHubClient {
   List<GitHubMilestone> findMilestones(@Param("owner") String owner, @Param("repo") String repo, @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
   /**
-   * Find issues by milestone.
+   * Find issues by milestone. Results are sorted by creation time.
    * @param owner
    * @param repo
    * @param milestone
@@ -58,4 +58,6 @@ public interface GitHubClient {
    */
   @RequestLine("GET /repos/{owner}/{repo}/issues?milestone={milestone}&state=all&page={page}&per_page={pageSize}")
   List<GitHubIssue> findIssuesByMilestone(@Param("owner") String owner, @Param("repo") String repo,@Param("milestone") Integer milestone, @Param("page") Integer page, @Param("pageSize") Integer pageSize);
+
+
 }

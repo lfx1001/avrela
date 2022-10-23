@@ -1,6 +1,8 @@
 package es.ubu.lsi.avrela.client.github;
 
+import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import lombok.Data;
 
@@ -16,5 +18,12 @@ public class GitHubIssue {
   private Collection<GitHubLabel> labels;
 
   private GitHubItemState state;
+
+  private Integer comments;
+
+  private GitHubUser assignee;
+
+  @SerializedName("created_at")
+  private ZonedDateTime createdAt;
 
 }
