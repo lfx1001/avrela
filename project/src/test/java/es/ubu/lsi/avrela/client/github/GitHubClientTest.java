@@ -88,4 +88,13 @@ class GitHubClientTest {
     assertTrue(issues.size()>0, "Issue list length must be greater than zero");
   }
 
+  @Test
+  public void sprintsInfoShouldBeComplete(){
+    var sprints = gitHubClient.findMilestones(owner, repo, 1, 100);
+
+    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getNumber() != null));
+    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getTitle() != null));
+    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getState() != null));
+  }
+
 }
