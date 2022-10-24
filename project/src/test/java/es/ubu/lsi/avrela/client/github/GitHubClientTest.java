@@ -1,6 +1,5 @@
 package es.ubu.lsi.avrela.client.github;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,10 +18,14 @@ import feign.slf4j.Slf4jLogger;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * GitHub client integration test.
+ *
+ * @see <a href="https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.1/com/google/gson/TypeAdapter.html">Gson type adapter example.</a>
+ */
 class GitHubClientTest {
 
   /** Repository owner. */
@@ -68,8 +71,7 @@ class GitHubClientTest {
   }
 
   @Test
-  public void shouldGetCommits(){
-    // List<GitHubSprint> gitHubSprints = gitHubClient.findSprints(owner, repo);
+  public void commitsShouldBeRetrieved(){
     var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1, 1);
 
     assertNotNull(commits, "Commit list must be none null.");
@@ -77,7 +79,7 @@ class GitHubClientTest {
   }
 
   @Test
-  public void shouldGetMilestones(){
+  public void milestonesShouldBeRetrieved(){
     var sprints = gitHubClient.findMilestones(owner, repo, 1, 1);
 
     assertNotNull(sprints, "Sprint list must be none null.");
@@ -85,7 +87,7 @@ class GitHubClientTest {
   }
 
   @Test
-  public void shouldGetIssues(){
+  public void issuesShouldBeRetrieved(){
     var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1 ,1);
 
     assertNotNull(issues, "Issue list must be none null.");
@@ -100,6 +102,30 @@ class GitHubClientTest {
     assertTrue(sprints.stream().anyMatch( sprint -> sprint.getTitle() != null), "Title must be retrieved");
     assertTrue(sprints.stream().anyMatch( sprint -> sprint.getState() != null), "State must be retrieved");
     assertTrue(sprints.stream().anyMatch( sprint -> sprint.getClosedAt() != null), "Closed at must be retrieved");
+  }
+
+  @Test
+  public void issuesInfoShouldBeComplete(){
+    var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1 ,1);
+
+    assertTrue(issues.stream().anyMatch( issue -> issue.getNumber() != null), "Number must be retrieved");
+    assertTrue(issues.stream().anyMatch( issue -> issue.getMilestone() != null), "Milestone must be retrieved");
+    assertTrue(issues.stream().anyMatch( issue -> issue.getTitle() != null), "Title must be retrieved");
+    assertTrue(issues.stream().anyMatch( issue -> issue.getBody() != null), "Body must be retrieved");
+    assertTrue(issues.stream().anyMatch( issue -> issue.getLabels() != null), "Labels must be retrieved");
+    assertTrue(issues.stream().anyMatch( issue -> issue.getState() != null), "State must be retrieved");
+    assertTrue(issues.stream().anyMatch( issue -> issue.getAssignee() != null), "Assignee must be retrieved");
+    assertTrue(issues.stream().anyMatch( issue -> issue.getCreatedAt() != null), "Created_at must be retrieved");
+  }
+
+  @Test
+  public void commitsInfoShouldBeComplete(){
+    var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1, 100);
+
+    assertTrue(commits.stream().anyMatch( commit -> commit.getSha() != null), "SHA must be retrieved");
+    assertTrue(commits.stream().anyMatch( commit -> commit.getData().getMessage() != null), "Message must be retrieved");
+    assertTrue(commits.stream().anyMatch( commit -> commit.getData().getAuthor().getName() != null), "Author name must be retrieved");
+    assertTrue(commits.stream().anyMatch( commit -> commit.getData().getAuthor().getDate() != null), "Date must be retrieved");
   }
 
 }

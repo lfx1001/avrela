@@ -1,11 +1,14 @@
 package es.ubu.lsi.avrela.client.github;
 
-import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class GitHubCommit implements Serializable {
+public class GitHubCommit {
 
   private String sha;
+
+  @SerializedName("commit")
+  private GitHubCommitData data;
 
 }

@@ -11,6 +11,8 @@ public class GitHubIssue {
 
   private Integer number;
 
+  private GitHubMilestone milestone;
+
   private String title;
 
   private String body;
@@ -18,8 +20,6 @@ public class GitHubIssue {
   private Collection<GitHubLabel> labels;
 
   private GitHubItemState state;
-
-  private Integer comments;
 
   private GitHubUser assignee;
 
