@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import feign.Feign;
 import feign.Logger.Level;
@@ -44,14 +45,17 @@ class GitHubClientTest {
         new GsonBuilder()
             .registerTypeAdapter(ZonedDateTime.class, new TypeAdapter<ZonedDateTime>() {
               @Override
-              public void write(JsonWriter out, ZonedDateTime value) throws IOException {
-                out.value(value.toString());
-              }
+              public void write(JsonWriter out, ZonedDateTime value) throws IOException {}
               @Override
               public ZonedDateTime read(JsonReader in) throws IOException {
+                if (in.peek() == JsonToken.NULL) {
+                  in.nextNull();
+                  return null;
+                }
                 return ZonedDateTime.parse(in.nextString());
               }
             })
+            .serializeNulls()
             .create();
     final Decoder decoder = new GsonDecoder(gson);
 
@@ -92,9 +96,10 @@ class GitHubClientTest {
   public void sprintsInfoShouldBeComplete(){
     var sprints = gitHubClient.findMilestones(owner, repo, 1, 100);
 
-    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getNumber() != null));
-    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getTitle() != null));
-    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getState() != null));
+    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getNumber() != null), "Number must be retrieved");
+    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getTitle() != null), "Title must be retrieved");
+    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getState() != null), "State must be retrieved");
+    assertTrue(sprints.stream().anyMatch( sprint -> sprint.getClosedAt() != null), "Closed at must be retrieved");
   }
 
 }
