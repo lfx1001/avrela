@@ -1,8 +1,11 @@
 package es.ubu.lsi.avrela.client.github;
 
+
+import com.google.gson.annotations.SerializedName;
+
 public enum GitHubItemState {
 
-  open,
-  closed
+  @SerializedName("open") OPEN,
+  @SerializedName("closed")CLOSED
 
 }
