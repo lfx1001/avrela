@@ -1,7 +1,6 @@
 package es.ubu.lsi.avrela.client.github;
 
 import com.google.gson.annotations.SerializedName;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import lombok.Data;
@@ -25,5 +24,15 @@ public class GitHubIssue {
 
   @SerializedName("created_at")
   private ZonedDateTime createdAt;
+
+  /**
+   * Checks whether body contain task list.
+   */
+  public Boolean hasTaskList(){
+    if (body == null ){
+      return false;
+    }
+    return body.contains("[ ]") || body.contains("[x]");
+  }
 
 }
