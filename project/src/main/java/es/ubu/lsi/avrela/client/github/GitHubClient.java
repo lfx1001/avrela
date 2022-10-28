@@ -59,5 +59,14 @@ public interface GitHubClient {
   @RequestLine("GET /repos/{owner}/{repo}/issues?milestone={milestone}&state=all&page={page}&per_page={pageSize}")
   List<GitHubIssue> findIssuesByMilestone(@Param("owner") String owner, @Param("repo") String repo,@Param("milestone") Integer milestone, @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
+  /**
+   * Find issue commments.
+   * @param owner
+   * @param repo
+   * @param issue
+   * @return
+   */
+  @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}/comments")
+  List<GitHubComment> findCommentsByIssue(@Param("owner") String owner, @Param("repo") String repo, @Param("issue") String issue);
 
 }

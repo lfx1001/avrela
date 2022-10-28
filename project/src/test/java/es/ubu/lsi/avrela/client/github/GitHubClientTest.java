@@ -40,6 +40,8 @@ class GitHubClientTest {
   /** Milestone. */
   private final Integer milestone = 1;
 
+  private final String issueWithComments = "202";
+
   private GitHubClient  gitHubClient;
 
   @BeforeEach
@@ -126,6 +128,25 @@ class GitHubClientTest {
     assertTrue(commits.stream().anyMatch( commit -> commit.getData().getMessage() != null), "Message must be retrieved");
     assertTrue(commits.stream().anyMatch( commit -> commit.getData().getAuthor().getName() != null), "Author name must be retrieved");
     assertTrue(commits.stream().anyMatch( commit -> commit.getData().getAuthor().getDate() != null), "Date must be retrieved");
+  }
+
+  @Test
+  public void commentsShouldBeRetrieved(){
+    var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
+
+    assertNotNull(comments, "Comment list must be none null.");
+    assertTrue(comments.size()>0, "Comment list length must be greater than zero");
+  }
+
+  @Test
+  public void commentsInfoShouldBeComplete(){
+    var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
+
+    assertTrue(comments.stream().anyMatch( comment -> comment.getId() != null), "Id must be retrieved");
+    assertTrue(comments.stream().anyMatch( comment -> comment.getBody() != null), "Body must be retrieved");
+    assertTrue(comments.stream().anyMatch( comment -> comment.getUser() != null), "User must be retrieved");
+    assertTrue(comments.stream().anyMatch( comment -> comment.getCreatedAt() != null), "Created at must be retrieved");
+    assertTrue(comments.stream().anyMatch( comment -> comment.getUpdatedAt() != null), "Updated at must be retrieved");
   }
 
 }
