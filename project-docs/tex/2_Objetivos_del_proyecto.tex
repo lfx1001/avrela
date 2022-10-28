@@ -1,9 +1,9 @@
 \capitulo{2}{Objetivos del proyecto}
 
-La realización de este proyecto tiene como objetivo principal el desarrollo de un software que permita automatizar la evaluación y retroalimentación de las siguientes actividades planteadas como laboratorio virtual en la asignatura gestión de proyectos del grado en ingeniería informática:
+La realización de este proyecto tiene como objetivo principal el desarrollo de un software que permita automatizar la evaluación y retroalimentación de los siguientes casos de estudio de simulación planteados como laboratorio virtual en la asignatura gestión de proyectos del grado en ingeniería informática:
 
 \begin{enumerate}
-	\item Gestión de tareas de un proyecto software. 
+	\item Simulación de gestión de tareas de un proyecto software. 
 	\item Simulación de control de versiones de un proyecto open source.
 \end{enumerate}
 
@@ -12,12 +12,29 @@ Para acometer lo anterior el software desarrollado deberá implementar las sigui
 \begin{enumerate}
 	\item Obtención de información de la gestión de tareas de un proyecto alojado en GitHub con la extensión ZenHub activada:
 	\begin{enumerate}
-		\item Sprints. 
+		\item Sprints.
+		\begin{enumerate}
+			\item Título. 
+			\item Fecha de finalización.
+			\item Estado.	
+		\end{enumerate}	
 		\item Tareas.	
+		\begin{enumerate}
+			\item Descripción. 
+			\item Etiquetas.
+			\item Puntos de historia.
+			\item Comentarios.
+			\item Estado.	
+		\end{enumerate}	
 	\end{enumerate}		
 	\item Obtención de información del control de versiones de un proyecto alojado en GitHub:
 	\begin{enumerate}
-		\item Commits. 	
+		\item Commits. 
+			\begin{enumerate}
+				\item Identificador único (SHA, Simple Hashing Algorithm). 
+				\item Fecha.
+				\item Autor.
+			\end{enumerate}		
 	\end{enumerate}
 	\item Comparación de la información de la gestión de tareas de dos proyectos.
 	\item Comparación de la información del control de versiones de dos proyectos.			
