@@ -1,29 +1,31 @@
 \capitulo{1}{Introducción}
 
-En la actualidad, la enseñanza a distancia goza de gran importancia debido a ventajas inherentes como la deslocalización de profesores y alumnos, la libertad de agenda de los alumnos a la hora de seguir la formación y el uso eficiente de los recursos educativos que permite a los centros de formación ampliar su capacidad de alumnado al no estar sujetos a limitaciones propias de la enseñanza presencial como aulas y laboratorios.
+En la actualidad, la enseñanza a distancia goza de gran importancia debido a ventajas inherentes como la deslocalización de profesores y estudiantes y la  libertad de agenda de los estudiantes a la hora de seguir la formación.
+
+Los centros de formación pueden  hacer un  uso más eficiente de los recursos educativos, lo que permite a ampliar su capacidad de estudiantes al no estar sujetos a limitaciones propias de la enseñanza presencial como aulas y laboratorios.
 
 Sin embargo, la enseñanza a distancia de materias relacionadas con la ciencia, la tecnología y  la ingeniería  presenta dificultades derivadas de la propia naturaleza de estas disciplinas: a menudo requieren prácticas en el laboratorio para dotar al alumno de las competencias necesarías . \cite{bourne2019} menciona  cómo, históricamente, algunas de las necesidades especiales de los estudios universitarios de ingeniería no han sido bien cubiertas por los métodos de enseñanza online.
 
-La emergencia de las tecnologías de la información ha permitido el desarrollo de laboratorios virtuales. Su acceso online y el software que los soporta permite a los alumnos una reproducción cada vez más fiel del trabajo realizado en el laboratorio.
+La emergencia de las tecnologías de la información ha permitido el desarrollo de laboratorios virtuales. Su acceso online y el software que los soporta permite a los estudiantes una reproducción cada vez más fiel del trabajo realizado en el laboratorio.
 
-Como \cite{tejado2018}  señala, los laboratorios virtuales son esenciales para que los alumnos adquieran conocimientos prácticos que se convertirán en  activos fundamentales en su  carrera profesional. En el desarrollo de laboratorios virtuales, uno de los focos de acción es facilitar la autoevaluación para mejorar la experiencia de aprendizaje de los alumnos y reducir la carga de trabajo de los docentes.Una autoevaluación clara y concisa lleva al alumno a una reflexión sobre sus propios errores, convirtiendo una evaluación formativa en una evaluación formadora \cite{sánchez2009}.
+Como \cite{tejado2018}  señala, los laboratorios virtuales son esenciales para que los estudiantes adquieran conocimientos prácticos que se convertirán en  activos fundamentales en su  carrera profesional. En el desarrollo de laboratorios virtuales, uno de los focos de acción es facilitar la autoevaluación para mejorar la experiencia de aprendizaje de los alumnos y reducir la carga de trabajo de los docentes.Una autoevaluación clara y concisa lleva al alumno a una reflexión sobre sus propios errores, convirtiendo una evaluación formativa en una evaluación formadora \cite{sánchez2009}.
 
-La enseñanza de un modelo ágil de gestión de proyectos mediante GitHub, ZenHub  y el sistema de control de versiones Git proporciona el marco de este trabajo de fin de grado. Corresponde a la asignatura Gestión de proyectos - bloque gestión ágil, del tercer curso del grado en ingeniería informática. En esta asignatura se plantean dos actividades a modo de laboratorio virtual:
+La enseñanza de un modelo ágil de gestión de proyectos mediante GitHub, ZenHub  y el sistema de control de versiones Git proporciona el marco de este trabajo de fin de grado. En concreto nos centraremos en la asignatura de Gestión de Proyectos en el bloque correspondiente a la Gestión ágil (ver guía docente https://ubuvirtual.ubu.es/mod/guiadocente/get_guiadocente.php?asignatura=6366_online&cursoacademico=2022):
 
 \begin{itemize}
-	\item Gestión de tareas de un proyecto software. El alumno realiza una simulación de planificación de tareas de un proyecto software.
-	\item Simulación de control de versiones de un proyecto open source. El alumno simula la gestión de versiones de código utilizando un proyecto disponible en un repositorio público.
+	\item Simulación de gestión de tareas de un proyecto software. El estudiante realiza una simulación de planificación de tareas de un proyecto software.
+	\item Simulación de control de versiones de un proyecto open source. El estudiante simula la gestión de versiones de código utilizando un proyecto disponible en un repositorio público.
 \end{itemize}
 
-Los supuestos de ambas actividadades proporcionan el  detalle paso por paso de la simulación a realizar, como el que se muestra en la figura~\ref{fig:planning-simu-showcase.png} y, además, el alumno cuenta con el repositorio original a mode de referencia. 
+Los casos de estudio de simulación de ambas actividadades proporcionan el  detalle paso por paso de la simulación a realizar, como el que se muestra en la Figura~\ref{fig:planning-simu-showcase.png} y, además, el alumno cuenta con el repositorio original a mode de referencia. 
 
-\imagen{planning-simu-showcase.png}{Gestión de tareas de un proyecto software: extracto de información para la simulación}{1}
+\imagen{planning-simu-showcase.png}{Descripción cuantitativa y cualitativa de la simulación de un sprint/iteración}{1}
 
-El producto entegable de cada una de las prácticas consta de capturas de pantalla que constatan la fidelidad de la simulación con respecto al original.Para la evaluación de cada una de las prácticas, existe una rúbrica de evaluación que actualmente es aplicada de forma manual en base al producto entregado.
+El producto entregable es la clonación del repositorio o url del repositorio con el nuevo proyecto simulado.Para la evaluación de cada uno de los casos de estudio de simulación, existe una rúbrica de evaluación que se muestra en la  Figura~\ref{fig:planning-simu-rubric.png} que actualmente es aplicada de forma manual en base al producto entregado.
 
 \imagen{planning-simu-rubric.png}{Gestión de tareas de un proyecto software: extracto de rúbrica para la evaluación}{1}
 
-La evaluación de ambas actividades puede automatizarse en gran medida. La información de las planificación de un proyecto en GitHub y en ZenHub, así como la información  del control de versiones de GitHub, es accesible vía API. A partir del contraste de la información del proyecto referencia y el proyecto de la simulación podemos dar contestación a gran parte de los elementos de la rúbrica. Del mismo modo, podemos explotar esta comparación para proporcionar retroalimentación al alumno de aquellos elementos de la simulación que concuerdan o discrepan con el original.
+La evaluación de ambos casos de estudio de simulación puede automatizarse en gran medida. La información de las planificación de un proyecto en GitHub y en ZenHub, así como la información  del control de versiones de GitHub, es accesible vía API. A partir del contraste de la información del proyecto referencia y el proyecto de la simulación podemos dar contestación a gran parte de los elementos de la rúbrica. Del mismo modo, podemos explotar esta comparación para proporcionar retroalimentación al estudiante de aquellos elementos de la simulación que concuerdan o discrepan con el original.
 
 La evaluación  automática de las competencias de  gestión de tareas y del control de versiones es de utilidad fuera del ámbito académico, por ejemplo, en el proceso de evaluación de competencias de profesionales con esas habilidades en el mundo empresarial, en concreto:
 
@@ -32,4 +34,4 @@ La evaluación  automática de las competencias de  gestión de tareas y del con
 	\item Evaluaciones internas de personal de la compañía.
 \end{itemize}
 
-En este trabajo, se abordará la evalución en el plano académico.  Podría  haberse abordado desde la perspectiva de un proceso de control de calidad.
+En este trabajo, se abordará la evalución de los casos de estudio desde una perspectiva académico, si bien podría también haberse abordado desde la perspectiva de un proceso de control de calidad.
