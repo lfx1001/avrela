@@ -88,29 +88,45 @@ class GitHubClientTest {
         .target(GitHubClient.class, "https://api.github.com");
   }
 
-  @Test
-  public void commitsShouldBeRetrieved() {
-    var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1, 1);
+  @Nested
+  @DisplayName("Given a GitHub repository")
+  public class GitHubCommitsTest {
 
-    assertNotNull(commits, "Commit list must be none null.");
-    assertTrue(commits.size() > 0, "Commit list length must be greater than zero");
+    @Nested
+    @DisplayName("When repository has commits")
+    public class GitHubRepositoryWithCommits {
+
+      @Test
+      @DisplayName("Then commits should be fetched")
+      public void commitsShouldBeRetrieved() {
+        var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+            1);
+
+        assertNotNull(commits, "Commit list must be none null.");
+        assertTrue(commits.size() > 0, "Commit list length must be greater than zero");
+      }
+
+      @Test
+      @DisplayName("Then commit relevant info should be fetched")
+      public void commitsInfoShouldBeComplete() {
+        var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+            100);
+
+        assertAll("Verify relevant info is present",
+            () -> assertTrue(commits.stream().anyMatch(commit -> commit.getSha() != null),
+                "SHA must be retrieved"),
+            () -> assertTrue(
+                commits.stream().anyMatch(commit -> commit.getData().getMessage() != null),
+                "Message must be retrieved"),
+            () -> assertTrue(
+                commits.stream().anyMatch(commit -> commit.getData().getAuthor().getName() != null),
+                "Author name must be retrieved"),
+            () -> assertTrue(
+                commits.stream().anyMatch(commit -> commit.getData().getAuthor().getDate() != null),
+                "Date must be retrieved"));
+      }
+    }
   }
-
-  @Test
-  public void commitsInfoShouldBeComplete() {
-    var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1, 100);
-
-    assertTrue(commits.stream().anyMatch(commit -> commit.getSha() != null),
-        "SHA must be retrieved");
-    assertTrue(commits.stream().anyMatch(commit -> commit.getData().getMessage() != null),
-        "Message must be retrieved");
-    assertTrue(commits.stream().anyMatch(commit -> commit.getData().getAuthor().getName() != null),
-        "Author name must be retrieved");
-    assertTrue(commits.stream().anyMatch(commit -> commit.getData().getAuthor().getDate() != null),
-        "Date must be retrieved");
-  }
-
-
 
   @Nested
   @DisplayName("Given a GitHub repository")
@@ -130,7 +146,7 @@ class GitHubClientTest {
       }
 
       @Test
-      @DisplayName("Then milestone relevant info should be present")
+      @DisplayName("Then milestone relevant info should be fetched")
       public void milestonesInfoShouldBeComplete() {
         var milestones = gitHubClient.findMilestones(owner, repo, 1, 100);
 
@@ -200,10 +216,12 @@ class GitHubClientTest {
 
   @Nested
   @DisplayName("Given an issue")
-  public class GitHubCommentsTest{
+  public class GitHubCommentsTest {
+
     @Nested
     @DisplayName("When issue has comments")
-    public class GitHubIssueWithComments{
+    public class GitHubIssueWithComments {
+
       @Test
       @DisplayName("Then issues should be fetched")
       public void commentsShouldBeRetrieved() {
@@ -219,17 +237,17 @@ class GitHubClientTest {
         var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
 
         assertAll("Verify comment data",
-            ()-> assertTrue(comments.stream().anyMatch(comment -> comment.getId() != null),
+            () -> assertTrue(comments.stream().anyMatch(comment -> comment.getId() != null),
                 "Id must be retrieved"),
-            ()-> assertTrue(comments.stream().anyMatch(comment -> comment.getBody() != null),
+            () -> assertTrue(comments.stream().anyMatch(comment -> comment.getBody() != null),
                 "Body must be retrieved"),
-            ()-> assertTrue(comments.stream().anyMatch(comment -> comment.getUser() != null),
+            () -> assertTrue(comments.stream().anyMatch(comment -> comment.getUser() != null),
                 "User must be retrieved"),
             () -> assertTrue(comments.stream().anyMatch(comment -> comment.getCreatedAt() != null),
                 "Created at must be retrieved"),
             () -> assertTrue(comments.stream().anyMatch(comment -> comment.getUpdatedAt() != null),
                 "Updated at must be retrieved")
-            );
+        );
       }
 
     }
