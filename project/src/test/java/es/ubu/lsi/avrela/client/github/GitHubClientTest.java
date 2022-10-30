@@ -110,29 +110,7 @@ class GitHubClientTest {
         "Date must be retrieved");
   }
 
-  @Test
-  public void commentsShouldBeRetrieved() {
-    var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
 
-    assertNotNull(comments, "Comment list must be none null.");
-    assertTrue(comments.size() > 0, "Comment list length must be greater than zero");
-  }
-
-  @Test
-  public void commentsInfoShouldBeComplete() {
-    var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
-
-    assertTrue(comments.stream().anyMatch(comment -> comment.getId() != null),
-        "Id must be retrieved");
-    assertTrue(comments.stream().anyMatch(comment -> comment.getBody() != null),
-        "Body must be retrieved");
-    assertTrue(comments.stream().anyMatch(comment -> comment.getUser() != null),
-        "User must be retrieved");
-    assertTrue(comments.stream().anyMatch(comment -> comment.getCreatedAt() != null),
-        "Created at must be retrieved");
-    assertTrue(comments.stream().anyMatch(comment -> comment.getUpdatedAt() != null),
-        "Updated at must be retrieved");
-  }
 
   @Nested
   @DisplayName("Given a GitHub repository")
@@ -185,7 +163,7 @@ class GitHubClientTest {
     class RepositoryWithIssues {
 
       @Test
-      @DisplayName("Then issues should be retrieved")
+      @DisplayName("Then issues should be fetched")
       public void issuesShouldBeRetrieved() {
         var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
 
@@ -194,11 +172,11 @@ class GitHubClientTest {
       }
 
       @Test
-      @DisplayName("Then issue relevant info should be present")
+      @DisplayName("Then issue relevant info should be fetched")
       public void issuesInfoShouldBeComplete() {
         var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
 
-        assertAll("Verify all relevant ",
+        assertAll("Verify all relevant issue info is present",
             () -> assertTrue(issues.stream().anyMatch(issue -> issue.getNumber() != null),
                 "Number must be retrieved"),
             () -> assertTrue(issues.stream().anyMatch(issue -> issue.getMilestone() != null),
@@ -218,6 +196,44 @@ class GitHubClientTest {
         );
       }
     }
+  }
+
+  @Nested
+  @DisplayName("Given an issue")
+  public class GitHubCommentsTest{
+    @Nested
+    @DisplayName("When issue has comments")
+    public class GitHubIssueWithComments{
+      @Test
+      @DisplayName("Then issues should be fetched")
+      public void commentsShouldBeRetrieved() {
+        var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
+
+        assertNotNull(comments, "Comment list must be none null.");
+        assertTrue(comments.size() > 0, "Comment list length must be greater than zero");
+      }
+
+      @Test
+      @DisplayName("Then issue relevant info should be fetched")
+      public void commentsInfoShouldBeComplete() {
+        var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
+
+        assertAll("Verify comment data",
+            ()-> assertTrue(comments.stream().anyMatch(comment -> comment.getId() != null),
+                "Id must be retrieved"),
+            ()-> assertTrue(comments.stream().anyMatch(comment -> comment.getBody() != null),
+                "Body must be retrieved"),
+            ()-> assertTrue(comments.stream().anyMatch(comment -> comment.getUser() != null),
+                "User must be retrieved"),
+            () -> assertTrue(comments.stream().anyMatch(comment -> comment.getCreatedAt() != null),
+                "Created at must be retrieved"),
+            () -> assertTrue(comments.stream().anyMatch(comment -> comment.getUpdatedAt() != null),
+                "Updated at must be retrieved")
+            );
+      }
+
+    }
+
   }
 
 }
