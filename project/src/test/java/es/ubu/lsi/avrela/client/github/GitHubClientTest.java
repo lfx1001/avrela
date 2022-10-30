@@ -34,34 +34,29 @@ import org.junit.jupiter.api.Test;
 class GitHubClientTest {
 
   /**
+   * GitHub Client.
+   */
+  private static GitHubClient gitHubClient;
+  /**
    * Repository owner.
    */
   private final String owner = "davidmigloz";
-
   /**
    * Repository.
    */
   private final String repo = "go-bees";
-
   /**
    * Branch.
    */
   private final String branch = "master";
-
   /**
    * Milestone.
    */
   private final Integer milestone = 1;
-
   /**
    * Issue.
    */
   private final String issueWithComments = "202";
-
-  /**
-   * Client
-   */
-  private static GitHubClient gitHubClient;
 
   @BeforeAll
   public static void setUp() {
@@ -93,85 +88,12 @@ class GitHubClientTest {
         .target(GitHubClient.class, "https://api.github.com");
   }
 
-
-  @Nested
-  @DisplayName("Given a GitHub repository")
-  class GitHubSprintsTest {
-
-    @Nested
-    @DisplayName("When repository has milestones")
-    class RepositoryWithMilestones {
-
-      @Test
-      @DisplayName("Then milestones should be fetched")
-      public void milestonesShouldBeRetrieved() {
-        var milestones = gitHubClient.findMilestones(owner, repo, 1, 1);
-
-        assertNotNull(milestones, "Milestones list must be none null.");
-        assertTrue(milestones.size() > 0, "Milestones list is not empty");
-      }
-
-      @Test
-      @DisplayName("Then all milestones relevant info should be fetched")
-      public void milestonesInfoShouldBeComplete() {
-        var milestones = gitHubClient.findMilestones(owner, repo, 1, 100);
-
-        assertAll("Verify milestone  relevant info is present",
-            () -> assertTrue(
-                milestones.stream().anyMatch(milestone -> milestone.getNumber() != null)),
-            () -> assertTrue(
-                milestones.stream().anyMatch(milestone -> milestone.getNumber() != null)),
-            () -> assertTrue(
-                milestones.stream().anyMatch(milestone -> milestone.getNumber() != null)),
-            () -> assertTrue(
-                milestones.stream().anyMatch(milestone -> milestone.getTitle() != null)),
-            () -> assertTrue(
-                milestones.stream().anyMatch(milestone -> milestone.getState() != null)),
-            () -> assertTrue(
-                milestones.stream().anyMatch(milestone -> milestone.getClosedAt() != null))
-        );
-      }
-
-    }
-
-  }
-
-  @Test
-  public void issuesShouldBeRetrieved() {
-    var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
-
-    assertNotNull(issues, "Issue list must be none null.");
-    assertTrue(issues.size() > 0, "Issue list length must be greater than zero");
-  }
-
   @Test
   public void commitsShouldBeRetrieved() {
     var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1, 1);
 
     assertNotNull(commits, "Commit list must be none null.");
     assertTrue(commits.size() > 0, "Commit list length must be greater than zero");
-  }
-
-  @Test
-  public void issuesInfoShouldBeComplete() {
-    var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
-
-    assertTrue(issues.stream().anyMatch(issue -> issue.getNumber() != null),
-        "Number must be retrieved");
-    assertTrue(issues.stream().anyMatch(issue -> issue.getMilestone() != null),
-        "Milestone must be retrieved");
-    assertTrue(issues.stream().anyMatch(issue -> issue.getTitle() != null),
-        "Title must be retrieved");
-    assertTrue(issues.stream().anyMatch(issue -> issue.getBody() != null),
-        "Body must be retrieved");
-    assertTrue(issues.stream().anyMatch(issue -> issue.getLabels() != null),
-        "Labels must be retrieved");
-    assertTrue(issues.stream().anyMatch(issue -> issue.getState() != null),
-        "State must be retrieved");
-    assertTrue(issues.stream().anyMatch(issue -> issue.getAssignee() != null),
-        "Assignee must be retrieved");
-    assertTrue(issues.stream().anyMatch(issue -> issue.getCreatedAt() != null),
-        "Created_at must be retrieved");
   }
 
   @Test
@@ -210,6 +132,92 @@ class GitHubClientTest {
         "Created at must be retrieved");
     assertTrue(comments.stream().anyMatch(comment -> comment.getUpdatedAt() != null),
         "Updated at must be retrieved");
+  }
+
+  @Nested
+  @DisplayName("Given a GitHub repository")
+  class GitHubSprintsTest {
+
+    @Nested
+    @DisplayName("When repository has milestones")
+    class RepositoryWithMilestones {
+
+      @Test
+      @DisplayName("Then milestones should be fetched")
+      public void milestonesShouldBeRetrieved() {
+        var milestones = gitHubClient.findMilestones(owner, repo, 1, 1);
+
+        assertNotNull(milestones, "Milestones list must be none null.");
+        assertTrue(milestones.size() > 0, "Milestones list is not empty");
+      }
+
+      @Test
+      @DisplayName("Then milestone relevant info should be present")
+      public void milestonesInfoShouldBeComplete() {
+        var milestones = gitHubClient.findMilestones(owner, repo, 1, 100);
+
+        assertAll("Verify milestone  relevant info is present",
+            () -> assertTrue(
+                milestones.stream().anyMatch(milestone -> milestone.getNumber() != null)),
+            () -> assertTrue(
+                milestones.stream().anyMatch(milestone -> milestone.getNumber() != null)),
+            () -> assertTrue(
+                milestones.stream().anyMatch(milestone -> milestone.getNumber() != null)),
+            () -> assertTrue(
+                milestones.stream().anyMatch(milestone -> milestone.getTitle() != null)),
+            () -> assertTrue(
+                milestones.stream().anyMatch(milestone -> milestone.getState() != null)),
+            () -> assertTrue(
+                milestones.stream().anyMatch(milestone -> milestone.getClosedAt() != null))
+        );
+      }
+
+    }
+
+  }
+
+  @Nested
+  @DisplayName("Given a GitHub repository")
+  class GitHubIssuesTest {
+
+    @Nested
+    @DisplayName("When repository has issues")
+    class RepositoryWithIssues {
+
+      @Test
+      @DisplayName("Then issues should be retrieved")
+      public void issuesShouldBeRetrieved() {
+        var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
+
+        assertNotNull(issues, "Issue list must be none null.");
+        assertTrue(issues.size() > 0, "Issue list length must be greater than zero");
+      }
+
+      @Test
+      @DisplayName("Then issue relevant info should be present")
+      public void issuesInfoShouldBeComplete() {
+        var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
+
+        assertAll("Verify all relevant ",
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getNumber() != null),
+                "Number must be retrieved"),
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getMilestone() != null),
+                "Milestone must be retrieved"),
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getTitle() != null),
+                "Title must be retrieved"),
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getBody() != null),
+                "Body must be retrieved"),
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getLabels() != null),
+                "Labels must be retrieved"),
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getState() != null),
+                "State must be retrieved"),
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getAssignee() != null),
+                "Assignee must be retrieved"),
+            () -> assertTrue(issues.stream().anyMatch(issue -> issue.getCreatedAt() != null),
+                "Created_at must be retrieved")
+        );
+      }
+    }
   }
 
 }
