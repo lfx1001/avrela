@@ -80,11 +80,14 @@ class GitHubClientTest {
             .create();
     final Decoder decoder = new GsonDecoder(gson);
 
+    final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
+
     gitHubClient = Feign.builder()
+        .requestInterceptor(authInterceptor)
         .logger(new Slf4jLogger(GitHubClient.class))
         .encoder(new GsonEncoder())
         .decoder(decoder)
-        .logLevel(Level.FULL)
+        .logLevel(Level.BASIC)
         .target(GitHubClient.class, "https://api.github.com");
   }
 
