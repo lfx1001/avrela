@@ -3,9 +3,15 @@ package es.ubu.lsi.avrela.client.github;
 import com.google.gson.annotations.SerializedName;
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GitHubIssue {
 
   private Integer number;

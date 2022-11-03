@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.domain;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +25,8 @@ public class Issue {
   @ToString.Include
   private String name;
 
+  private String body;
+
   /** Sprint. */
   private Sprint sprint;
 
@@ -39,10 +41,13 @@ public class Issue {
   private Integer storyPoints;
 
   /** Creation time. */
-  private LocalDateTime createdAt;
+  private ZonedDateTime createdAt;
 
   /** Labels. */
   private List<String> labels;
+
+  /** Comments. */
+  private List<Comment> comments;
 
   /** Assignee. */
   private String assignee;
