@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.domain;
+package es.ubu.lsi.avrela.apm.domain.model;
 
 import java.time.ZonedDateTime;
 import java.util.List;

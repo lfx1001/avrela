@@ -10,6 +10,8 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubAuthenticationInterceptor;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubClient;
 import feign.Feign;
 import feign.Logger.Level;
 import feign.codec.Decoder;

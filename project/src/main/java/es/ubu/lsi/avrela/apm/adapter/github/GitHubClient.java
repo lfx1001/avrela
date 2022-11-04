@@ -1,6 +1,10 @@
-package es.ubu.lsi.avrela.client.github;
+package es.ubu.lsi.avrela.apm.adapter.github;
 
 
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
+import es.ubu.lsi.avrela.client.github.GitHubCommit;
 import feign.Param;
 import feign.RequestLine;
 import java.time.LocalDateTime;
@@ -9,8 +13,8 @@ import java.util.List;
 /**
  * Feign based GitHub client.
  *
- * @see https://github.com/OpenFeign/feign
- * @see https://www.baeldung.com/intro-to-feign
+ * @see <a href="https://github.com/OpenFeign/feign">Official documentation</a>
+ * @see <a href="https://www.baeldung.com/intro-to-feign">Intro to Feign</a>
  */
 public interface GitHubClient {
 
@@ -41,7 +45,7 @@ public interface GitHubClient {
    * @param page
    * @param pageSize
    * @return
-   * @see https://docs.github.com/en/rest/issues/milestones
+   * @see <a href="https://docs.github.com/en/rest/issues/milestones">GitHub Milestones REST API</a>
    */
   @RequestLine("GET /repos/{owner}/{repo}/milestones?state=all&page={page}&per_page={pageSize}")
   List<GitHubMilestone> findMilestones(@Param("owner") String owner, @Param("repo") String repo, @Param("page") Integer page, @Param("pageSize") Integer pageSize);
@@ -54,7 +58,7 @@ public interface GitHubClient {
    * @param page
    * @param pageSize
    * @return
-   * @see https://docs.github.com/en/rest/issues/issues#list-repository-issues
+   * @see <a href="https://docs.github.com/en/rest/issues/issues#list-repository-issues">GitHub Issues REST API</a>
    */
   @RequestLine("GET /repos/{owner}/{repo}/issues?milestone={milestone}&state=all&page={page}&per_page={pageSize}")
   List<GitHubIssue> findIssuesByMilestone(@Param("owner") String owner, @Param("repo") String repo,@Param("milestone") Integer milestone, @Param("page") Integer page, @Param("pageSize") Integer pageSize);

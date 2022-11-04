@@ -1,9 +1,9 @@
 package es.ubu.lsi.avrela.client.github.mapper;
 
-import es.ubu.lsi.avrela.client.github.GitHubComment;
-import es.ubu.lsi.avrela.client.github.GitHubIssue;
-import es.ubu.lsi.avrela.domain.Issue;
-import es.ubu.lsi.avrela.domain.IssueState;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
+import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.apm.domain.model.IssueState;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 

@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import es.ubu.lsi.avrela.client.github.GitHubComment;
-import es.ubu.lsi.avrela.client.github.GitHubIssue;
-import es.ubu.lsi.avrela.client.github.GitHubItemState;
-import es.ubu.lsi.avrela.client.github.GitHubUser;
-import es.ubu.lsi.avrela.domain.Issue;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubItemState;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubUser;
+import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;

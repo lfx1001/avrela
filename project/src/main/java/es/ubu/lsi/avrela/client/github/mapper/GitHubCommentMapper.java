@@ -1,7 +1,7 @@
 package es.ubu.lsi.avrela.client.github.mapper;
 
-import es.ubu.lsi.avrela.client.github.GitHubComment;
-import es.ubu.lsi.avrela.domain.Comment;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
+import es.ubu.lsi.avrela.apm.domain.model.Comment;
 import java.util.ArrayList;
 import java.util.List;
 

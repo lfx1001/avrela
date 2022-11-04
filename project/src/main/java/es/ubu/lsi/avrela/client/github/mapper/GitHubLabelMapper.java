@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.client.github.mapper;
 
-import es.ubu.lsi.avrela.client.github.GitHubLabel;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubLabel;
 import java.util.ArrayList;
 import java.util.List;
 

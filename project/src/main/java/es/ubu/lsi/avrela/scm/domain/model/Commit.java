@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.domain;
+package es.ubu.lsi.avrela.scm.domain.model;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

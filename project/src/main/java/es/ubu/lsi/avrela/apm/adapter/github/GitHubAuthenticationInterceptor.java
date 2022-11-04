@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.client.github;
+package es.ubu.lsi.avrela.apm.adapter.github;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

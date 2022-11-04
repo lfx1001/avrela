@@ -3,6 +3,7 @@ package es.ubu.lsi.avrela.client.github;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import org.junit.jupiter.api.Test;
 
 class GitHubIssueTest {
