@@ -2,7 +2,7 @@ package es.ubu.lsi.avrela.client.github;
 
 import com.google.gson.annotations.SerializedName;
 import java.time.ZonedDateTime;
-import java.util.Collection;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class GitHubIssue {
 
   private String body;
 
-  private Collection<GitHubLabel> labels;
+  private List<GitHubLabel> labels;
 
   private GitHubItemState state;
 

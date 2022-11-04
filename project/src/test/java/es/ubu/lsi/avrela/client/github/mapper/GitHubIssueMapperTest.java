@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import es.ubu.lsi.avrela.client.github.GitHubComment;
 import es.ubu.lsi.avrela.client.github.GitHubIssue;
+import es.ubu.lsi.avrela.client.github.GitHubItemState;
 import es.ubu.lsi.avrela.client.github.GitHubUser;
 import es.ubu.lsi.avrela.domain.Issue;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 public class GitHubIssueMapperTest {
 
-  public GitHubIssueMapper commentMapper = new GitHubIssueMapper(new GitHubCommentMapper());
+  public GitHubIssueMapper commentMapper = new GitHubIssueMapper(new GitHubCommentMapper(), new GitHubLabelMapper());
 
   @Nested
   @DisplayName("Given a null GitHubIssue")
@@ -51,15 +53,8 @@ public class GitHubIssueMapperTest {
       @Test
       @DisplayName("Then domain entity should contain the information needed")
       public void shouldReturnDomainEntity(){
-        GitHubIssue issue = GitHubIssue.builder()
-            .body("The issue body")
-            .title("Issue title")
-            .number(1)
-            .createdAt(ZonedDateTime.now())
-            .assignee( new GitHubUser("Assignee"))
-            .build();
-
-        List<GitHubComment> comments = null;
+        GitHubIssue issue = getGitHubIssue();
+        List<GitHubComment> comments = getGitHubComments();
 
         Issue result = commentMapper.toDomain(issue, comments);
 
@@ -69,10 +64,35 @@ public class GitHubIssueMapperTest {
             ()-> assertEquals(issue.getBody(), result.getBody()),
             ()-> assertEquals(issue.getNumber().toString(), result.getId()),
             ()-> assertEquals(issue.getCreatedAt(), result.getCreatedAt()),
-            ()-> assertEquals(issue.getAssignee().getLogin(), result.getAssignee())
+            ()-> assertEquals(issue.getAssignee().getLogin(), result.getAssignee()),
+            ()-> assertEquals(issue.getState().name(), result.getState().name()),
+            ()-> assertNotNull(result.getComments())
         );
       }
     }
+
+    private GitHubIssue getGitHubIssue() {
+      GitHubIssue issue = GitHubIssue.builder()
+          .body("The issue body")
+          .title("Issue title")
+          .number(1)
+          .createdAt(ZonedDateTime.now())
+          .state(GitHubItemState.OPEN)
+          .assignee( new GitHubUser("Assignee"))
+          .build();
+      return issue;
+    }
+  }
+
+  private static List<GitHubComment> getGitHubComments() {
+    List<GitHubComment> comments = new ArrayList<>();
+    GitHubComment comment = GitHubComment.builder()
+        .id("id")
+        .body("comment body")
+        .user(new GitHubUser("author"))
+        .createdAt(ZonedDateTime.now())
+        .build();
+    return comments;
   }
 
 

@@ -2,8 +2,10 @@ package es.ubu.lsi.avrela.client.github;
 
 import com.google.gson.annotations.SerializedName;
 import java.time.ZonedDateTime;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class GitHubComment {
 

@@ -3,6 +3,7 @@ package es.ubu.lsi.avrela.client.github.mapper;
 import es.ubu.lsi.avrela.client.github.GitHubComment;
 import es.ubu.lsi.avrela.client.github.GitHubIssue;
 import es.ubu.lsi.avrela.domain.Issue;
+import es.ubu.lsi.avrela.domain.IssueState;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class GitHubIssueMapper {
 
   private final GitHubCommentMapper commentMapper;
+  private final GitHubLabelMapper labelMapper;
 
   public Issue toDomain(GitHubIssue issue, List<GitHubComment> comments) {
     if (issue == null) {return null;}
@@ -17,10 +19,12 @@ public class GitHubIssueMapper {
         .id(issue.getNumber().toString())
         .name(issue.getTitle())
         .hasTaskList(issue.hasTaskList())
+        .state(IssueState.valueOf(issue.getState().name()))
         .body(issue.getBody())
         .createdAt(issue.getCreatedAt())
         .assignee(issue.getAssignee().getLogin())
         .comments(commentMapper.toDomain(comments))
+        .labels(labelMapper.toDomain(issue.getLabels()))
         .build();
     return result;
   }
