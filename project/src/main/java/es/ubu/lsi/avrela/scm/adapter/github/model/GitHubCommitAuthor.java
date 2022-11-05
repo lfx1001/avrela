@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.client.github;
+package es.ubu.lsi.avrela.scm.adapter.github.model;
 
 import java.time.ZonedDateTime;
 import lombok.Data;

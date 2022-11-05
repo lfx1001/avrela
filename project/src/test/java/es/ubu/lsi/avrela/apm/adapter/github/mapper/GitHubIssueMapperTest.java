@@ -1,10 +1,13 @@
-package es.ubu.lsi.avrela.client.github.mapper;
+package es.ubu.lsi.avrela.apm.adapter.github.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubCommentMapper;
+import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubIssueMapper;
+import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubLabelMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubItemState;

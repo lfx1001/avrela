@@ -4,7 +4,7 @@ package es.ubu.lsi.avrela.apm.adapter.github;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
-import es.ubu.lsi.avrela.client.github.GitHubCommit;
+import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
 import feign.Param;
 import feign.RequestLine;
 import java.time.LocalDateTime;

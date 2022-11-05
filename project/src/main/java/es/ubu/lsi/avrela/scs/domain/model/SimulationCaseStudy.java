@@ -1,12 +1,12 @@
-package es.ubu.lsi.avrela.domain;
+package es.ubu.lsi.avrela.scs.domain.model;
 
 import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import es.ubu.lsi.avrela.apm.domain.model.Sprint;
 import es.ubu.lsi.avrela.scm.domain.model.Commit;
 import java.util.List;
 
-/** Models a repository. */
-public class Repository {
+/** Models a Simulation Case Study. */
+public class SimulationCaseStudy {
 
   /** Sprints. */
   private List<Sprint> sprints;

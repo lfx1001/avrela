@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.client.github;
+package es.ubu.lsi.avrela.scm.adapter.github.model;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
