@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.bdd;
+package es.ubu.lsi.avrela.bdd.apm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
