@@ -33,7 +33,7 @@ public class GitHubIssueMapperTest {
 
     @Nested
     @DisplayName("When I map the GitHub issue to domain entity")
-    public class MapNullGitHubIssue{
+    class MapNullGitHubIssue{
 
       @Test
       @DisplayName("Then result should be null")
@@ -54,7 +54,7 @@ public class GitHubIssueMapperTest {
 
     @Nested
     @DisplayName("When I map the GitHub issue to domain entity")
-    public class MapNoneNullGitHubIssue{
+    class MapNoneNullGitHubIssue{
 
       @Test
       @DisplayName("Then domain entity should contain the information needed")

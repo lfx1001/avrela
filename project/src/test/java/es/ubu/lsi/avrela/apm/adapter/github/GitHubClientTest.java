@@ -57,7 +57,7 @@ class GitHubClientTest {
 
     @Nested
     @DisplayName("When repository has commits")
-    public class GitHubRepositoryWithCommits {
+    class GitHubRepositoryWithCommits {
 
       @Test
       @DisplayName("Then commits should be fetched")
@@ -183,7 +183,7 @@ class GitHubClientTest {
 
     @Nested
     @DisplayName("When issue has comments")
-    public class GitHubIssueWithComments {
+    class GitHubIssueWithComments {
 
       @Test
       @DisplayName("Then issues should be fetched")
