@@ -12,7 +12,7 @@ public class GitHubLabelMapper {
 
   public List<String> toDomain(List<GitHubLabel> gitHubLabels){
     if (gitHubLabels == null){
-      return null;
+      return new ArrayList<>();
     }
     List<String> result = new ArrayList<>(gitHubLabels.size());
     for (GitHubLabel label : gitHubLabels) {

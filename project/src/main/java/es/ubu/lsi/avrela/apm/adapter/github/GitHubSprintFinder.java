@@ -9,7 +9,6 @@ import es.ubu.lsi.avrela.apm.port.SprintFinder;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,14 +28,14 @@ public class GitHubSprintFinder implements SprintFinder {
     log.debug("Fetching milestones between [{}] and [{}]", startAt, endAt);
     List<GitHubMilestone> milestones = gitHubClient.findMilestones(repoOwner, repoName, 1, 100);
     log.debug("[{}] sprints fetched", milestones.size());
-    if (milestones == null || milestones.size() == 0) {
+    if (milestones.isEmpty()) {
       return new ArrayList<>();
     }
     List<GitHubMilestone> targetMilestones = milestones
         .stream()
         .filter(milestone -> milestone.getDueOn().isAfter(startAt) && milestone.getDueOn()
             .isBefore(endAt))
-        .collect(Collectors.toList());
+        .toList();
     log.debug("[{}] sprints filtered", targetMilestones.size());
 
     for (GitHubMilestone milestone : targetMilestones) {

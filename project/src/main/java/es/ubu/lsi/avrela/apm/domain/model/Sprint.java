@@ -35,7 +35,7 @@ public class Sprint {
   private ZonedDateTime dueOn;
 
   public Long countIssues() {
-    return issues.stream().count();
+    return (long) issues.size();
   }
 
   public Long countIssuesByLabel(String label) {
@@ -46,7 +46,7 @@ public class Sprint {
 
   public Long countIssuesByHasComments(Boolean hasComments) {
     return issues.stream()
-        .filter(issue -> hasComments.equals(issue.getComments() != null))
+        .filter(issue -> hasComments.equals(issue.getComments().size() != 0))
         .count();
   }
 

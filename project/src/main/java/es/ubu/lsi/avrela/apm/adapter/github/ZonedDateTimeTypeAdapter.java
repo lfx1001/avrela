@@ -11,6 +11,7 @@ public class ZonedDateTimeTypeAdapter extends TypeAdapter<ZonedDateTime> {
 
   @Override
   public void write(JsonWriter out, ZonedDateTime value) throws IOException {
+    throw new UnsupportedOperationException();
   }
 
   @Override

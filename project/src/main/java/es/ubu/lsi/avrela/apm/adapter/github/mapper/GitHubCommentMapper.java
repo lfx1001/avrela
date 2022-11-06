@@ -16,7 +16,7 @@ public class GitHubCommentMapper {
 
   public List<Comment> toDomain(List<GitHubComment> comments){
     if (comments == null){
-      return null;
+      return new ArrayList<>();
     }
     List<Comment> result = new ArrayList<>(comments.size());
     for(GitHubComment comment : comments){

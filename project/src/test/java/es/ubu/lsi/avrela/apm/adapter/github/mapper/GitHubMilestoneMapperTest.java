@@ -37,7 +37,7 @@ public class GitHubMilestoneMapperTest {
 
       @Test
       @DisplayName("The  result should be null")
-      public void shouldReturnNull(){
+      void shouldReturnNull(){
         GitHubMilestone milestone = null;
         List<GitHubIssue> issues = null;
 
@@ -60,7 +60,7 @@ public class GitHubMilestoneMapperTest {
 
       @Test
       @DisplayName("The  result should be not null")
-      public void shouldReturnNull(){
+      void shouldReturnNull(){
         GitHubMilestone milestone = GitHubMilestone.builder()
             .number(1)
             .title("Milestone title")

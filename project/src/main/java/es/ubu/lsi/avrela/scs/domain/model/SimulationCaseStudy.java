@@ -4,8 +4,10 @@ import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import es.ubu.lsi.avrela.apm.domain.model.Sprint;
 import es.ubu.lsi.avrela.scm.domain.model.Commit;
 import java.util.List;
+import lombok.Data;
 
 /** Models a Simulation Case Study. */
+@Data
 public class SimulationCaseStudy {
 
   /** Sprints. */

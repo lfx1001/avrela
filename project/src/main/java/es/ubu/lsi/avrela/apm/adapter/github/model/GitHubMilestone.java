@@ -1,7 +1,6 @@
 package es.ubu.lsi.avrela.apm.adapter.github.model;
 
 import com.google.gson.annotations.SerializedName;
-import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubItemState;
 import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Builder;

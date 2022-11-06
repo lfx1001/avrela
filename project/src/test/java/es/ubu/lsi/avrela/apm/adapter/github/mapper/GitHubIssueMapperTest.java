@@ -37,7 +37,7 @@ public class GitHubIssueMapperTest {
 
       @Test
       @DisplayName("Then result should be null")
-      public void shouldReturnNull(){
+      void shouldReturnNull(){
         GitHubIssue issue = null;
         List<GitHubComment> comments = null;
 
@@ -58,7 +58,7 @@ public class GitHubIssueMapperTest {
 
       @Test
       @DisplayName("Then domain entity should contain the information needed")
-      public void shouldReturnDomainEntity(){
+      void shouldReturnDomainEntity(){
         GitHubIssue issue = getGitHubIssue();
         List<GitHubComment> comments = getGitHubComments();
         issue.setComments(comments);

@@ -61,7 +61,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then commits should be fetched")
-      public void commitsShouldBeRetrieved() {
+      void commitsShouldBeRetrieved() {
         var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
             1);
 
@@ -71,7 +71,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then commit relevant info should be fetched")
-      public void commitsInfoShouldBeComplete() {
+      void commitsInfoShouldBeComplete() {
         var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
             100);
 
@@ -101,7 +101,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then milestones should be fetched")
-      public void milestonesShouldBeRetrieved() {
+      void milestonesShouldBeRetrieved() {
         var milestones = gitHubClient.findMilestones(owner, repo, 1, 1);
 
         assertNotNull(milestones, "Milestones list must be none null.");
@@ -110,7 +110,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then milestone relevant info should be fetched")
-      public void milestonesInfoShouldBeComplete() {
+      void milestonesInfoShouldBeComplete() {
         var milestones = gitHubClient.findMilestones(owner, repo, 1, 100);
 
         assertAll("Verify milestone  relevant info is present",
@@ -143,7 +143,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then issues should be fetched")
-      public void issuesShouldBeRetrieved() {
+      void issuesShouldBeRetrieved() {
         var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
 
         assertNotNull(issues, "Issue list must be none null.");
@@ -152,7 +152,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then issue relevant info should be fetched")
-      public void issuesInfoShouldBeComplete() {
+      void issuesInfoShouldBeComplete() {
         var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
 
         assertAll("Verify all relevant issue info is present",
@@ -187,7 +187,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then issues should be fetched")
-      public void commentsShouldBeRetrieved() {
+      void commentsShouldBeRetrieved() {
         var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
 
         assertNotNull(comments, "Comment list must be none null.");
@@ -196,7 +196,7 @@ class GitHubClientTest {
 
       @Test
       @DisplayName("Then issue relevant info should be fetched")
-      public void commentsInfoShouldBeComplete() {
+      void commentsInfoShouldBeComplete() {
         var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
 
         assertAll("Verify comment data",

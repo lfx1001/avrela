@@ -15,7 +15,7 @@ public class GitHubIssueMapper {
 
   public Issue toDomain(GitHubIssue issue) {
     if (issue == null) {return null;}
-    Issue result = Issue.builder()
+    return Issue.builder()
         .id(issue.getNumber().toString())
         .name(issue.getTitle())
         .hasTaskList(issue.hasTaskList())
@@ -26,12 +26,11 @@ public class GitHubIssueMapper {
         .comments(commentMapper.toDomain(issue.getComments()))
         .labels(labelMapper.toDomain(issue.getLabels()))
         .build();
-    return result;
   }
 
   public List<Issue> toDomain(List<GitHubIssue> issues){
     if (issues == null){
-      return null;
+      return new ArrayList<>();
     }
     List<Issue> result = new ArrayList<>(issues.size());
     for(GitHubIssue issue : issues){

@@ -20,7 +20,7 @@ public class GitHubMilestoneMapper {
     if (milestone == null){
       return null;
     }
-    Sprint result = Sprint.builder()
+    return Sprint.builder()
         .id(milestone.getNumber().toString())
         .title(milestone.getTitle())
         .description(milestone.getDescription())
@@ -28,13 +28,11 @@ public class GitHubMilestoneMapper {
         .dueOn(milestone.getDueOn())
         .issues(issueMapper.toDomain(milestone.getIssues()))
         .build();
-
-    return result;
   }
 
   public List<Sprint> toDomain(List<GitHubMilestone> milestones) {
     if(milestones == null){
-      return null;
+      return new ArrayList<>();
     }
     List<Sprint> result = new ArrayList<>(milestones.size());
     for (GitHubMilestone milestone : milestones){

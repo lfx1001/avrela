@@ -37,15 +37,13 @@ public interface GitHubClient {
 
     final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
 
-    GitHubClient result = Feign.builder()
+    return Feign.builder()
         .requestInterceptor(authInterceptor)
         .logger(new Slf4jLogger(GitHubClient.class))
         .encoder(new GsonEncoder())
         .decoder(decoder)
         .logLevel(loggerLevel)
         .target(GitHubClient.class, "https://api.github.com");
-
-    return result;
   }
 
   /**
