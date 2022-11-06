@@ -1,5 +1,6 @@
 package es.ubu.lsi.avrela.bdd.apm;
 
+import es.ubu.lsi.avrela.apm.port.SprintFinder;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -15,6 +16,8 @@ public class ImportApmStepDefs {
   String repositoryOwner = null, repositoryName = null;
 
   ZonedDateTime  beginAt = null, endAt = null;
+
+  SprintFinder sprintFinder = null;
 
   @ParameterType(".*")
   public ZonedDateTime zoneddatetime(String zonedDateTime) {
@@ -35,6 +38,8 @@ public class ImportApmStepDefs {
 
   @When("I import the agile project management info")
   public void iTryToImportTheRepository() {
+    //Init GitHubClient
+
   }
 
   @Then("agile project management should match expected")

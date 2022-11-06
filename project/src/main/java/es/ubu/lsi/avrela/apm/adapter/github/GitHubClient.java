@@ -1,13 +1,22 @@
 package es.ubu.lsi.avrela.apm.adapter.github;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
 import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
+import feign.Feign;
+import feign.Logger.Level;
 import feign.Param;
 import feign.RequestLine;
+import feign.codec.Decoder;
+import feign.gson.GsonDecoder;
+import feign.gson.GsonEncoder;
+import feign.slf4j.Slf4jLogger;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -17,6 +26,27 @@ import java.util.List;
  * @see <a href="https://www.baeldung.com/intro-to-feign">Intro to Feign</a>
  */
 public interface GitHubClient {
+
+  static GitHubClient with(Level loggerLevel) {
+    final Gson gson =
+        new GsonBuilder()
+            .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeTypeAdapter())
+            .serializeNulls()
+            .create();
+    final Decoder decoder = new GsonDecoder(gson);
+
+    final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
+
+    GitHubClient result = Feign.builder()
+        .requestInterceptor(authInterceptor)
+        .logger(new Slf4jLogger(GitHubClient.class))
+        .encoder(new GsonEncoder())
+        .decoder(decoder)
+        .logLevel(loggerLevel)
+        .target(GitHubClient.class, "https://api.github.com");
+
+    return result;
+  }
 
   /**
    * Find commits.

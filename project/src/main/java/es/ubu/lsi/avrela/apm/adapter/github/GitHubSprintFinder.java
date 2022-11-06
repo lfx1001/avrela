@@ -44,10 +44,12 @@ public class GitHubSprintFinder implements SprintFinder {
       List<GitHubIssue> issues = gitHubClient.findIssuesByMilestone(repoOwner, repoName,
           milestone.getNumber(), 1, 100);
       for (GitHubIssue issue : issues) {
-        //TODO: Paginate comments. Currently, only 100 comments per Issue are fetched.
-        List<GitHubComment> comments = gitHubClient.findCommentsByIssue(repoOwner, repoName,
-            issue.getNumber().toString());
-        issue.setComments(comments);
+        if(issue.getTotalComments() > 0){
+          //TODO: Paginate comments. Currently, only 100 comments per Issue are fetched.
+          List<GitHubComment> comments = gitHubClient.findCommentsByIssue(repoOwner, repoName,
+              issue.getNumber().toString());
+          issue.setComments(comments);
+        }
       }
       milestone.setIssues(issues);
     }
