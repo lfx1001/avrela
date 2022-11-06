@@ -29,7 +29,7 @@ public class GitHubSprintFinder implements SprintFinder {
     log.debug("Fetching milestones between [{}] and [{}]", startAt, endAt);
     List<GitHubMilestone> milestones = gitHubClient.findMilestones(repoOwner, repoName, 1, 100);
     log.debug("[{}] sprints fetched", milestones.size());
-    if (milestones == null && milestones.size() == 0) {
+    if (milestones == null || milestones.size() == 0) {
       return new ArrayList<>();
     }
     List<GitHubMilestone> targetMilestones = milestones
