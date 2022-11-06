@@ -28,27 +28,30 @@ public class GitHubSprintFinder implements SprintFinder {
     //TODO: review MAX page size. GitHub Milestones REST API cannot filter by dates.
     log.debug("Fetching milestones between [{}] and [{}]", startAt, endAt);
     List<GitHubMilestone> milestones = gitHubClient.findMilestones(repoOwner, repoName, 1, 100);
+    log.debug("[{}] sprints fetched", milestones.size());
     if (milestones == null && milestones.size() == 0) {
       return new ArrayList<>();
     }
-
     List<GitHubMilestone> targetMilestones = milestones
         .stream()
         .filter(milestone -> milestone.getDueOn().isAfter(startAt) && milestone.getDueOn()
             .isBefore(endAt))
         .collect(Collectors.toList());
-    log.debug("[{}] sprints fetched", targetMilestones.size());
+    log.debug("[{}] sprints filtered", targetMilestones.size());
 
     for (GitHubMilestone milestone : targetMilestones) {
       //TODO: Paginate issues. Currently, only 100 issues per Sprint are fetched.
       log.debug("Fetching milestone [{}] due on [{}] issues", milestone.getTitle(), milestone.getDueOn());
       List<GitHubIssue> issues = gitHubClient.findIssuesByMilestone(repoOwner, repoName,
           milestone.getNumber(), 1, 100);
+      log.debug("[{}] issues fetched", issues.size());
       for (GitHubIssue issue : issues) {
         if(issue.getTotalComments() > 0){
           //TODO: Paginate comments. Currently, only 100 comments per Issue are fetched.
+          log.debug("Fetching issue [{}] comments", issue.getTitle());
           List<GitHubComment> comments = gitHubClient.findCommentsByIssue(repoOwner, repoName,
               issue.getNumber().toString());
+          log.debug("[{}] comments fetched", comments.size());
           issue.setComments(comments);
         }
       }

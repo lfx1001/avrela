@@ -34,4 +34,25 @@ public class Sprint {
 
   private ZonedDateTime dueOn;
 
+  public Long countIssues() {
+    return issues.stream().count();
+  }
+
+  public Long countIssuesByLabel(String label) {
+    return issues.stream()
+        .filter(issue -> issue.getLabels().contains(label))
+        .count();
+  }
+
+  public Long countIssuesByHasComments(Boolean hasComments) {
+    return issues.stream()
+        .filter(issue -> hasComments.equals(issue.getComments() != null))
+        .count();
+  }
+
+  public Long countIssuesByState(IssueState state) {
+    return issues.stream()
+        .filter(issue -> state.equals(issue.getState()))
+        .count();
+  }
 }

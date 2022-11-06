@@ -1,10 +1,12 @@
 package es.ubu.lsi.avrela.bdd.apm;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubClient;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
+import es.ubu.lsi.avrela.apm.domain.model.IssueState;
 import es.ubu.lsi.avrela.apm.domain.model.Sprint;
 import es.ubu.lsi.avrela.apm.port.SprintFinder;
 import feign.Logger.Level;
@@ -49,7 +51,7 @@ public class ImportApmStepDefs {
   @When("I import the agile project management info")
   public void iTryToImportTheRepository() {
     //Init GitHubClient
-    GitHubClient gitHubClient = GitHubClient.with(Level.FULL);
+    GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
     this.sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
     //Fetch
@@ -59,5 +61,20 @@ public class ImportApmStepDefs {
   @Then("agile project management should match expected")
   public void agileProjectManagementInfoShouldBeRetrieved() {
     assertNotNull(this.sprints);
+    Sprint sprint = this.sprints.get(0);
+
+    assertEquals(17L, sprint.countIssues());
+    assertEquals(7L , sprint.countIssuesByLabel("documentation"));
+    assertEquals(4L , sprint.countIssuesByLabel("feature"));
+    assertEquals(2L , sprint.countIssuesByLabel("testing"));
+    assertEquals(4L , sprint.countIssuesByLabel("bug"));
+    assertEquals(2L, sprint.countIssuesByHasComments(true));
+    assertEquals(17L, sprint.countIssuesByState(IssueState.CLOSED));
+
+
+
+
+
+
   }
 }
