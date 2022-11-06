@@ -17,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GitHubSprintFinder implements SprintFinder {
 
-  private GitHubClient gitHubClient;
+  private final GitHubClient gitHubClient;
 
-  private GitHubMilestoneMapper gitHubMilestoneMapper;
+  private final GitHubMilestoneMapper gitHubMilestoneMapper;
 
   @Override
   public List<Sprint> findByDueOnBetween(String repoOwner, String repoName, ZonedDateTime startAt,
@@ -41,6 +41,7 @@ public class GitHubSprintFinder implements SprintFinder {
 
     for (GitHubMilestone milestone : targetMilestones) {
       //TODO: Paginate issues. Currently, only 100 issues per Sprint are fetched.
+      log.debug("Fetching milestone [{}] due on [{}] issues", milestone.getTitle(), milestone.getDueOn());
       List<GitHubIssue> issues = gitHubClient.findIssuesByMilestone(repoOwner, repoName,
           milestone.getNumber(), 1, 100);
       for (GitHubIssue issue : issues) {

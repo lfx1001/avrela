@@ -59,8 +59,8 @@ public interface GitHubClient {
    * @param page
    * @param pageSize
    * @return
-   * @see https://docs.github.com/en/rest/commits/commits#list-commits
-   * @see https://docs.github.com/en/enterprise-cloud@latest/rest/guides/traversing-with-pagination
+   * @see <a href="https://docs.github.com/en/rest/commits/commits#list-commits">List commits API</a>
+   * @see <a href="https://docs.github.com/en/enterprise-cloud@latest/rest/guides/traversing-with-pagination">Pagination guidelines</a>
    */
   @RequestLine("GET /repos/{owner}/{repo}/commits?sha={branch}&since={since}&until={until}&page={page}&per_page={pageSize}")
   List<GitHubCommit> findCommits(@Param("owner") String owner, @Param("repo") String repo, @Param("branch") String branch,

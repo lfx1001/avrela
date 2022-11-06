@@ -12,6 +12,10 @@ public class GitHubMilestoneMapper {
 
   private final GitHubIssueMapper issueMapper;
 
+  public static GitHubMilestoneMapper build() {
+    return new GitHubMilestoneMapper(new GitHubIssueMapper(new GitHubCommentMapper(), new GitHubLabelMapper()));
+  }
+
   public Sprint toDomain(GitHubMilestone milestone) {
     if (milestone == null){
       return null;

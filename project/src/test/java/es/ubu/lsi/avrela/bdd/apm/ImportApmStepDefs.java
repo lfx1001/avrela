@@ -1,12 +1,20 @@
 package es.ubu.lsi.avrela.bdd.apm;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubClient;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
+import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
+import es.ubu.lsi.avrela.apm.domain.model.Sprint;
 import es.ubu.lsi.avrela.apm.port.SprintFinder;
+import feign.Logger.Level;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.ZonedDateTime;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -18,6 +26,8 @@ public class ImportApmStepDefs {
   ZonedDateTime  beginAt = null, endAt = null;
 
   SprintFinder sprintFinder = null;
+
+  List<Sprint> sprints = null;
 
   @ParameterType(".*")
   public ZonedDateTime zoneddatetime(String zonedDateTime) {
@@ -39,10 +49,15 @@ public class ImportApmStepDefs {
   @When("I import the agile project management info")
   public void iTryToImportTheRepository() {
     //Init GitHubClient
-
+    GitHubClient gitHubClient = GitHubClient.with(Level.FULL);
+    GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
+    this.sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
+    //Fetch
+    this.sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
   }
 
   @Then("agile project management should match expected")
   public void agileProjectManagementInfoShouldBeRetrieved() {
+    assertNotNull(this.sprints);
   }
 }
