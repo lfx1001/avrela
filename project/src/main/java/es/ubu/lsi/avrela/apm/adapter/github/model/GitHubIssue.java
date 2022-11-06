@@ -28,6 +28,13 @@ public class GitHubIssue {
 
   private GitHubUser assignee;
 
+  @SerializedName("comments")
+  private Integer totalComments;
+
+  /** Comments - Artificial field */
+  @SerializedName("commentsArtificial")
+  private List<GitHubComment> comments;
+
   @SerializedName("created_at")
   private ZonedDateTime createdAt;
 

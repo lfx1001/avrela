@@ -1,8 +1,10 @@
 package es.ubu.lsi.avrela.apm.domain.model;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -12,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
+@Data
 @Builder
 public class Sprint {
 
@@ -19,10 +22,37 @@ public class Sprint {
   @EqualsAndHashCode.Include
   private String id;
 
+  private String title;
+
+  private String description;
+
   /** State. */
   private SprintState state;
 
   /** Issues */
   private List<Issue> issues;
 
+  private ZonedDateTime dueOn;
+
+  public Long countIssues() {
+    return issues.stream().count();
+  }
+
+  public Long countIssuesByLabel(String label) {
+    return issues.stream()
+        .filter(issue -> issue.getLabels().contains(label))
+        .count();
+  }
+
+  public Long countIssuesByHasComments(Boolean hasComments) {
+    return issues.stream()
+        .filter(issue -> hasComments.equals(issue.getComments() != null))
+        .count();
+  }
+
+  public Long countIssuesByState(IssueState state) {
+    return issues.stream()
+        .filter(issue -> state.equals(issue.getState()))
+        .count();
+  }
 }

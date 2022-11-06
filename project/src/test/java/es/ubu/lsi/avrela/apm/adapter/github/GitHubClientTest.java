@@ -4,23 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-import es.ubu.lsi.avrela.apm.adapter.github.GitHubAuthenticationInterceptor;
-import es.ubu.lsi.avrela.apm.adapter.github.GitHubClient;
-import feign.Feign;
 import feign.Logger.Level;
-import feign.codec.Decoder;
-import feign.gson.GsonDecoder;
-import feign.gson.GsonEncoder;
-import feign.slf4j.Slf4jLogger;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -62,36 +47,9 @@ class GitHubClientTest {
 
   @BeforeAll
   public static void setUp() {
-    final Gson gson =
-        new GsonBuilder()
-            .registerTypeAdapter(ZonedDateTime.class, new TypeAdapter<ZonedDateTime>() {
-              @Override
-              public void write(JsonWriter out, ZonedDateTime value) throws IOException {
-              }
-
-              @Override
-              public ZonedDateTime read(JsonReader in) throws IOException {
-                if (in.peek() == JsonToken.NULL) {
-                  in.nextNull();
-                  return null;
-                }
-                return ZonedDateTime.parse(in.nextString());
-              }
-            })
-            .serializeNulls()
-            .create();
-    final Decoder decoder = new GsonDecoder(gson);
-
-    final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
-
-    gitHubClient = Feign.builder()
-        .requestInterceptor(authInterceptor)
-        .logger(new Slf4jLogger(GitHubClient.class))
-        .encoder(new GsonEncoder())
-        .decoder(decoder)
-        .logLevel(Level.BASIC)
-        .target(GitHubClient.class, "https://api.github.com");
+    gitHubClient = GitHubClient.with(Level.BASIC);
   }
+
 
   @Nested
   @DisplayName("Given a GitHub repository")

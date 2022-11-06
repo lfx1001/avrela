@@ -2,6 +2,7 @@ package es.ubu.lsi.avrela.apm.domain.model;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.function.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -51,5 +52,6 @@ public class Issue {
 
   /** Assignee. */
   private String assignee;
+
 
 }

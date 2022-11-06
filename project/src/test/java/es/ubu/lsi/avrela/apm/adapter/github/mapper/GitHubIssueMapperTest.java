@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubCommentMapper;
-import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubIssueMapper;
-import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubLabelMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubItemState;
@@ -16,14 +13,19 @@ import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class GitHubIssueMapperTest {
 
-  public GitHubIssueMapper commentMapper = new GitHubIssueMapper(new GitHubCommentMapper(), new GitHubLabelMapper());
+  private GitHubIssueMapper issueMapper = null;
+
+  @BeforeEach
+  public void init(){
+    issueMapper =  new GitHubIssueMapper(new GitHubCommentMapper(), new GitHubLabelMapper());
+  }
 
   @Nested
   @DisplayName("Given a null GitHubIssue")
@@ -39,7 +41,8 @@ public class GitHubIssueMapperTest {
         GitHubIssue issue = null;
         List<GitHubComment> comments = null;
 
-        Issue result = commentMapper.toDomain(issue, comments);
+        Issue result = issueMapper.toDomain(issue);
+
         assertNull(result);
       }
     }
@@ -58,8 +61,9 @@ public class GitHubIssueMapperTest {
       public void shouldReturnDomainEntity(){
         GitHubIssue issue = getGitHubIssue();
         List<GitHubComment> comments = getGitHubComments();
+        issue.setComments(comments);
 
-        Issue result = commentMapper.toDomain(issue, comments);
+        Issue result = issueMapper.toDomain(issue);
 
         assertNotNull(result);
         assertAll("Verify mapping result",
