@@ -5,3 +5,58 @@ Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalle
 Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
 Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
 Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+
+\section{Obtención de información correspondiente a la gestión de tareas del proyecto}
+
+La información relativa a la gestión de tareas se encuentra contenida en su mayoría en GitHub, con la excepción de los puntos de historia de usuario, almacenados en Zenhub. Para poder acceder a esta información, debemos interactuar con ambas plataformas.
+
+\subsection{Interacción con GitHub.}
+
+Para la interacción con GitHub existen dos tipos de APIs a disposición de los desarrolladores:
+
+\begin{itemize}
+  \item API REST.
+  \item API GraphQL.
+\end{itemize}
+
+De entre ambas opciones, nos decantamos por el API REST ya que, si bien el API GraphQL ofrece una gran flexibilidad a la hora de personalizar las consultas para agregar recursos y granular los datos recuperados, el API REST ofrece un mayor ecosistema de técnicas y herramientas que facilitarán el desarrollo de la interacción.
+
+Validamos en primer lugar la viabilidad de utilizar el API REST utilizando  el cliente de servicios web Insomina. En base a la documentación del API REST de GitHub realizamos una serie de pruebas de acceso a los recursos necesarios:
+
+\begin{itemize}
+  \item Milestones.
+  \item Issues.
+  \item Comments.
+\end{itemize}
+
+Constatamos de esta forma que todos los datos correspondientes a la gestión de tareas necesarios están disponibles.
+
+El consumo del API REST de GitHub puede llevarse a cabo mediante:
+
+\begin{itemize}
+  \item Uso de librerías cliente ya existentes, como por ejemplo https://github-api.kohsuke.org/ .
+  \item Desarrollo de un cliente a medida.
+\end{itemize}
+
+Dado que el conjunto de operaciones es reducido - tres operaciones en el caso de la obtención de información de la gestión de tareas del proyecto, consideramos excesivo incorporar una librería para este propósito, y optamos en su lugar por desarrollar un cliente a medida mediante TBD:Open Feign
+
+Para asegurarnos que la estrategia de interacción con GitHub es válida, planteamos una serie de pruebas automáticas mediante TBD:Cucumber.
+
+TBD: incluir comparativa instrucciones de siumlación y pruebas de Cucumber.
+
+En el consumo del API REST de GitHub hemos de considerar que aplican restricciones en el número de peticiones https://docs.github.com/en/rest/overview/resources-in-the-rest-api:
+
+\begin{itemize}
+  \item Peticiones autenticadas: 5000 peticiones por usuario y hora.
+  \item Peticiones sin autenticar: 60 peticiones por dirección IP y hora.
+\end{itemize}
+
+\subsection{Interacción con Zenhub.}
+
+ZenHub es la plataforma en la que reside la información de los puntos de historia de usuario de las tareas. Procedemos forma análoga al estudio realizado para la interacción con GitHub, realizando peticiones contra el API REST de ZenHub.
+
+Descubrimos que la interacción con proyectos en ZenHub requiere de la generación de un token de autenticación por parte del propietario del proyecto. En el contexto del estudio de casos de simulación, cada estudiante debería generar dicho token para que el evaluador pueda acceder a la información.
+
+Esto plantea una dificultad añadida para la evaluación de los casos de estudio de simulación, a diferencia de la interacción con GitHub, que no requiere de acción alguna para extraer información de los proyectos siempre que el repositorio sea público.
+
+Tras la finalización del Sprint 1 decidimos posponer la \textbf {tarea de integración con Zenhub}\footnote{\textsl{Tarea de integración con Zenhub}: \url{https://github.com/lfx1001/avrela/issues/10}} hasta revisar con el tutor las alternativas posibles.
