@@ -29,7 +29,7 @@ public class ImportApmStepDefs {
 
   SprintFinder sprintFinder = null;
 
-  List<Sprint> sprints = null;
+  Sprint sprintUnderTest = null;
 
   @ParameterType(".*")
   public ZonedDateTime zoneddatetime(String zonedDateTime) {
@@ -53,28 +53,21 @@ public class ImportApmStepDefs {
     //Init GitHubClient
     GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
-    this.sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
+    sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
     //Fetch
-    this.sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
+    var sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
+    assertNotNull(sprints);
+    sprintUnderTest = sprints.get(0);
   }
 
   @Then("agile project management should match expected")
   public void agileProjectManagementInfoShouldBeRetrieved() {
-    assertNotNull(this.sprints);
-    Sprint sprint = this.sprints.get(0);
-
-    assertEquals(17L, sprint.countIssues());
-    assertEquals(7L , sprint.countIssuesByLabel("documentation"));
-    assertEquals(4L , sprint.countIssuesByLabel("feature"));
-    assertEquals(2L , sprint.countIssuesByLabel("testing"));
-    assertEquals(4L , sprint.countIssuesByLabel("bug"));
-    assertEquals(2L, sprint.countIssuesByHasComments(true));
-    assertEquals(17L, sprint.countIssuesByState(IssueState.CLOSED));
-
-
-
-
-
-
+    assertEquals(17L, sprintUnderTest.countIssues());
+    assertEquals(7L , sprintUnderTest.countIssuesByLabel("documentation"));
+    assertEquals(4L , sprintUnderTest.countIssuesByLabel("feature"));
+    assertEquals(2L , sprintUnderTest.countIssuesByLabel("testing"));
+    assertEquals(4L , sprintUnderTest.countIssuesByLabel("bug"));
+    assertEquals(2L, sprintUnderTest.countIssuesByHasComments(true));
+    assertEquals(17L, sprintUnderTest.countIssuesByState(IssueState.CLOSED));
   }
 }
