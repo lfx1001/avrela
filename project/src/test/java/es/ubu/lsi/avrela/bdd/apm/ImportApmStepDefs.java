@@ -62,37 +62,42 @@ public class ImportApmStepDefs {
   }
 
   @Then("total issues should be {long}")
-  public void totalIssuesShouldBe(Long arg0) {
-    assertEquals(17L, sprintUnderTest.countIssues());
+  public void totalIssuesShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssues());
   }
 
   @And("total issues labeled as documentation should be {long}")
-  public void totalIssuesLabeledAsDocumentationShouldBe(Long arg0) {
-    assertEquals(7L , sprintUnderTest.countIssuesByLabel("documentation"));
+  public void totalIssuesLabeledAsDocumentationShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("documentation"));
   }
 
   @And("total issues labeled as feature should be {long}")
-  public void totalIssuesLabeledAsFeatureShouldBe(Long arg0) {
-    assertEquals(4L , sprintUnderTest.countIssuesByLabel("feature"));
+  public void totalIssuesLabeledAsFeatureShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("feature"));
   }
 
   @And("total issues labeled as testing should be {long}")
-  public void totalIssuesLabeledAsTestingShouldBe(Long arg0) {
-    assertEquals(2L , sprintUnderTest.countIssuesByLabel("testing"));
+  public void totalIssuesLabeledAsTestingShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("testing"));
   }
 
   @And("total issues with comments should be {long}")
-  public void totalIssuesWithCommentsShouldBe(Long arg0) {
-    assertEquals(2L, sprintUnderTest.countIssuesByHasComments(true));
+  public void totalIssuesWithCommentsShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssuesByHasComments(true));
   }
 
   @And("total closed issues should be {long}")
-  public void totalClosedIssuesShouldBe(Long arg0) {
-    assertEquals(17L, sprintUnderTest.countIssuesByState(IssueState.CLOSED));
+  public void totalClosedIssuesShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssuesByState(IssueState.CLOSED));
   }
 
   @And("total issues labeled as bug should be {long}")
-  public void totalIssuesLabeledAsBugShouldBe(Long arg0) {
-    assertEquals(4L , sprintUnderTest.countIssuesByLabel("bug"));
+  public void totalIssuesLabeledAsBugShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("bug"));
+  }
+
+  @And("total issues with task list should be {long}")
+  public void totalIssuesWithTaskListShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssuesByHasTaskList(true));
   }
 }

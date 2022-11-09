@@ -55,4 +55,10 @@ public class Sprint {
         .filter(issue -> state.equals(issue.getState()))
         .count();
   }
+
+  public long countIssuesByHasTaskList(boolean hasTaskList) {
+    return issues.stream()
+        .filter(issue -> issue.getHasTaskList().equals(hasTaskList))
+        .count();
+  }
 }
