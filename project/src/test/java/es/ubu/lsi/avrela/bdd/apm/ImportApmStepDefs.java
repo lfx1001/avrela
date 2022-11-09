@@ -48,7 +48,7 @@ public class ImportApmStepDefs {
     this.endAt = endAt;
   }
 
-  @When("I import the sprint tasks")
+  @When("I import the sprint issues")
   public void iTryToImportTheRepository() {
     //Init GitHubClient
     GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
@@ -57,17 +57,42 @@ public class ImportApmStepDefs {
     //Fetch
     var sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
     assertNotNull(sprints);
+    assertEquals(1, sprints.size());
     sprintUnderTest = sprints.get(0);
   }
 
-  @Then("tasks should match expected")
-  public void agileProjectManagementInfoShouldBeRetrieved() {
+  @Then("total issues should be {long}")
+  public void totalIssuesShouldBe(Long arg0) {
     assertEquals(17L, sprintUnderTest.countIssues());
+  }
+
+  @And("total issues labeled as documentation should be {long}")
+  public void totalIssuesLabeledAsDocumentationShouldBe(Long arg0) {
     assertEquals(7L , sprintUnderTest.countIssuesByLabel("documentation"));
+  }
+
+  @And("total issues labeled as feature should be {long}")
+  public void totalIssuesLabeledAsFeatureShouldBe(Long arg0) {
     assertEquals(4L , sprintUnderTest.countIssuesByLabel("feature"));
+  }
+
+  @And("total issues labeled as testing should be {long}")
+  public void totalIssuesLabeledAsTestingShouldBe(Long arg0) {
     assertEquals(2L , sprintUnderTest.countIssuesByLabel("testing"));
-    assertEquals(4L , sprintUnderTest.countIssuesByLabel("bug"));
+  }
+
+  @And("total issues with comments should be {long}")
+  public void totalIssuesWithCommentsShouldBe(Long arg0) {
     assertEquals(2L, sprintUnderTest.countIssuesByHasComments(true));
+  }
+
+  @And("total closed issues should be {long}")
+  public void totalClosedIssuesShouldBe(Long arg0) {
     assertEquals(17L, sprintUnderTest.countIssuesByState(IssueState.CLOSED));
+  }
+
+  @And("total issues labeled as bug should be {long}")
+  public void totalIssuesLabeledAsBugShouldBe(Long arg0) {
+    assertEquals(4L , sprintUnderTest.countIssuesByLabel("bug"));
   }
 }
