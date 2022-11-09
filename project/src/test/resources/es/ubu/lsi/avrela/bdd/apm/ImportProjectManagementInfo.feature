@@ -5,7 +5,7 @@ Feature: Import agile project management information
 
   Scenario: Import successful
     Given a repository owned by "davidmigloz" named "go-bees"
-    And the dates 2017-01-25T00:00:00Z and 2017-01-25T23:59:59Z
-    When I import the agile project management info
-    Then agile project management should match expected
+    And the sprint dates 2017-01-25T00:00:00Z and 2017-01-25T23:59:59Z
+    When I import the sprint tasks
+    Then tasks should match expected
 

@@ -42,13 +42,13 @@ public class ImportApmStepDefs {
     this.repositoryName = repositoryName;
   }
 
-  @And("the dates {zoneddatetime} and {zoneddatetime}")
+  @And("the sprint dates {zoneddatetime} and {zoneddatetime}")
   public void theDatesAnd(ZonedDateTime beginAt, ZonedDateTime endAt) {
     this.beginAt = beginAt;
     this.endAt = endAt;
   }
 
-  @When("I import the agile project management info")
+  @When("I import the sprint tasks")
   public void iTryToImportTheRepository() {
     //Init GitHubClient
     GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
@@ -60,7 +60,7 @@ public class ImportApmStepDefs {
     sprintUnderTest = sprints.get(0);
   }
 
-  @Then("agile project management should match expected")
+  @Then("tasks should match expected")
   public void agileProjectManagementInfoShouldBeRetrieved() {
     assertEquals(17L, sprintUnderTest.countIssues());
     assertEquals(7L , sprintUnderTest.countIssuesByLabel("documentation"));
