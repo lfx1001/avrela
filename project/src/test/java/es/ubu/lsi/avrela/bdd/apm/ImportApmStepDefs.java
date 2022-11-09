@@ -29,7 +29,7 @@ public class ImportApmStepDefs {
 
   SprintFinder sprintFinder = null;
 
-  List<Sprint> sprints = null;
+  Sprint sprintUnderTest = null;
 
   @ParameterType(".*")
   public ZonedDateTime zoneddatetime(String zonedDateTime) {
@@ -42,39 +42,62 @@ public class ImportApmStepDefs {
     this.repositoryName = repositoryName;
   }
 
-  @And("the dates {zoneddatetime} and {zoneddatetime}")
+  @And("the sprint dates {zoneddatetime} and {zoneddatetime}")
   public void theDatesAnd(ZonedDateTime beginAt, ZonedDateTime endAt) {
     this.beginAt = beginAt;
     this.endAt = endAt;
   }
 
-  @When("I import the agile project management info")
+  @When("I import the sprint issues")
   public void iTryToImportTheRepository() {
     //Init GitHubClient
     GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
-    this.sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
+    sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
     //Fetch
-    this.sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
+    var sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
+    assertNotNull(sprints);
+    assertEquals(1, sprints.size());
+    sprintUnderTest = sprints.get(0);
   }
 
-  @Then("agile project management should match expected")
-  public void agileProjectManagementInfoShouldBeRetrieved() {
-    assertNotNull(this.sprints);
-    Sprint sprint = this.sprints.get(0);
+  @Then("total issues should be {long}")
+  public void totalIssuesShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssues());
+  }
 
-    assertEquals(17L, sprint.countIssues());
-    assertEquals(7L , sprint.countIssuesByLabel("documentation"));
-    assertEquals(4L , sprint.countIssuesByLabel("feature"));
-    assertEquals(2L , sprint.countIssuesByLabel("testing"));
-    assertEquals(4L , sprint.countIssuesByLabel("bug"));
-    assertEquals(2L, sprint.countIssuesByHasComments(true));
-    assertEquals(17L, sprint.countIssuesByState(IssueState.CLOSED));
+  @And("total issues labeled as documentation should be {long}")
+  public void totalIssuesLabeledAsDocumentationShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("documentation"));
+  }
 
+  @And("total issues labeled as feature should be {long}")
+  public void totalIssuesLabeledAsFeatureShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("feature"));
+  }
 
+  @And("total issues labeled as testing should be {long}")
+  public void totalIssuesLabeledAsTestingShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("testing"));
+  }
 
+  @And("total issues with comments should be {long}")
+  public void totalIssuesWithCommentsShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssuesByHasComments(true));
+  }
 
+  @And("total closed issues should be {long}")
+  public void totalClosedIssuesShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssuesByState(IssueState.CLOSED));
+  }
 
+  @And("total issues labeled as bug should be {long}")
+  public void totalIssuesLabeledAsBugShouldBe(Long arg) {
+    assertEquals(arg , sprintUnderTest.countIssuesByLabel("bug"));
+  }
 
+  @And("total issues with task list should be {long}")
+  public void totalIssuesWithTaskListShouldBe(Long arg) {
+    assertEquals(arg, sprintUnderTest.countIssuesByHasTaskList(true));
   }
 }
