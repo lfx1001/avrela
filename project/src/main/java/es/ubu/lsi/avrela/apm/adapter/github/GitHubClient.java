@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
 import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
 import feign.Feign;
@@ -100,5 +101,15 @@ public interface GitHubClient {
    */
   @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}/comments")
   List<GitHubComment> findCommentsByIssue(@Param("owner") String owner, @Param("repo") String repo, @Param("issue") String issue);
+
+  /**
+   * Fid issue events.
+   * @param owner
+   * @param repo
+   * @param issue
+   * @return
+   */
+  @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}/timeline")
+  List<GitHubIssueEvent> findEventsByIssue(@Param("owner") String owner, @Param("repo") String repo, @Param("issue") String issue);
 
 }
