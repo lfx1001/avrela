@@ -36,10 +36,18 @@ public interface GitHubClient {
             .create();
     final Decoder decoder = new GsonDecoder(gson);
 
-    final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
+    if (System.getenv("GITHUB_TOKEN") != null){
+      final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
+      return Feign.builder()
+          .requestInterceptor(authInterceptor)
+          .logger(new Slf4jLogger(GitHubClient.class))
+          .encoder(new GsonEncoder())
+          .decoder(decoder)
+          .logLevel(loggerLevel)
+          .target(GitHubClient.class, "https://api.github.com");
+    }
 
     return Feign.builder()
-        .requestInterceptor(authInterceptor)
         .logger(new Slf4jLogger(GitHubClient.class))
         .encoder(new GsonEncoder())
         .decoder(decoder)
