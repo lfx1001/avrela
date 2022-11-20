@@ -22,7 +22,10 @@ public class GitHubMilestoneMapperTest {
 
   @BeforeEach
   public void init(){
-    GitHubIssueMapper gitHubIssueMapper = new GitHubIssueMapper(new GitHubCommentMapper(), new GitHubLabelMapper());
+    GitHubIssueMapper gitHubIssueMapper = new GitHubIssueMapper(
+        new GitHubCommentMapper(),
+        new GitHubLabelMapper(),
+        new GitHubIssueEventMapper());
     gitHubMilestoneMapper = new GitHubMilestoneMapper(gitHubIssueMapper);
   }
 

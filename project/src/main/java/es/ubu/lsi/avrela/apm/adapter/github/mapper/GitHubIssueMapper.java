@@ -13,6 +13,8 @@ public class GitHubIssueMapper {
   private final GitHubCommentMapper commentMapper;
   private final GitHubLabelMapper labelMapper;
 
+  private final GitHubIssueEventMapper eventMapper;
+
   public Issue toDomain(GitHubIssue issue) {
     if (issue == null) {return null;}
     return Issue.builder()
@@ -25,6 +27,7 @@ public class GitHubIssueMapper {
         .assignee(issue.getAssignee().getLogin())
         .comments(commentMapper.toDomain(issue.getComments()))
         .labels(labelMapper.toDomain(issue.getLabels()))
+        .events(eventMapper.toDomain(issue.getEvents()))
         .build();
   }
 

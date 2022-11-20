@@ -11,6 +11,7 @@ public enum GitHubIssueEventType {
   @SerializedName("milestoned") MILESTONED,
   @SerializedName("assigned") ASSIGNED,
   @SerializedName("referenced") REFERENCED,
+  @SerializedName("cross-referenced") CROSS_REFERENCED,
   @SerializedName("commented") COMMENTED,
   @SerializedName("closed") CLOSED
 

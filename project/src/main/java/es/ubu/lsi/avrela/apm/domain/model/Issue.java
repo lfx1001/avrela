@@ -49,6 +49,9 @@ public class Issue {
   /** Comments. */
   private List<Comment> comments;
 
+  /** Events. */
+  private List<IssueEvent> events;
+
   /** Assignee. */
   private String assignee;
 

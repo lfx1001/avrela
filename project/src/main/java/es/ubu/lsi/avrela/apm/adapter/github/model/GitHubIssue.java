@@ -35,6 +35,9 @@ public class GitHubIssue {
   @SerializedName("commentsArtificial")
   private List<GitHubComment> comments;
 
+  /** Events - Artificial field */
+  private List<GitHubIssueEvent> events;
+
   @SerializedName("created_at")
   private ZonedDateTime createdAt;
 
