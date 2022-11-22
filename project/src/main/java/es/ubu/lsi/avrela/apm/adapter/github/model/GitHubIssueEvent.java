@@ -2,10 +2,13 @@ package es.ubu.lsi.avrela.apm.adapter.github.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.time.ZonedDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aspectj.apache.bcel.generic.InstructionList;
+import org.bouncycastle.util.Arrays;
 
 /**
  * Models a GitHub issue event
@@ -15,6 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GitHubIssueEvent {
+
+  public static final List<GitHubIssueEventType> TYPES_SUPPORTED = List.of(
+      GitHubIssueEventType.CLOSED,
+      GitHubIssueEventType.ASSIGNED,
+      GitHubIssueEventType.LABELED,
+      GitHubIssueEventType.COMMENTED,
+      GitHubIssueEventType.REFERENCED);
 
   private Long id;
 

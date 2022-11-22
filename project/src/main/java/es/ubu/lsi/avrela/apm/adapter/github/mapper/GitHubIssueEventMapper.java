@@ -11,7 +11,7 @@ public class GitHubIssueEventMapper {
   public IssueEvent toDomain(GitHubIssueEvent event){
     if (event == null) {return null;}
     return IssueEvent.builder()
-        .id(event.getId().toString())
+        .id(event.getId() == null ? null : event.getId().toString())
         .createdAt(event.getCreatedAt())
         .commitId(event.getCommitId())
         .body(event.getBody())

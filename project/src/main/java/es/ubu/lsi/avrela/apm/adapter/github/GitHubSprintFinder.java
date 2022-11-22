@@ -3,6 +3,7 @@ package es.ubu.lsi.avrela.apm.adapter.github;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
 import es.ubu.lsi.avrela.apm.domain.model.Sprint;
 import es.ubu.lsi.avrela.apm.port.SprintFinder;
@@ -45,6 +46,16 @@ public class GitHubSprintFinder implements SprintFinder {
           milestone.getNumber(), 1, 100);
       log.debug("[{}] issues fetched", issues.size());
       for (GitHubIssue issue : issues) {
+        log.debug("Fetching issue [{}] events", issue.getTitle());
+        List<GitHubIssueEvent> events = gitHubClient.findEventsByIssue(repoOwner, repoName, issue.getNumber().toString());
+        log.debug("Fetched [{}] events", events.size());
+        List<GitHubIssueEvent> filteredEvents = null;
+        events.stream().forEach( event -> {
+              log.debug("Processing event {[]} of issue [{}]", event, issue.getTitle());
+            }
+        );
+
+        issue.setEvents(filteredEvents);
         if(issue.getTotalComments() > 0){
           //TODO: Paginate comments. Currently, only 100 comments per Issue are fetched.
           log.debug("Fetching issue [{}] comments", issue.getTitle());
