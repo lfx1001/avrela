@@ -16,12 +16,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.ZonedDateTime;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
-public class ImportApmStepDefs {
+public class ImportSprintDataDefs {
 
   String repositoryOwner = null, repositoryName = null;
 
