@@ -49,9 +49,12 @@ public class GitHubSprintFinder implements SprintFinder {
         log.debug("Fetching issue [{}] events", issue.getTitle());
         List<GitHubIssueEvent> events = gitHubClient.findEventsByIssue(repoOwner, repoName, issue.getNumber().toString());
         log.debug("Fetched [{}] events", events.size());
-        List<GitHubIssueEvent> filteredEvents = null;
+        List<GitHubIssueEvent> filteredEvents = new ArrayList<>();
         events.stream().forEach( event -> {
-              log.debug("Processing event {[]} of issue [{}]", event, issue.getTitle());
+              log.debug("Processing event [{}] of issue [{}]", event, issue.getTitle());
+              if (event.getType() != null && GitHubIssueEvent.TYPES_SUPPORTED.contains(event.getType())){
+                filteredEvents.add(event);
+              }
             }
         );
 

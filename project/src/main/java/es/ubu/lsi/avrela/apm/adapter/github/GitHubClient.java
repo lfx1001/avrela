@@ -120,4 +120,13 @@ public interface GitHubClient {
   @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}/timeline")
   List<GitHubIssueEvent> findEventsByIssue(@Param("owner") String owner, @Param("repo") String repo, @Param("issue") String issue);
 
+  /**
+   *
+   * @param repoOwner
+   * @param repoName
+   * @param issueId
+   * @return
+   */
+  @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}")
+  GitHubIssue findIssueById(@Param("owner") String owner,@Param("repo") String repo, @Param("issue") String issue);
 }
