@@ -16,3 +16,4 @@ Feature: Import issue data
       | repoOwner   | repoName  | issueId | hasComments | totalComments | hasImage | hasLink  | isLabeled | labelValue     | totalCommits |
       | davidmigloz | go-bees   | 159     | true        | 1             | false    | true     | true      | documentation  | 0            |
       | davidmigloz | go-bees   | 176     | true        | 1             | false    | true     | true      | testing        | 0            |
+      | davidmigloz | go-bees   | 164     | true        | 1             | false    | false    | true      | bug            | 8            |
