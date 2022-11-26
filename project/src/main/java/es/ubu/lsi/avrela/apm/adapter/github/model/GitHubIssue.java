@@ -35,6 +35,9 @@ public class GitHubIssue {
   @SerializedName("commentsArtificial")
   private List<GitHubComment> comments;
 
+  /** Events - Artificial field */
+  private List<GitHubIssueEvent> events;
+
   @SerializedName("created_at")
   private ZonedDateTime createdAt;
 
@@ -46,6 +49,16 @@ public class GitHubIssue {
       return false;
     }
     return body.contains("[ ]") || body.contains("[x]");
+  }
+
+  /**
+   * Checks whether body contain link.
+   */
+  public Boolean hasLink(){
+    if (body == null ){
+      return false;
+    }
+    return body.contains("http://") || body.contains("https://");
   }
 
 }

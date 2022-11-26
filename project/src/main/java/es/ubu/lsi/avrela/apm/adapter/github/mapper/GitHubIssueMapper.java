@@ -13,18 +13,22 @@ public class GitHubIssueMapper {
   private final GitHubCommentMapper commentMapper;
   private final GitHubLabelMapper labelMapper;
 
+  private final GitHubIssueEventMapper eventMapper;
+
   public Issue toDomain(GitHubIssue issue) {
     if (issue == null) {return null;}
     return Issue.builder()
         .id(issue.getNumber().toString())
         .name(issue.getTitle())
         .hasTaskList(issue.hasTaskList())
+        .hasLink(issue.hasLink())
         .state(IssueState.valueOf(issue.getState().name()))
         .body(issue.getBody())
         .createdAt(issue.getCreatedAt())
         .assignee(issue.getAssignee().getLogin())
         .comments(commentMapper.toDomain(issue.getComments()))
         .labels(labelMapper.toDomain(issue.getLabels()))
+        .events(eventMapper.toDomain(issue.getEvents()))
         .build();
   }
 

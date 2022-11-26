@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
 import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
 import feign.Feign;
@@ -35,10 +36,18 @@ public interface GitHubClient {
             .create();
     final Decoder decoder = new GsonDecoder(gson);
 
-    final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
+    if (System.getenv("GITHUB_TOKEN") != null){
+      final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
+      return Feign.builder()
+          .requestInterceptor(authInterceptor)
+          .logger(new Slf4jLogger(GitHubClient.class))
+          .encoder(new GsonEncoder())
+          .decoder(decoder)
+          .logLevel(loggerLevel)
+          .target(GitHubClient.class, "https://api.github.com");
+    }
 
     return Feign.builder()
-        .requestInterceptor(authInterceptor)
         .logger(new Slf4jLogger(GitHubClient.class))
         .encoder(new GsonEncoder())
         .decoder(decoder)
@@ -101,4 +110,23 @@ public interface GitHubClient {
   @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}/comments")
   List<GitHubComment> findCommentsByIssue(@Param("owner") String owner, @Param("repo") String repo, @Param("issue") String issue);
 
+  /**
+   * Fid issue events.
+   * @param owner
+   * @param repo
+   * @param issue
+   * @return
+   */
+  @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}/timeline")
+  List<GitHubIssueEvent> findEventsByIssue(@Param("owner") String owner, @Param("repo") String repo, @Param("issue") String issue);
+
+  /**
+   *
+   * @param repoOwner
+   * @param repoName
+   * @param issueId
+   * @return
+   */
+  @RequestLine("GET /repos/{owner}/{repo}/issues/{issue}")
+  GitHubIssue findIssueById(@Param("owner") String owner,@Param("repo") String repo, @Param("issue") String issue);
 }

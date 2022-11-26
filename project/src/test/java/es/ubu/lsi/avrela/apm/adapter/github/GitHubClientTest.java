@@ -217,4 +217,44 @@ class GitHubClientTest {
 
   }
 
+  @Nested
+  @DisplayName("Given a GitHub repository")
+  public class GitHubEventTest {
+
+    @Nested
+    @DisplayName("When an issue has events")
+    class IssueWithEvents {
+
+      @Test
+      @DisplayName("Then events should be fetched")
+      void commitsShouldBeRetrieved() {
+        var events = gitHubClient.findEventsByIssue(owner, repo, "181");
+
+        assertNotNull(events, "Events list must be none null.");
+        assertTrue(events.size() > 0, "Event list length must be greater than zero");
+      }
+
+      @Test
+      @DisplayName("Then commit relevant info should be fetched")
+      void commitsInfoShouldBeComplete() {
+        var events = gitHubClient.findEventsByIssue(owner, repo, "181");
+
+        assertAll("Verify relevant info is present",
+            () -> assertTrue(events.stream().anyMatch(event -> event.getId() != null),
+                "Id must be retrieved"),
+            () -> assertTrue(
+                events.stream().anyMatch(event -> event.getType() != null),
+                "Message must be retrieved"),
+            () -> assertTrue(
+                events.stream().anyMatch(event -> event.getCreatedAt() != null),
+                "Created at must be retrieved"),
+            () -> assertTrue(
+                events.stream().anyMatch(event -> event.getBody() != null),
+                "Body must be retrieved"),
+            () -> assertTrue(
+                events.stream().anyMatch(event -> event.getCommitId() != null),
+                "Referenced commit must be retrieved"));
+      }
+    }
+  }
 }

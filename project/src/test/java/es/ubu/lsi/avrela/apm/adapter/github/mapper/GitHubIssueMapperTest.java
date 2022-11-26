@@ -24,7 +24,10 @@ public class GitHubIssueMapperTest {
 
   @BeforeEach
   public void init(){
-    issueMapper =  new GitHubIssueMapper(new GitHubCommentMapper(), new GitHubLabelMapper());
+    issueMapper =  new GitHubIssueMapper(
+        new GitHubCommentMapper(),
+        new GitHubLabelMapper(),
+        new GitHubIssueEventMapper());
   }
 
   @Nested

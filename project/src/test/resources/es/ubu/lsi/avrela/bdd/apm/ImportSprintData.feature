@@ -1,9 +1,9 @@
-Feature: Import agile project management information
+Feature: Import sprint data
 
-  Agile project management information should be imported when input data is valid.
+  Sprint data should be imported when input data is valid.
   Uses https://github.com/davidmigloz/go-bees as example data.
 
-  Scenario Outline: Import successful
+  Scenario Outline: Sprint import successful
     Given a repository owned by "<repoOwner>" named "<repoName>"
     And the sprint dates <sprintStartAt> and <sprintEndAt>
     When I import the sprint issues
