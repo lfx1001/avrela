@@ -8,6 +8,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubIssueMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubLabelMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.apm.domain.model.IssueEventType;
 import es.ubu.lsi.avrela.apm.port.IssueFinder;
 import feign.Logger.Level;
 import io.cucumber.java.en.And;
@@ -64,21 +65,23 @@ public class IssueImportSteps {
 
   @And("issue has link check should be {string}")
   public void issueHasLinkCheckShouldBe(String arg) {
-    Assertions.assertTrue(true);
+    Boolean hasLinkCheck = Boolean.valueOf(arg);
+    Assertions.assertEquals(hasLinkCheck, issueUnderTest.getHasLink());
   }
 
   @And("issue is labeled check should be {string}")
   public void issueIsLabeledCheckShouldBe(String arg) {
-    Assertions.assertTrue(true);
+    Assertions.assertTrue(issueUnderTest.isLabeled());
   }
 
   @And("issue has label with value {string}")
   public void issueHasLabelWithValue(String arg) {
-    Assertions.assertTrue(true);
+    Assertions.assertTrue(issueUnderTest.isLabeledWithLabel(arg));
   }
 
   @And("issue total referenced commits should be {long}")
   public void issueTotalReferencedCommitsShouldBe(Long arg) {
+    Assertions.assertEquals(arg, issueUnderTest.countByEventType(IssueEventType.REFERENCED));
     Assertions.assertTrue(true);
   }
 

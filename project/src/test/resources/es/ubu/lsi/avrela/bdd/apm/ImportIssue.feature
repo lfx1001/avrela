@@ -13,5 +13,6 @@ Feature: Import issue data
     And issue has label with value "<labelValue>"
     And issue total referenced commits should be <totalCommits>
     Examples:
-      | repoOwner   | repoName  | issueId | hasComments | totalComments | hasImage | hasLink | isLabeled | labelValue     | totalCommits |
-      | davidmigloz | go-bees   | 159     | true        | 1             | false    | true    | tre       | documentation  | 17           |
+      | repoOwner   | repoName  | issueId | hasComments | totalComments | hasImage | hasLink  | isLabeled | labelValue     | totalCommits |
+      | davidmigloz | go-bees   | 159     | true        | 1             | false    | true     | true      | documentation  | 0            |
+      | davidmigloz | go-bees   | 176     | true        | 1             | false    | true     | true      | testing        | 0            |

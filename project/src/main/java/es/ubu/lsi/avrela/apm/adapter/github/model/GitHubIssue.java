@@ -51,4 +51,14 @@ public class GitHubIssue {
     return body.contains("[ ]") || body.contains("[x]");
   }
 
+  /**
+   * Checks whether body contain link.
+   */
+  public Boolean hasLink(){
+    if (body == null ){
+      return false;
+    }
+    return body.contains("http://") || body.contains("https://");
+  }
+
 }

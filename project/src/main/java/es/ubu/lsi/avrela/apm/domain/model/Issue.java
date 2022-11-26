@@ -55,5 +55,24 @@ public class Issue {
   /** Assignee. */
   private String assignee;
 
+  /** Body has links. */
+  private Boolean hasLink;
 
+  /** Images. */
+  private Boolean hasImages;
+
+  public Long countByEventType(IssueEventType eventType) {
+    if (this.events == null ) {return 0L;};
+    return this.events.stream()
+            .filter(event -> event.getEventType() != null && eventType.equals(event.getEventType()))
+            .count();
+  }
+
+  public boolean isLabeled() {
+    return labels !=null && labels.size() > 0;
+  }
+
+  public boolean isLabeledWithLabel(String arg) {
+    return isLabeled() && labels.contains(arg);
+  }
 }
