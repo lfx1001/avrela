@@ -1,7 +1,10 @@
 package es.ubu.lsi.avrela.apm.domain.model;
 
 import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -74,5 +77,21 @@ public class Issue {
 
   public boolean isLabeledWithLabel(String arg) {
     return isLabeled() && labels.contains(arg);
+  }
+
+  public Collection<String> getUsers() {
+    Set<String> result = new HashSet<>();
+    events.forEach(
+        event -> {
+          if (!result.contains(event.getUser())){
+           result.add(event.getUser());
+          }
+        }
+    );
+    return result;
+  }
+
+  public Integer countUsers(){
+    return getUsers().size();
   }
 }

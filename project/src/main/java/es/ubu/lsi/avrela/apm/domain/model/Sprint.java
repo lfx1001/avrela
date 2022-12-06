@@ -1,7 +1,10 @@
 package es.ubu.lsi.avrela.apm.domain.model;
 
 import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -60,5 +63,17 @@ public class Sprint {
     return issues.stream()
         .filter(issue -> issue.getHasTaskList().equals(hasTaskList))
         .count();
+  }
+
+  public Collection<String> getUsers() {
+    Set<String> result = new HashSet<>();
+    issues.forEach(
+        issue -> result.addAll(issue.getUsers())
+    );
+    return result;
+  }
+
+  public Integer countUsers(){
+    return getUsers().size();
   }
 }
