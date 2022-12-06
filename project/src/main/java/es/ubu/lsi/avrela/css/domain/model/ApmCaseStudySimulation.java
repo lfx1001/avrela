@@ -1,22 +1,14 @@
 package es.ubu.lsi.avrela.css.domain.model;
 
-import es.ubu.lsi.avrela.apm.domain.model.Issue;
-import es.ubu.lsi.avrela.apm.domain.model.Sprint;
-import es.ubu.lsi.avrela.scm.domain.model.Commit;
-import java.util.List;
+import es.ubu.lsi.avrela.apm.domain.model.HistoricalApmData;
 import lombok.Data;
 
 /** Models a case study simulation. */
 @Data
 public class ApmCaseStudySimulation {
 
-  /** Sprints. */
-  private List<Sprint> sprints;
+  private HistoricalApmData caseStudy;
 
-  /** Issues. */
-  private List<Issue> issues;
-
-  /** Commit list ordered by date asc. */
-  private List<Commit> commits;
+  private HistoricalApmData simulation;
 
 }
