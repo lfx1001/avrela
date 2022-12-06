@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.scs.domain.model;
+package es.ubu.lsi.avrela.css.domain.model;
 
 import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import es.ubu.lsi.avrela.apm.domain.model.Sprint;
@@ -6,9 +6,9 @@ import es.ubu.lsi.avrela.scm.domain.model.Commit;
 import java.util.List;
 import lombok.Data;
 
-/** Models a Simulation Case Study. */
+/** Models a case study simulation. */
 @Data
-public class SimulationCaseStudy {
+public class ApmCaseStudySimulation {
 
   /** Sprints. */
   private List<Sprint> sprints;
