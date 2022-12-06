@@ -14,6 +14,7 @@ public class GitHubIssueEventMapper {
         .id(event.getId() == null ? null : event.getId().toString())
         .createdAt(event.getCreatedAt())
         .commitId(event.getCommitId())
+        .user(event.getActor().getLogin())
         .body(event.getBody())
         .eventType(IssueEventType.valueOf(event.getType().name()))
         .build();

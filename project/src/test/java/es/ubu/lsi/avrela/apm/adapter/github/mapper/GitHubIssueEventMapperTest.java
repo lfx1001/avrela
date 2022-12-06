@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEventType;
+import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubUser;
 import es.ubu.lsi.avrela.apm.domain.model.IssueEvent;
 import java.time.ZonedDateTime;
 import org.junit.jupiter.api.DisplayName;
@@ -51,6 +52,7 @@ class GitHubIssueEventMapperTest {
         .commitId("SADAFDFEfasFASFASFS")
         .type(GitHubIssueEventType.CLOSED)
         .createdAt(ZonedDateTime.now())
+        .actor(new GitHubUser("user"))
         .build();
   }
   }

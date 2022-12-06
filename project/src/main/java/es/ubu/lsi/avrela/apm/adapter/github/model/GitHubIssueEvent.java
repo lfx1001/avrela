@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aspectj.apache.bcel.generic.InstructionList;
-import org.bouncycastle.util.Arrays;
 
 /**
  * Models a GitHub issue event
@@ -44,5 +42,10 @@ public class GitHubIssueEvent {
    */
   @SerializedName("commit_id")
   private String commitId;
+
+  /**
+   * User who triggered the event.
+   */
+  private GitHubUser actor;
 
 }
