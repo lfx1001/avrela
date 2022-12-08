@@ -65,15 +65,23 @@ public class Sprint {
         .count();
   }
 
-  public Collection<String> getUsers() {
+  /**
+   *
+   * @return sprint participants.
+   */
+  public Collection<String> getParticipants() {
     Set<String> result = new HashSet<>();
     issues.forEach(
-        issue -> result.addAll(issue.getUsers())
+        issue -> result.addAll(issue.getParticipants())
     );
     return result;
   }
 
-  public Integer countUsers(){
-    return getUsers().size();
+  /**
+   * Count sprint participants.
+   * @return number of participants.
+   */
+  public Integer countParticipants(){
+    return getParticipants().size();
   }
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -79,7 +80,11 @@ public class Issue {
     return isLabeled() && labels.contains(arg);
   }
 
-  public Collection<String> getUsers() {
+  /**
+   *
+   * @return issue participants.
+   */
+  public Collection<String> getParticipants() {
     Set<String> result = new HashSet<>();
     events.forEach(
         event -> {
@@ -91,7 +96,21 @@ public class Issue {
     return result;
   }
 
-  public Integer countUsers(){
-    return getUsers().size();
+  /**
+   * Count issue participants.
+   * @return number of participants.
+   */
+  public Integer countParticipants(){
+    return getParticipants().size();
   }
+
+  /**
+   * Check whether issue participants is greater or equals to provided value.
+   * @param participants
+   * @return
+   */
+  public static Predicate<Issue> participantsGreaterThanOrEqual(Integer participants){
+    return p -> (p.getParticipants() != null && p.getParticipants().size() != 0 && p.getParticipants().size() >= participants);
+  }
+
 }

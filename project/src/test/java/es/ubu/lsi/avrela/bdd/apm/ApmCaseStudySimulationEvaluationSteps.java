@@ -49,7 +49,7 @@ public class ApmCaseStudySimulationEvaluationSteps {
   @When("I apply the rubric")
   public void iApplyTheRubric() {
     //throw new io.cucumber.java.PendingException();
-    simulation.getUsers().forEach(
+    simulation.getParticipants().forEach(
         user -> log.debug("User [{}]", user)
     );
   }

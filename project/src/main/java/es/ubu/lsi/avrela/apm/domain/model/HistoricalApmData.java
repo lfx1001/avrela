@@ -30,24 +30,32 @@ public class HistoricalApmData {
 
   /**
    *
-   * @return users who has performed actions in the simulation
+   * @return participants in time box.
    */
-  public Set<String> getUsers(){
+  public Set<String> getParticipants(){
     Set<String> result = new HashSet<>();
     sprints.forEach(
         sprint -> {
-          result.addAll(sprint.getUsers());
+          result.addAll(sprint.getParticipants());
         }
     );
     return result;
   }
 
   /**
-   *
-   * @return total number of unique users
+   * Count participants in time box.
+   * @return number of participants.
    */
   public Integer countUsers(){
-    return getUsers().size();
+    return getParticipants().size();
+  }
+
+  public Long countIssues(){
+    Long result = 0L;
+    for(Sprint sprint: sprints){
+      result += sprint.countIssues();
+    }
+    return result;
   }
 
 }
