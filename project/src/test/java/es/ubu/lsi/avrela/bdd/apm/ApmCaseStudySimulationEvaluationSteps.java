@@ -13,6 +13,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -47,7 +50,42 @@ public class ApmCaseStudySimulationEvaluationSteps {
 
   @And("a rubric")
   public void aRubric(DataTable dataTable) {
-    //throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+    //Process team work criteria
+    Map<String, String>  teamWorkCriteriaRow = rows.get(0);
+    String[] ratingScaleValues = {"0", "1", "2"};
+    List<Double> teamWorkCriteriaScale = new ArrayList<>();
+    for(String ratingScaleValue: ratingScaleValues){
+      if (!"None".equals(teamWorkCriteriaRow.get(ratingScaleValue))){
+        teamWorkCriteriaScale.add(Double.parseDouble(teamWorkCriteriaRow.get(ratingScaleValue)));
+      } else {
+        teamWorkCriteriaScale.add(Double.MIN_VALUE);
+      }
+    }
+    //Evaluate value
+    //1.Get value
+    Double teamWork = 100D;
+    Integer scaleValuePos = 0, scaleValueCurrent = 0;
+    Boolean finish = false;
+    while(!finish){
+      if(teamWork >= teamWorkCriteriaScale.get(scaleValueCurrent)){
+        if(Double.MIN_VALUE != teamWorkCriteriaScale.get(scaleValueCurrent)){
+          scaleValuePos = scaleValueCurrent;
+          if (scaleValueCurrent == teamWorkCriteriaScale.size()-1 ){
+            finish = true;
+          }else{
+            scaleValueCurrent++;
+          }
+        }else{//None value detected
+          //None values at the end are not supported
+          scaleValueCurrent++;
+        }
+      }else{
+        finish = true;
+      }
+    }
+    log.debug("Calculated pos for [{}] value is [{}]", teamWork, scaleValuePos);
+
   }
 
   @When("I apply the rubric")
