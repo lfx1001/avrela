@@ -31,5 +31,10 @@ public class IssueEvent {
   @SerializedName("commit_id")
   private String commitId;
 
+  /**
+   * User who triggered the event.
+   */
+  private String user;
+
 
 }

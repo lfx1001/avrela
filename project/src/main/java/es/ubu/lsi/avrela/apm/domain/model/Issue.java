@@ -1,7 +1,11 @@
 package es.ubu.lsi.avrela.apm.domain.model;
 
 import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -75,4 +79,38 @@ public class Issue {
   public boolean isLabeledWithLabel(String arg) {
     return isLabeled() && labels.contains(arg);
   }
+
+  /**
+   *
+   * @return issue participants.
+   */
+  public Collection<String> getParticipants() {
+    Set<String> result = new HashSet<>();
+    events.forEach(
+        event -> {
+          if (!result.contains(event.getUser())){
+           result.add(event.getUser());
+          }
+        }
+    );
+    return result;
+  }
+
+  /**
+   * Count issue participants.
+   * @return number of participants.
+   */
+  public Integer countParticipants(){
+    return getParticipants().size();
+  }
+
+  /**
+   * Check whether issue participants is greater or equals to provided value.
+   * @param participants
+   * @return
+   */
+  public static Predicate<Issue> participantsGreaterThanOrEqual(Integer participants){
+    return p -> (p.getParticipants() != null && p.getParticipants().size() != 0 && p.getParticipants().size() >= participants);
+  }
+
 }
