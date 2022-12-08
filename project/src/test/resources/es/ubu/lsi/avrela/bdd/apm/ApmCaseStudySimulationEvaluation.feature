@@ -7,7 +7,7 @@ Feature: Agile project management simulation case study evaluation
 
   Scenario: Successful evaluation
     Given a case study with repo owner "davidmigloz", name "go-bees" and time period 2017-01-25T00:00:00Z 2017-01-25T23:59:59Z
-    And a simulation with repo owner "davidmigloz", name "go-bees" and time period 2017-01-25T00:00:00Z 2017-01-25T23:59:59Z
+    And a simulation with repo owner "davidmigloz", name "go-bees", time period 2017-01-25T00:00:00Z 2017-01-25T23:59:59Z and 1 participant(s)
     And a rubric
       | Criteria                                         | 0  | 1           | 2    |
       | Valoración del trabajo en equipo en Github       | 50 | None        | 100  |

@@ -5,6 +5,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.GitHubHistoricalApmDataRepository;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.domain.model.HistoricalApmData;
+import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import feign.Logger.Level;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -21,6 +22,8 @@ public class ApmCaseStudySimulationEvaluationSteps {
 
   HistoricalApmData simulation;
 
+  Integer simulationParticipants;
+
   GitHubHistoricalApmDataRepository apmDataRepository;
 
   @Given("a case study with repo owner {string}, name {string} and time period {zoneddatetime} {zoneddatetime}")
@@ -35,9 +38,10 @@ public class ApmCaseStudySimulationEvaluationSteps {
     caseStudy = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
   }
 
-  @And("a simulation with repo owner {string}, name {string} and time period {zoneddatetime} {zoneddatetime}")
+  @And("a simulation with repo owner {string}, name {string}, time period {zoneddatetime} {zoneddatetime} and {int} participant\\(s)")
   public void aSimulationWithRepoOwnerNameAndTimePeriod(String repoOwner, String repoName, ZonedDateTime startAt,
-      ZonedDateTime endAt) {
+      ZonedDateTime endAt, Integer simulationParticipants) {
+    simulationParticipants = simulationParticipants;
     simulation = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
   }
 
@@ -52,10 +56,14 @@ public class ApmCaseStudySimulationEvaluationSteps {
     simulation.getParticipants().forEach(
         user -> log.debug("User [{}]", user)
     );
+    log.debug("Number of issues is [{}]", simulation.countIssues());
+    log.debug("Number of issues that match predicate  [{}]", simulation.filterIssues(
+        Issue.participantsGreaterThanOrEqual(1)).size());
   }
 
   @Then("rubric score should be")
   public void rubricScoreShouldBe(DataTable dataTable) {
     //throw new io.cucumber.java.PendingException();
   }
+
 }

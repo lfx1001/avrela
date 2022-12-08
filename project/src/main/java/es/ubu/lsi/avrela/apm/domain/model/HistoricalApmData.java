@@ -5,6 +5,8 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Data;
 
@@ -46,7 +48,7 @@ public class HistoricalApmData {
    * Count participants in time box.
    * @return number of participants.
    */
-  public Integer countUsers(){
+  public Integer countParticipants(){
     return getParticipants().size();
   }
 
@@ -56,6 +58,19 @@ public class HistoricalApmData {
       result += sprint.countIssues();
     }
     return result;
+  }
+
+  /**
+   * Filter issues
+   * @param filter
+   * @return filtered issues
+   */
+  public List<Issue> filterIssues(Predicate<Issue> filter){
+    return sprints.stream()
+        .flatMap( sprint -> sprint.getIssues().stream()
+            .filter(filter)
+        )
+        .collect(Collectors.toList());
   }
 
 }
