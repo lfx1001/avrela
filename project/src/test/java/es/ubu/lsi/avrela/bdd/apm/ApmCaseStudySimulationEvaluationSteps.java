@@ -120,7 +120,7 @@ public class ApmCaseStudySimulationEvaluationSteps {
     Integer scaleValueCurrent = 0;
     Boolean finish = false;
     //Get scale value
-    while(!finish){
+    while(!finish && scaleValueCurrent <= criteriaScale.size()-1){
       if(criteriaValue >= criteriaScale.get(scaleValueCurrent)){
         if(Double.MIN_VALUE != criteriaScale.get(scaleValueCurrent)){
           result = scaleValueCurrent;
@@ -129,8 +129,8 @@ public class ApmCaseStudySimulationEvaluationSteps {
           }else{
             scaleValueCurrent++;
           }
-        }else{//None value detected
-          //None values at the end are not supported
+        }else{
+          //None value detected
           scaleValueCurrent++;
         }
       }else{
