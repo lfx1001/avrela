@@ -6,6 +6,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.domain.model.HistoricalApmData;
 import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.css.domain.model.ApmCaseStudySimulation;
 import feign.Logger.Level;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -22,17 +23,18 @@ import org.junit.jupiter.api.Assertions;
 @Slf4j
 public class ApmCaseStudySimulationEvaluationSteps {
 
+  GitHubHistoricalApmDataRepository apmDataRepository;
   HistoricalApmData caseStudy;
-
   HistoricalApmData simulation;
+  ApmCaseStudySimulation apmCaseStudySimulation;
 
   Integer simulationParticipants;
-
   List<Double> teamWorkCriteriaScale;
-  GitHubHistoricalApmDataRepository apmDataRepository;
-
-
   private Integer actualTeamWorkRubricValue = 0;
+
+
+  List<Double> toolLearningDescriptionCriteriaScale;
+  private Integer actualToolLearningDescriptionRubricValue = 0;
 
   @Given("a case study with repo owner {string}, name {string} and time period {zoneddatetime} {zoneddatetime}")
   public void aCaseStudyWithRepoOwnerNameAndTimePeriod(String repoOwner, String repoName, ZonedDateTime startAt,
@@ -52,24 +54,38 @@ public class ApmCaseStudySimulationEvaluationSteps {
       ZonedDateTime endAt, Integer simulationParticipants) {
     this.simulationParticipants = simulationParticipants;
     simulation = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
+
+    apmCaseStudySimulation = ApmCaseStudySimulation.builder()
+        .caseStudy(caseStudy)
+        .simulation(simulation)
+        .build();
   }
 
   @And("a rubric")
   public void aRubric(DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-    //Obtain criteria scale
-    Map<String, String>  teamWorkCriteriaRow = rows.get(0);
-    teamWorkCriteriaScale = toCriteriaScale(teamWorkCriteriaRow);
+    //Obtain teamwork criteria  scale
+    teamWorkCriteriaScale = toCriteriaScale(rows.get(0));
+
+    //Obtain TaskManagement Tool Learning - Description criteria scale
+    toolLearningDescriptionCriteriaScale = toCriteriaScale(rows.get(1));
 
   }
   @When("I apply the rubric")
   public void iApplyTheRubric() {
-    //Evaluate value
+    //Evaluate Teamwork criteria
     Double teamWorkDividend = 100d *  simulation.filterIssues(
         Issue.participantsGreaterThanOrEqual(simulationParticipants)).size();
     Double teamWordDivisor = simulation.countIssues().doubleValue();
     Double teamWork = teamWorkDividend / teamWordDivisor;
     actualTeamWorkRubricValue = evaluateCriteria(teamWorkCriteriaScale, teamWork);
+
+    //Evaluate TaskManagement Tool Learning - Description criteria
+    Double toolLearningDescriptionDividend = 100d * apmCaseStudySimulation.filterIssueMatchComparisons(
+        Issue.participantsGreaterThanOrEqual(1)).size();
+    Double toolLearningDescriptionDivisor = simulation.countIssues().doubleValue();
+    Double toolLearningDescription = toolLearningDescriptionDividend / toolLearningDescriptionDivisor;
+    actualToolLearningDescriptionRubricValue = evaluateCriteria(toolLearningDescriptionCriteriaScale, toolLearningDescription);
 
     log.debug("Calculated pos for [{}] value is [{}]", teamWork, actualTeamWorkRubricValue);
   }
@@ -78,10 +94,15 @@ public class ApmCaseStudySimulationEvaluationSteps {
   public void rubricScoreShouldBe(DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
     //Process team work criteria
-    Map<String, String>  teamWorkEvaluationRow = rows.get(0);
-    Integer expectedTeamWorkRubricValue = getExpectedRubricValue(teamWorkEvaluationRow);
+    Integer expectedTeamWorkRubricValue = getExpectedRubricValue(rows.get(0));
 
-    Assertions.assertEquals(expectedTeamWorkRubricValue, actualTeamWorkRubricValue);
+    Assertions.assertEquals(expectedTeamWorkRubricValue, actualTeamWorkRubricValue, "Teamwork rubric evaluation score mismatch");
+
+    //Process tool learning description criteria
+    Integer expectedToolLearningDescriptionRubricValue = getExpectedRubricValue(rows.get(1));
+
+    Assertions.assertEquals(expectedToolLearningDescriptionRubricValue , actualToolLearningDescriptionRubricValue, "Tool learning description rubric evaluation score mismatch");
+
   }
 
   private static Integer getExpectedRubricValue(Map<String, String> teamWorkEvaluationRow) {
