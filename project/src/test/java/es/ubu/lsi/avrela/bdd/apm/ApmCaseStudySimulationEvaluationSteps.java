@@ -45,8 +45,7 @@ public class ApmCaseStudySimulationEvaluationSteps {
     GitHubSprintFinder sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
     apmDataRepository = new GitHubHistoricalApmDataRepository(sprintFinder);
     //Uncomment lines below for case study evaluation
-    //Fetch
-    // caseStudy = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
+    caseStudy = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
   }
 
   @And("a simulation with repo owner {string}, name {string}, time period {zoneddatetime} {zoneddatetime} and {int} participant\\(s)")
@@ -86,6 +85,7 @@ public class ApmCaseStudySimulationEvaluationSteps {
     Double toolLearningDescriptionDivisor = simulation.countIssues().doubleValue();
     Double toolLearningDescription = toolLearningDescriptionDividend / toolLearningDescriptionDivisor;
     actualToolLearningDescriptionRubricValue = evaluateCriteria(toolLearningDescriptionCriteriaScale, toolLearningDescription);
+    log.debug("toolLearningDescriptionDividend [{}] , toolLearningDescriptionDivisor is [{}]", toolLearningDescriptionDividend, toolLearningDescriptionDivisor);
 
     log.debug("Calculated pos for [{}] value is [{}]", teamWork, actualTeamWorkRubricValue);
   }

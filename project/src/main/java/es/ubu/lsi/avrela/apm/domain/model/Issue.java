@@ -39,7 +39,7 @@ public class Issue {
   private IssueState state;
 
   /** Check whether description contains task list*/
-  private Boolean hasTaskList;
+  private Boolean hasTaskList = false;
 
   /** Story points. */
   private Integer storyPoints;
@@ -60,10 +60,10 @@ public class Issue {
   private String assignee;
 
   /** Body has links. */
-  private Boolean hasLink;
+  private Boolean hasLink = false;
 
   /** Images. */
-  private Boolean hasImages;
+  private Boolean hasImages = false;
 
   public Long countByEventType(IssueEventType eventType) {
     if (this.events == null ) {return 0L;};
