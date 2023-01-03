@@ -6,6 +6,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.domain.model.HistoricalApmData;
 import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.css.domain.model.ApmCaseStudySimulation;
 import feign.Logger.Level;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -22,14 +23,18 @@ import org.junit.jupiter.api.Assertions;
 @Slf4j
 public class ApmCaseStudySimulationEvaluationSteps {
 
+  GitHubHistoricalApmDataRepository apmDataRepository;
   HistoricalApmData caseStudy;
-
   HistoricalApmData simulation;
+  ApmCaseStudySimulation apmCaseStudySimulation;
 
   Integer simulationParticipants;
-
-  GitHubHistoricalApmDataRepository apmDataRepository;
+  List<Double> teamWorkCriteriaScale;
   private Integer actualTeamWorkRubricValue = 0;
+
+
+  List<Double> toolLearningDescriptionCriteriaScale;
+  private Integer actualToolLearningDescriptionRubricValue = 0;
 
   @Given("a case study with repo owner {string}, name {string} and time period {zoneddatetime} {zoneddatetime}")
   public void aCaseStudyWithRepoOwnerNameAndTimePeriod(String repoOwner, String repoName, ZonedDateTime startAt,
@@ -40,8 +45,7 @@ public class ApmCaseStudySimulationEvaluationSteps {
     GitHubSprintFinder sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
     apmDataRepository = new GitHubHistoricalApmDataRepository(sprintFinder);
     //Uncomment lines below for case study evaluation
-    //Fetch
-    // caseStudy = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
+    caseStudy = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
   }
 
   @And("a simulation with repo owner {string}, name {string}, time period {zoneddatetime} {zoneddatetime} and {int} participant\\(s)")
@@ -49,62 +53,59 @@ public class ApmCaseStudySimulationEvaluationSteps {
       ZonedDateTime endAt, Integer simulationParticipants) {
     this.simulationParticipants = simulationParticipants;
     simulation = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
+
+    apmCaseStudySimulation = ApmCaseStudySimulation.builder()
+        .caseStudy(caseStudy)
+        .simulation(simulation)
+        .build();
   }
 
   @And("a rubric")
   public void aRubric(DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-    //Process team work criteria
-    Map<String, String>  teamWorkCriteriaRow = rows.get(0);
-    String[] ratingScaleValues = {"0", "1", "2"};
-    List<Double> teamWorkCriteriaScale = new ArrayList<>();
-    for(String ratingScaleValue: ratingScaleValues){
-      if (!"None".equals(teamWorkCriteriaRow.get(ratingScaleValue))){
-        teamWorkCriteriaScale.add(Double.parseDouble(teamWorkCriteriaRow.get(ratingScaleValue)));
-      } else {
-        teamWorkCriteriaScale.add(Double.MIN_VALUE);
-      }
-    }
-    //Evaluate value
-    //1.Get value
-    Double teamWorkNum = 100d *  simulation.filterIssues(
-        Issue.participantsGreaterThanOrEqual(simulationParticipants)).size();
-    Double teamWordDen = simulation.countIssues().doubleValue();
-    Double teamWork = teamWorkNum / teamWordDen;
-    Integer scaleValueCurrent = 0;
-    Boolean finish = false;
-    //2. Get scale value
-    while(!finish){
-      if(teamWork >= teamWorkCriteriaScale.get(scaleValueCurrent)){
-        if(Double.MIN_VALUE != teamWorkCriteriaScale.get(scaleValueCurrent)){
-          actualTeamWorkRubricValue = scaleValueCurrent;
-          if (scaleValueCurrent == teamWorkCriteriaScale.size()-1 ){
-            finish = true;
-          }else{
-            scaleValueCurrent++;
-          }
-        }else{//None value detected
-          //None values at the end are not supported
-          scaleValueCurrent++;
-        }
-      }else{
-        finish = true;
-      }
-    }
-    log.debug("Calculated pos for [{}] value is [{}]", teamWork, actualTeamWorkRubricValue);
+    //Obtain teamwork criteria  scale
+    teamWorkCriteriaScale = toCriteriaScale(rows.get(0));
+
+    //Obtain TaskManagement Tool Learning - Description criteria scale
+    toolLearningDescriptionCriteriaScale = toCriteriaScale(rows.get(1));
 
   }
-
   @When("I apply the rubric")
   public void iApplyTheRubric() {
-    //throw new io.cucumber.java.PendingException();
+    //Evaluate Teamwork criteria
+    Double teamWorkDividend = 100d *  simulation.filterIssues(
+        Issue.participantsGreaterThanOrEqual(simulationParticipants)).size();
+    Double teamWordDivisor = simulation.countIssues().doubleValue();
+    Double teamWork = teamWorkDividend / teamWordDivisor;
+    actualTeamWorkRubricValue = evaluateCriteria(teamWorkCriteriaScale, teamWork);
+
+    //Evaluate TaskManagement Tool Learning - Description criteria
+    Double toolLearningDescriptionDividend = 100d * apmCaseStudySimulation.filterIssueMatchComparisons(
+        null).size();
+    Double toolLearningDescriptionDivisor = simulation.countIssues().doubleValue();
+    Double toolLearningDescription = toolLearningDescriptionDividend / toolLearningDescriptionDivisor;
+    actualToolLearningDescriptionRubricValue = evaluateCriteria(toolLearningDescriptionCriteriaScale, toolLearningDescription);
+    log.debug("toolLearningDescriptionDividend [{}] , toolLearningDescriptionDivisor is [{}]", toolLearningDescriptionDividend, toolLearningDescriptionDivisor);
+
+    log.debug("Calculated pos for [{}] value is [{}]", teamWork, actualTeamWorkRubricValue);
   }
 
   @Then("rubric score should be")
   public void rubricScoreShouldBe(DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
     //Process team work criteria
-    Map<String, String>  teamWorkEvaluationRow = rows.get(0);
+    Integer expectedTeamWorkRubricValue = getExpectedRubricValue(rows.get(0));
+
+    Assertions.assertEquals(expectedTeamWorkRubricValue, actualTeamWorkRubricValue, "Teamwork rubric evaluation score mismatch");
+
+    //Process tool learning description criteria
+    Integer expectedToolLearningDescriptionRubricValue = getExpectedRubricValue(rows.get(1));
+
+    Assertions.assertEquals(expectedToolLearningDescriptionRubricValue , actualToolLearningDescriptionRubricValue, "Tool learning description rubric evaluation score mismatch");
+
+  }
+
+  private static Integer getExpectedRubricValue(Map<String, String> teamWorkEvaluationRow) {
     String[] ratingScaleValues = {"0", "1", "2"};
     Integer expectedTeamWorkRubricValue = 0;
     for(String ratingScaleValue: ratingScaleValues){
@@ -113,8 +114,52 @@ public class ApmCaseStudySimulationEvaluationSteps {
       }
       expectedTeamWorkRubricValue++;
     }
-
-    Assertions.assertEquals(expectedTeamWorkRubricValue, actualTeamWorkRubricValue);
+    return expectedTeamWorkRubricValue;
   }
+
+  private List<Double> toCriteriaScale(Map<String, String> dataTableRow) {
+    final String[] ratingScaleValues = {"0", "1", "2"};
+    List<Double> result = new ArrayList<>();
+    for(String ratingScaleValue: ratingScaleValues){
+      if (!"None".equals(dataTableRow.get(ratingScaleValue))){
+        result.add(Double.parseDouble(dataTableRow.get(ratingScaleValue)));
+      } else {
+        result.add(Double.MIN_VALUE);
+      }
+    }
+    return result;
+  }
+
+  /**
+   *
+   * @param criteriaScale
+   * @param criteriaValue
+   * @return evaluation as criteria scale position.
+   */
+  private Integer evaluateCriteria(List<Double> criteriaScale, Double criteriaValue) {
+    Integer result = 0;
+    Integer scaleValueCurrent = 0;
+    Boolean finish = false;
+    //Get scale value
+    while(!finish && scaleValueCurrent <= criteriaScale.size()-1){
+      if(criteriaValue >= criteriaScale.get(scaleValueCurrent)){
+        if(Double.MIN_VALUE != criteriaScale.get(scaleValueCurrent)){
+          result = scaleValueCurrent;
+          if (scaleValueCurrent == criteriaScale.size()-1 ){
+            finish = true;
+          }else{
+            scaleValueCurrent++;
+          }
+        }else{
+          //None value detected
+          scaleValueCurrent++;
+        }
+      }else{
+        finish = true;
+      }
+    }
+    return result;
+  }
+
 
 }

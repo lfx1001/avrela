@@ -22,6 +22,7 @@ public class GitHubIssueMapper {
         .name(issue.getTitle())
         .hasTaskList(issue.hasTaskList())
         .hasLink(issue.hasLink())
+        .hasImages(issue.hasImage())
         .state(IssueState.valueOf(issue.getState().name()))
         .body(issue.getBody())
         .createdAt(issue.getCreatedAt())

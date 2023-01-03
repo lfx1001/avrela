@@ -11,9 +11,11 @@ Feature: Agile project management simulation case study evaluation
     And a rubric
       | Criteria                                         | 0  | 1           | 2    |
       | Teamwork                                         | 50 | None        | 100  |
-      | TaskManagementToolLearning                       | 0  | 100         | 100  |
+      | TaskManagementToolLearning  - Description        | 0  | 100         | None |
+      | TaskManagementToolLearning  - Organization       | 0  | 100         | None |
     When I apply the rubric
     Then rubric score should be
       | Criteria                                         | 0    | 1          | 2       |
       | Teamwork                                         | None | None       | X       |
-      | TaskManagementToolLearning                       | None | None       | X       |
+      | TaskManagementToolLearning - Description         | None | X          | None    |
+      | TaskManagementToolLearning - Organization        | None | X          | None    |
