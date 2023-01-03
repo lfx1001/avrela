@@ -39,7 +39,7 @@ public class Issue {
   private IssueState state;
 
   /** Check whether description contains task list*/
-  private Boolean hasTaskList = false;
+  private Boolean hasTaskList;
 
   /** Story points. */
   private Integer storyPoints;
@@ -60,10 +60,10 @@ public class Issue {
   private String assignee;
 
   /** Body has links. */
-  private Boolean hasLink = false;
+  private Boolean hasLink;
 
   /** Images. */
-  private Boolean hasImages = false;
+  private Boolean hasImages;
 
   public Long countByEventType(IssueEventType eventType) {
     if (this.events == null ) {return 0L;};
@@ -111,6 +111,18 @@ public class Issue {
    */
   public static Predicate<Issue> participantsGreaterThanOrEqual(Integer participants){
     return p -> (p.getParticipants() != null && p.getParticipants().size() != 0 && p.getParticipants().size() >= participants);
+  }
+
+  /**
+   * Check whether issues description match.
+   * @return comparison result.
+   */
+  public Boolean issueDescriptionMatch(Issue actualIssue){
+  Boolean result = false;
+  result = this.hasImages.equals(actualIssue.getHasImages());
+  result = result && this.hasLink.equals(actualIssue.getHasLink());
+  result = result && this.hasTaskList.equals(actualIssue.getHasTaskList());
+  return result;
   }
 
 }

@@ -5,7 +5,7 @@ import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.function.BiPredicate;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,7 +18,8 @@ public class ApmCaseStudySimulation {
 
   private HistoricalApmData simulation;
 
-  public List<Issue> filterIssueMatchComparisons(Predicate<Issue> comparisonMatchPredicate) {
+  public List<Issue> filterIssueMatchComparisons(
+      BiPredicate<Issue, Issue> comparisonMatchBiPredicate) {
     //TODO explore bipredicate usage
     List<Issue> result = new ArrayList<>();
     List<Issue> caseStudyIssues = caseStudy.filterIssues( issue -> true);
@@ -30,10 +31,12 @@ public class ApmCaseStudySimulation {
     while(caseStudyIssuesIterator.hasNext() && simulationIssuesIterator.hasNext()){
       caseStudyIssue = caseStudyIssuesIterator.next();
       simulationIssue = simulationIssuesIterator.next();
-      result.add(caseStudyIssue);
-      //TODO review match case
-      if (caseStudyIssue.getHasTaskList() == simulationIssue.getHasTaskList() && caseStudyIssue.getHasImages() == simulationIssue.getHasTaskList()){
-
+      //TODO compare based on similarity:
+      // - Order
+      // - Title (Jaro–Winkler distance)
+      // - Type
+      if (caseStudyIssue.issueDescriptionMatch(simulationIssue)){
+        result.add(caseStudyIssue);
       }
     }
     return result;

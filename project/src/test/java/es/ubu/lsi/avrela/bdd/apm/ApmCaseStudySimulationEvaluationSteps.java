@@ -81,7 +81,7 @@ public class ApmCaseStudySimulationEvaluationSteps {
 
     //Evaluate TaskManagement Tool Learning - Description criteria
     Double toolLearningDescriptionDividend = 100d * apmCaseStudySimulation.filterIssueMatchComparisons(
-        Issue.participantsGreaterThanOrEqual(1)).size();
+        null).size();
     Double toolLearningDescriptionDivisor = simulation.countIssues().doubleValue();
     Double toolLearningDescription = toolLearningDescriptionDividend / toolLearningDescriptionDivisor;
     actualToolLearningDescriptionRubricValue = evaluateCriteria(toolLearningDescriptionCriteriaScale, toolLearningDescription);

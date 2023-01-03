@@ -3,6 +3,8 @@ package es.ubu.lsi.avrela.apm.adapter.github.model;
 import com.google.gson.annotations.SerializedName;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -59,6 +61,20 @@ public class GitHubIssue {
       return false;
     }
     return body.contains("http://") || body.contains("https://");
+  }
+
+  /**
+   * Checks whether body contain link.
+   *
+   * @see <a href="https://regex101.com/r/1kqFpw/1">https://regex101.com/r/1kqFpw/1</a>
+   */
+  public Boolean hasImage(){
+    if (this.body == null ){
+      return false;
+    }
+    Pattern pattern = Pattern.compile("^.+(.jpg|.jpeg|.bmp|.svg|.gif)");
+    Matcher matcher = pattern.matcher(this.body);
+    return matcher.find();
   }
 
 }
