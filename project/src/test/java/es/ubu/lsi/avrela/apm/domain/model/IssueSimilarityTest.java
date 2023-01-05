@@ -8,13 +8,7 @@ public class IssueSimilarityTest {
 
   @Test
   public void shouldBeTotallySimilar(){
-    Issue a = new Issue.IssueBuilder()
-        .id("xxx")
-        .hasLink(true)
-        .hasImages(true)
-        .hasTaskList(true)
-        .labels(List.of("label1", "label2"))
-        .build();
+    Issue a = getIssue();
 
     Issue b = a;
 
@@ -22,6 +16,34 @@ public class IssueSimilarityTest {
 
     Assertions.assertEquals(1.0, result, "Should be totally similar");
 
+  }
+
+  @Test
+  public void shouldBeTotallyDifferent(){
+    Issue a = getIssue();
+
+    Issue b = new Issue.IssueBuilder()
+        .id("xxx")
+        .hasLink(true)
+        .hasImages(true)
+        .hasTaskList(true)
+        .labels(List.of("label3", "label4"))
+        .build();
+
+    double result = IssueSimilarity.calculate(a,b);
+
+    Assertions.assertEquals(0.0, result, "Should be totally different");
+
+  }
+
+  private static Issue getIssue() {
+    return new Issue.IssueBuilder()
+        .id("xxx")
+        .hasLink(true)
+        .hasImages(true)
+        .hasTaskList(true)
+        .labels(List.of("label1", "label2"))
+        .build();
   }
 
 }
