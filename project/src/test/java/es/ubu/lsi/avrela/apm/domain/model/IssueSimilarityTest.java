@@ -27,6 +27,7 @@ public class IssueSimilarityTest {
         .hasLink(true)
         .hasImages(true)
         .hasTaskList(true)
+        .state(IssueState.CLOSED)
         .labels(List.of("label3", "label4"))
         .build();
 

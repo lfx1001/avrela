@@ -17,7 +17,12 @@ public class IssueSimilarity {
     // Calculate the Jaccard similarity using the formula:
     // (size of intersection) / (size of union)
     double labelSimilarity = (double) labelIntersectionSize / labelUnionSize;
+    double labelSimilarityWeight = 1.0;
 
-    return labelSimilarity;
+    int stateSimilarity = ( a.getState() == b.getState()) ? 1 : 0;
+    double stateSimilarityWeight = 1.0;
+
+    return ((labelSimilarity*labelSimilarityWeight)
+        +(stateSimilarity*stateSimilarityWeight))/(labelSimilarityWeight+stateSimilarityWeight);
   }
 }
