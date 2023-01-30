@@ -27,7 +27,7 @@ public class IssueSimilarity {
 
     int stateSimilarity = ( a.getState() == b.getState()) ? 1 : 0;
 
-    // Calculate issue names similarity using Jaro-Winkler algorithm
+    // Calculate issue names similarity using Jaro-Winkler distance.
     double issueNameSimilarity = JaroWinklerDistance.getDistance(a.getName(), b.getName());
 
     return ((labelSimilarity*featureWeights.get(Feature.LABELS))
