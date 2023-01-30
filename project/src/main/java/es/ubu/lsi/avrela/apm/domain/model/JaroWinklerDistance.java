@@ -1,8 +1,9 @@
 package es.ubu.lsi.avrela.apm.domain.model;
 
 /**
- * implements the Jaro-Winkler distance algorithm,
+ * Implements the Jaro-Winkler distance algorithm,
  * which is a measure of the similarity between two strings.
+ * All the credit goes to ChatGPT.
  */
 public class JaroWinklerDistance {
 

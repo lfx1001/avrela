@@ -8,7 +8,8 @@ public class IssueSimilarity {
 
   public enum Feature {
     LABELS,
-    STATE
+    STATE,
+    ISSUE_NAME
   }
 
   public static double calculate(Issue a, Issue b, EnumMap<Feature, Double> featureWeights) {
@@ -26,7 +27,11 @@ public class IssueSimilarity {
 
     int stateSimilarity = ( a.getState() == b.getState()) ? 1 : 0;
 
+    // Calculate issue names similarity using Jaro-Winkler algorithm
+    double issueNameSimilarity = JaroWinklerDistance.getDistance(a.getName(), b.getName());
+
     return ((labelSimilarity*featureWeights.get(Feature.LABELS))
-        +(stateSimilarity*featureWeights.get(Feature.STATE)))/featureWeights.values().stream().mapToDouble(Double::doubleValue).sum();
+        +(stateSimilarity*featureWeights.get(Feature.STATE))
+        +(issueNameSimilarity*featureWeights.get(Feature.ISSUE_NAME)) )/featureWeights.values().stream().mapToDouble(Double::doubleValue).sum();
   }
 }
