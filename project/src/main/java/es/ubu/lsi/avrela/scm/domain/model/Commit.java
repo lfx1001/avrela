@@ -1,6 +1,8 @@
 package es.ubu.lsi.avrela.scm.domain.model;
 
+import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommitFile;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -26,5 +28,7 @@ public class Commit {
 
   /** Message. */
   private String message;
+
+  private List<CommitFile> files;
 
 }

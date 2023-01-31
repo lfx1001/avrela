@@ -8,12 +8,12 @@ import lombok.Data;
 @Data
 public class GitHubCommitFile {
 
-  String filename;
+  private String filename;
 
-  Integer additions;
+  private Integer additions;
 
-  Integer deletions;
+  private Integer deletions;
 
-  String status;
+  private String status;
 
 }
