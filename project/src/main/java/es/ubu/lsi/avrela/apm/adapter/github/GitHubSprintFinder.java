@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GitHubSprintFinder implements SprintFinder {
 
-  private final GitHubClient gitHubClient;
+  private final GitHubApmClient gitHubApmClient;
 
   private final GitHubMilestoneMapper gitHubMilestoneMapper;
 
@@ -27,7 +27,7 @@ public class GitHubSprintFinder implements SprintFinder {
     log.debug("Using repository identified by owner [{}] and name [{}]", repoOwner, repoName);
     //TODO: review MAX page size. GitHub Milestones REST API cannot filter by dates.
     log.debug("Fetching milestones between [{}] and [{}]", startAt, endAt);
-    List<GitHubMilestone> milestones = gitHubClient.findMilestones(repoOwner, repoName, 1, 100);
+    List<GitHubMilestone> milestones = gitHubApmClient.findMilestones(repoOwner, repoName, 1, 100);
     log.debug("[{}] sprints fetched", milestones.size());
     if (milestones.isEmpty()) {
       return new ArrayList<>();
@@ -42,12 +42,12 @@ public class GitHubSprintFinder implements SprintFinder {
     for (GitHubMilestone milestone : targetMilestones) {
       //TODO: Paginate issues. Currently, only 100 issues per Sprint are fetched.
       log.debug("Fetching milestone [{}] due on [{}] issues", milestone.getTitle(), milestone.getDueOn());
-      List<GitHubIssue> issues = gitHubClient.findIssuesByMilestone(repoOwner, repoName,
+      List<GitHubIssue> issues = gitHubApmClient.findIssuesByMilestone(repoOwner, repoName,
           milestone.getNumber(), 1, 100);
       log.debug("[{}] issues fetched", issues.size());
       for (GitHubIssue issue : issues) {
         log.debug("Fetching issue [{}] events", issue.getTitle());
-        List<GitHubIssueEvent> events = gitHubClient.findEventsByIssue(repoOwner, repoName, issue.getNumber().toString());
+        List<GitHubIssueEvent> events = gitHubApmClient.findEventsByIssue(repoOwner, repoName, issue.getNumber().toString());
         log.debug("Fetched [{}] events", events.size());
         List<GitHubIssueEvent> filteredEvents = new ArrayList<>();
         events.forEach( event -> {
@@ -62,7 +62,7 @@ public class GitHubSprintFinder implements SprintFinder {
         if(issue.getTotalComments() > 0){
           //TODO: Paginate comments. Currently, only 100 comments per Issue are fetched.
           log.debug("Fetching issue [{}] comments", issue.getTitle());
-          List<GitHubComment> comments = gitHubClient.findCommentsByIssue(repoOwner, repoName,
+          List<GitHubComment> comments = gitHubApmClient.findCommentsByIssue(repoOwner, repoName,
               issue.getNumber().toString());
           log.debug("[{}] comments fetched", comments.size());
           issue.setComments(comments);

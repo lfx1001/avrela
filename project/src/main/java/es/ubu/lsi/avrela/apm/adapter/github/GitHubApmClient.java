@@ -26,9 +26,9 @@ import java.util.List;
  * @see <a href="https://github.com/OpenFeign/feign">Official documentation</a>
  * @see <a href="https://www.baeldung.com/intro-to-feign">Intro to Feign</a>
  */
-public interface GitHubClient {
+public interface GitHubApmClient {
 
-  static GitHubClient with(Level loggerLevel) {
+  static GitHubApmClient with(Level loggerLevel) {
     final Gson gson =
         new GsonBuilder()
             .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeTypeAdapter())
@@ -40,19 +40,19 @@ public interface GitHubClient {
       final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
       return Feign.builder()
           .requestInterceptor(authInterceptor)
-          .logger(new Slf4jLogger(GitHubClient.class))
+          .logger(new Slf4jLogger(GitHubApmClient.class))
           .encoder(new GsonEncoder())
           .decoder(decoder)
           .logLevel(loggerLevel)
-          .target(GitHubClient.class, "https://api.github.com");
+          .target(GitHubApmClient.class, "https://api.github.com");
     }
 
     return Feign.builder()
-        .logger(new Slf4jLogger(GitHubClient.class))
+        .logger(new Slf4jLogger(GitHubApmClient.class))
         .encoder(new GsonEncoder())
         .decoder(decoder)
         .logLevel(loggerLevel)
-        .target(GitHubClient.class, "https://api.github.com");
+        .target(GitHubApmClient.class, "https://api.github.com");
   }
 
   /**

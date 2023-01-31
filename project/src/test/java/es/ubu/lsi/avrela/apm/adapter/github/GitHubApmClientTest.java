@@ -18,12 +18,12 @@ import org.junit.jupiter.api.Test;
  * href="https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.1/com/google/gson/TypeAdapter.html">Gson
  * type adapter example.</a>
  */
-class GitHubClientTest {
+class GitHubApmClientTest {
 
   /**
    * GitHub Client.
    */
-  private static GitHubClient gitHubClient;
+  private static GitHubApmClient gitHubApmClient;
   /**
    * Repository owner.
    */
@@ -47,7 +47,7 @@ class GitHubClientTest {
 
   @BeforeAll
   public static void setUp() {
-    gitHubClient = GitHubClient.with(Level.BASIC);
+    gitHubApmClient = GitHubApmClient.with(Level.BASIC);
   }
 
 
@@ -62,7 +62,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then commits should be fetched")
       void commitsShouldBeRetrieved() {
-        var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+        var commits = gitHubApmClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
             1);
 
         assertNotNull(commits, "Commit list must be none null.");
@@ -72,7 +72,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then commit relevant info should be fetched")
       void commitsInfoShouldBeComplete() {
-        var commits = gitHubClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+        var commits = gitHubApmClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
             100);
 
         assertAll("Verify relevant info is present",
@@ -102,7 +102,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then milestones should be fetched")
       void milestonesShouldBeRetrieved() {
-        var milestones = gitHubClient.findMilestones(owner, repo, 1, 1);
+        var milestones = gitHubApmClient.findMilestones(owner, repo, 1, 1);
 
         assertNotNull(milestones, "Milestones list must be none null.");
         assertTrue(milestones.size() > 0, "Milestones list is not empty");
@@ -111,7 +111,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then milestone relevant info should be fetched")
       void milestonesInfoShouldBeComplete() {
-        var milestones = gitHubClient.findMilestones(owner, repo, 1, 100);
+        var milestones = gitHubApmClient.findMilestones(owner, repo, 1, 100);
 
         assertAll("Verify milestone  relevant info is present",
             () -> assertTrue(
@@ -144,7 +144,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then issues should be fetched")
       void issuesShouldBeRetrieved() {
-        var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
+        var issues = gitHubApmClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
 
         assertNotNull(issues, "Issue list must be none null.");
         assertTrue(issues.size() > 0, "Issue list length must be greater than zero");
@@ -153,7 +153,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then issue relevant info should be fetched")
       void issuesInfoShouldBeComplete() {
-        var issues = gitHubClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
+        var issues = gitHubApmClient.findIssuesByMilestone(owner, repo, milestone, 1, 1);
 
         assertAll("Verify all relevant issue info is present",
             () -> assertTrue(issues.stream().anyMatch(issue -> issue.getNumber() != null),
@@ -188,7 +188,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then issues should be fetched")
       void commentsShouldBeRetrieved() {
-        var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
+        var comments = gitHubApmClient.findCommentsByIssue(owner, repo, issueWithComments);
 
         assertNotNull(comments, "Comment list must be none null.");
         assertTrue(comments.size() > 0, "Comment list length must be greater than zero");
@@ -197,7 +197,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then issue relevant info should be fetched")
       void commentsInfoShouldBeComplete() {
-        var comments = gitHubClient.findCommentsByIssue(owner, repo, issueWithComments);
+        var comments = gitHubApmClient.findCommentsByIssue(owner, repo, issueWithComments);
 
         assertAll("Verify comment data",
             () -> assertTrue(comments.stream().anyMatch(comment -> comment.getId() != null),
@@ -228,7 +228,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then events should be fetched")
       void commitsShouldBeRetrieved() {
-        var events = gitHubClient.findEventsByIssue(owner, repo, "181");
+        var events = gitHubApmClient.findEventsByIssue(owner, repo, "181");
 
         assertNotNull(events, "Events list must be none null.");
         assertTrue(events.size() > 0, "Event list length must be greater than zero");
@@ -237,7 +237,7 @@ class GitHubClientTest {
       @Test
       @DisplayName("Then commit relevant info should be fetched")
       void commitsInfoShouldBeComplete() {
-        var events = gitHubClient.findEventsByIssue(owner, repo, "181");
+        var events = gitHubApmClient.findEventsByIssue(owner, repo, "181");
 
         assertAll("Verify relevant info is present",
             () -> assertTrue(events.stream().anyMatch(event -> event.getId() != null),

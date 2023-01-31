@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.bdd.apm;
 
-import es.ubu.lsi.avrela.apm.adapter.github.GitHubClient;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubHistoricalApmDataRepository;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
@@ -40,9 +40,9 @@ public class ApmCaseStudySimulationEvaluationSteps {
   public void aCaseStudyWithRepoOwnerNameAndTimePeriod(String repoOwner, String repoName, ZonedDateTime startAt,
       ZonedDateTime endAt) {
     //Init GitHubClient
-    GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
+    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
-    GitHubSprintFinder sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
+    GitHubSprintFinder sprintFinder = new GitHubSprintFinder(gitHubApmClient, milestoneMapper);
     apmDataRepository = new GitHubHistoricalApmDataRepository(sprintFinder);
     //Uncomment lines below for case study evaluation
     caseStudy = apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(repoOwner, repoName, startAt, endAt);
