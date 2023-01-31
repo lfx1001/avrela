@@ -108,7 +108,16 @@ class GitHubScmClientTest {
             () -> assertNotNull(commit.getData().getMessage(), "Message must be retrieved"),
             () -> assertNotNull(commit.getData().getAuthor().getName(),
                 "Author name must be retrieved"),
-            () -> assertNotNull(commit.getData().getAuthor().getDate(), "Date must be retrieved"));
+            () -> assertNotNull(commit.getData().getAuthor().getDate(), "Date must be retrieved")
+        );
+
+        var files = commit.getFiles();
+        assertAll( "Verify change set",
+            () -> assertTrue(files.stream().anyMatch(file -> file.getFilename() != null), "Change must be associated to a file"),
+            () -> assertTrue(files.stream().anyMatch(file -> file.getAdditions() != null), "Number of additions must be provided"),
+            () -> assertTrue(files.stream().anyMatch(file -> file.getDeletions() != null), "Number of deletions must be provided"),
+            () -> assertTrue(files.stream().anyMatch(file -> file.getStatus() != null), "Change status must be provided")
+        );
       }
     }
   }
