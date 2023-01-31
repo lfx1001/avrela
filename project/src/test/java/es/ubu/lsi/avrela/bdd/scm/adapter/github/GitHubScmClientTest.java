@@ -1,0 +1,88 @@
+package es.ubu.lsi.avrela.bdd.scm.adapter.github;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import es.ubu.lsi.avrela.scm.adapter.github.GitHubScmClient;
+import feign.Logger.Level;
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+/**
+ * GitHub SCM client integration test.
+ *
+ * @see <a
+ * href="https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.1/com/google/gson/TypeAdapter.html">Gson
+ * type adapter example.</a>
+ */
+class GitHubScmClientTest {
+
+  /**
+   * GitHub Client.
+   */
+  private static GitHubScmClient gitHubScmClient;
+  /**
+   * Repository owner.
+   */
+  private final String owner = "davidmigloz";
+  /**
+   * Repository.
+   */
+  private final String repo = "go-bees";
+  /**
+   * Branch.
+   */
+  private final String branch = "master";
+
+
+  @BeforeAll
+  public static void setUp() {
+    gitHubScmClient = GitHubScmClient.with(Level.BASIC);
+  }
+
+
+  @Nested
+  @DisplayName("Given a GitHub repository")
+  public class GitHubCommitsTest {
+
+    @Nested
+    @DisplayName("When repository has commits")
+    class GitHubRepositoryWithCommits {
+
+      @Test
+      @DisplayName("Then commits should be fetched")
+      void commitsShouldBeRetrieved() {
+        var commits = gitHubScmClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+            1);
+
+        assertNotNull(commits, "Commit list must be none null.");
+        assertTrue(commits.size() > 0, "Commit list length must be greater than zero");
+      }
+
+      @Test
+      @DisplayName("Then commit relevant info should be fetched")
+      void commitsInfoShouldBeComplete() {
+        var commits = gitHubScmClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+            100);
+
+        assertAll("Verify relevant info is present",
+            () -> assertTrue(commits.stream().anyMatch(commit -> commit.getSha() != null),
+                "SHA must be retrieved"),
+            () -> assertTrue(
+                commits.stream().anyMatch(commit -> commit.getData().getMessage() != null),
+                "Message must be retrieved"),
+            () -> assertTrue(
+                commits.stream().anyMatch(commit -> commit.getData().getAuthor().getName() != null),
+                "Author name must be retrieved"),
+            () -> assertTrue(
+                commits.stream().anyMatch(commit -> commit.getData().getAuthor().getDate() != null),
+                "Date must be retrieved"));
+      }
+    }
+  }
+
+}
