@@ -37,11 +37,16 @@ class GitHubScmClientTest {
    * Branch.
    */
   private final String branch = "master";
+  /**
+   * Commit sha with files.
+   */
+  private final String shaWithFiles = "434cd9935020fdcceb4c6fbb5b1f2c9fe4a10d87";
+
 
 
   @BeforeAll
   public static void setUp() {
-    gitHubScmClient = GitHubScmClient.with(Level.BASIC);
+    gitHubScmClient = GitHubScmClient.with(Level.FULL);
   }
 
 
@@ -81,6 +86,38 @@ class GitHubScmClientTest {
             () -> assertTrue(
                 commits.stream().anyMatch(commit -> commit.getData().getAuthor().getDate() != null),
                 "Date must be retrieved"));
+      }
+    }
+  }
+
+  @Nested
+  @DisplayName("Given a GitHub repository")
+  public class GitHubCommitTest {
+
+    @Nested
+    @DisplayName("When I fetch a commit with file changes")
+    class GitHubRepositoryWithCommits {
+
+      @Test
+      @DisplayName("Then commit relevant info should be present")
+      void commitInfoShouldBeComplete() {
+        var commit = gitHubScmClient.findCommitBySha(owner, repo, shaWithFiles);
+
+        assertAll("Verify relevant info is present",
+            () -> assertNotNull(commit.getSha(), "SHA must be retrieved"),
+            () -> assertNotNull(commit.getData().getMessage(), "Message must be retrieved"),
+            () -> assertNotNull(commit.getData().getAuthor().getName(),
+                "Author name must be retrieved"),
+            () -> assertNotNull(commit.getData().getAuthor().getDate(), "Date must be retrieved")
+        );
+
+        var files = commit.getFiles();
+        assertAll( "Verify change set",
+            () -> assertTrue(files.stream().anyMatch(file -> file.getFilename() != null), "Change must be associated to a file"),
+            () -> assertTrue(files.stream().anyMatch(file -> file.getAdditions() != null), "Number of additions must be provided"),
+            () -> assertTrue(files.stream().anyMatch(file -> file.getDeletions() != null), "Number of deletions must be provided"),
+            () -> assertTrue(files.stream().anyMatch(file -> file.getStatus() != null), "Change status must be provided")
+        );
       }
     }
   }

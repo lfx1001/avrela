@@ -72,4 +72,13 @@ public interface GitHubScmClient {
       @Param("since") LocalDateTime since, @Param("until") LocalDateTime until,
       @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
+  /**
+   * Find specific commit.
+   *
+   * @param sha
+   * @return
+   */
+  @RequestLine("GET /repos/{owner}/{repo}/commits/{sha}")
+  GitHubCommit findCommitBySha(@Param("owner") String owner, @Param("repo") String repo,@Param("sha") String sha);
+
 }
