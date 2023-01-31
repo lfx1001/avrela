@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GitHubIssueFinder implements IssueFinder {
 
-  private final GitHubClient gitHubClient;
+  private final GitHubApmClient gitHubApmClient;
 
   private final GitHubIssueMapper gitHubIssueMapper;
 
@@ -24,9 +24,9 @@ public class GitHubIssueFinder implements IssueFinder {
   public Issue findById(String repoOwner, String repoName, String issueId) {
     log.debug("Using repository identified by owner [{}] and name [{}]", repoOwner, repoName);
     log.debug("Fetching issue with id [{}]", issueId);
-    GitHubIssue issue = gitHubClient.findIssueById(repoOwner, repoName, issueId);
+    GitHubIssue issue = gitHubApmClient.findIssueById(repoOwner, repoName, issueId);
     log.debug("Fetching issue [{}] events", issue.getTitle());
-    List<GitHubIssueEvent> events = gitHubClient.findEventsByIssue(repoOwner, repoName, issue.getNumber().toString());
+    List<GitHubIssueEvent> events = gitHubApmClient.findEventsByIssue(repoOwner, repoName, issue.getNumber().toString());
     log.debug("Fetched [{}] events", events.size());
     List<GitHubIssueEvent> filteredEvents = new ArrayList<>();
     events.stream().forEach( event -> {
@@ -41,7 +41,7 @@ public class GitHubIssueFinder implements IssueFinder {
     if(issue.getTotalComments() > 0){
       //TODO: Paginate comments. Currently, only 100 comments per Issue are fetched.
       log.debug("Fetching issue [{}] comments", issue.getTitle());
-      List<GitHubComment> comments = gitHubClient.findCommentsByIssue(repoOwner, repoName,
+      List<GitHubComment> comments = gitHubApmClient.findCommentsByIssue(repoOwner, repoName,
           issue.getNumber().toString());
       log.debug("[{}] comments fetched", comments.size());
       issue.setComments(comments);

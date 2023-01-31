@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.bdd.apm;
 
-import es.ubu.lsi.avrela.apm.adapter.github.GitHubClient;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubIssueFinder;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubCommentMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubIssueEventMapper;
@@ -35,9 +35,9 @@ public class IssueImportSteps {
   @When("I import the issue with id {string}")
   public void iImportTheIssue(String issueId) {
     //Init GitHubClient
-    GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
+    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
-    issueFinder = new GitHubIssueFinder(gitHubClient, new GitHubIssueMapper(
+    issueFinder = new GitHubIssueFinder(gitHubApmClient, new GitHubIssueMapper(
         new GitHubCommentMapper(),
         new GitHubLabelMapper(),
         new GitHubIssueEventMapper()

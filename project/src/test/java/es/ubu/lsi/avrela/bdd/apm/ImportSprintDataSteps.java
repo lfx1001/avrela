@@ -3,7 +3,7 @@ package es.ubu.lsi.avrela.bdd.apm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import es.ubu.lsi.avrela.apm.adapter.github.GitHubClient;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.domain.model.IssueState;
@@ -50,9 +50,9 @@ public class ImportSprintDataSteps {
   @When("I import the sprint issues")
   public void iTryToImportTheRepository() {
     //Init GitHubClient
-    GitHubClient gitHubClient = GitHubClient.with(Level.BASIC);
+    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
-    sprintFinder = new GitHubSprintFinder(gitHubClient, milestoneMapper);
+    sprintFinder = new GitHubSprintFinder(gitHubApmClient, milestoneMapper);
     //Fetch
     var sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
     assertNotNull(sprints);

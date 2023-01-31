@@ -7,7 +7,6 @@ import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
-import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
 import feign.Feign;
 import feign.Logger.Level;
 import feign.Param;
@@ -16,7 +15,6 @@ import feign.codec.Decoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import feign.slf4j.Slf4jLogger;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -26,9 +24,9 @@ import java.util.List;
  * @see <a href="https://github.com/OpenFeign/feign">Official documentation</a>
  * @see <a href="https://www.baeldung.com/intro-to-feign">Intro to Feign</a>
  */
-public interface GitHubClient {
+public interface GitHubApmClient {
 
-  static GitHubClient with(Level loggerLevel) {
+  static GitHubApmClient with(Level loggerLevel) {
     final Gson gson =
         new GsonBuilder()
             .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeTypeAdapter())
@@ -40,39 +38,20 @@ public interface GitHubClient {
       final GitHubAuthenticationInterceptor authInterceptor = new GitHubAuthenticationInterceptor(System.getenv("GITHUB_TOKEN"));
       return Feign.builder()
           .requestInterceptor(authInterceptor)
-          .logger(new Slf4jLogger(GitHubClient.class))
+          .logger(new Slf4jLogger(GitHubApmClient.class))
           .encoder(new GsonEncoder())
           .decoder(decoder)
           .logLevel(loggerLevel)
-          .target(GitHubClient.class, "https://api.github.com");
+          .target(GitHubApmClient.class, "https://api.github.com");
     }
 
     return Feign.builder()
-        .logger(new Slf4jLogger(GitHubClient.class))
+        .logger(new Slf4jLogger(GitHubApmClient.class))
         .encoder(new GsonEncoder())
         .decoder(decoder)
         .logLevel(loggerLevel)
-        .target(GitHubClient.class, "https://api.github.com");
+        .target(GitHubApmClient.class, "https://api.github.com");
   }
-
-  /**
-   * Find commits.
-   *
-   * @param owner
-   * @param repo
-   * @param branch
-   * @param since
-   * @param until
-   * @param page
-   * @param pageSize
-   * @return
-   * @see <a href="https://docs.github.com/en/rest/commits/commits#list-commits">List commits API</a>
-   * @see <a href="https://docs.github.com/en/enterprise-cloud@latest/rest/guides/traversing-with-pagination">Pagination guidelines</a>
-   */
-  @RequestLine("GET /repos/{owner}/{repo}/commits?sha={branch}&since={since}&until={until}&page={page}&per_page={pageSize}")
-  List<GitHubCommit> findCommits(@Param("owner") String owner, @Param("repo") String repo, @Param("branch") String branch,
-      @Param("since") LocalDateTime since, @Param("until") LocalDateTime until,
-      @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
   /**
    * Find all milestones/sprints. Results are sorted by due_on field in ascending order.
