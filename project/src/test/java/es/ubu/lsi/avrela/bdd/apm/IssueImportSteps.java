@@ -1,7 +1,7 @@
 package es.ubu.lsi.avrela.bdd.apm;
 
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
-import es.ubu.lsi.avrela.apm.adapter.github.GitHubIssueFinder;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubIssueRepository;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubCommentMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubIssueEventMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubIssueMapper;
@@ -9,7 +9,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubLabelMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import es.ubu.lsi.avrela.apm.domain.model.IssueEventType;
-import es.ubu.lsi.avrela.apm.port.IssueFinder;
+import es.ubu.lsi.avrela.apm.port.IssueRepository;
 import feign.Logger.Level;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -24,7 +24,7 @@ public class IssueImportSteps {
   String issueId = null;
 
   Issue issueUnderTest = null;
-  private IssueFinder issueFinder;
+  private IssueRepository issueRepository;
 
   @Given("the repository owned by {string} named {string}")
   public void theRepositoryOwnedByNamed(String repositoryOwner, String repositoryName) {
@@ -37,14 +37,14 @@ public class IssueImportSteps {
     //Init GitHubClient
     GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
-    issueFinder = new GitHubIssueFinder(gitHubApmClient, new GitHubIssueMapper(
+    issueRepository = new GitHubIssueRepository(gitHubApmClient, new GitHubIssueMapper(
         new GitHubCommentMapper(),
         new GitHubLabelMapper(),
         new GitHubIssueEventMapper()
     ));
 
     //Fetch
-    issueUnderTest = issueFinder.findById(repositoryOwner, repositoryName,issueId);
+    issueUnderTest = issueRepository.findById(repositoryOwner, repositoryName,issueId);
   }
 
   @Then("issue has comments check should be {string}")

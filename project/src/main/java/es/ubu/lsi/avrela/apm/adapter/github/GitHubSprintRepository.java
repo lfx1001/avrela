@@ -6,7 +6,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
 import es.ubu.lsi.avrela.apm.domain.model.Sprint;
-import es.ubu.lsi.avrela.apm.port.SprintFinder;
+import es.ubu.lsi.avrela.apm.port.SprintRepository;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
-public class GitHubSprintFinder implements SprintFinder {
+public class GitHubSprintRepository implements SprintRepository {
 
   private final GitHubApmClient gitHubApmClient;
 

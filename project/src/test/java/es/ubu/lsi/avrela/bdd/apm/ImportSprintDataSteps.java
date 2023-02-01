@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
-import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintFinder;
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintRepository;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.domain.model.IssueState;
 import es.ubu.lsi.avrela.apm.domain.model.Sprint;
-import es.ubu.lsi.avrela.apm.port.SprintFinder;
+import es.ubu.lsi.avrela.apm.port.SprintRepository;
 import feign.Logger.Level;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
@@ -26,7 +26,7 @@ public class ImportSprintDataSteps {
 
   ZonedDateTime  beginAt = null, endAt = null;
 
-  SprintFinder sprintFinder = null;
+  SprintRepository sprintRepository = null;
 
   Sprint sprintUnderTest = null;
 
@@ -52,9 +52,9 @@ public class ImportSprintDataSteps {
     //Init GitHubClient
     GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.BASIC);
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
-    sprintFinder = new GitHubSprintFinder(gitHubApmClient, milestoneMapper);
+    sprintRepository = new GitHubSprintRepository(gitHubApmClient, milestoneMapper);
     //Fetch
-    var sprints = this.sprintFinder.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
+    var sprints = this.sprintRepository.findByDueOnBetween(this.repositoryOwner, this.repositoryName, this.beginAt, this.endAt);
     assertNotNull(sprints);
     assertEquals(1, sprints.size());
     sprintUnderTest = sprints.get(0);
