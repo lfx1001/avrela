@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.bdd.scm.adapter.github;
+package es.ubu.lsi.avrela.scm.adapter.github;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
