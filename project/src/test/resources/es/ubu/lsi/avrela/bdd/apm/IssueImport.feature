@@ -3,7 +3,7 @@ Feature: Import issue data
   Issue data should be imported, aggregated data should be checked.
 
   Scenario Outline: Issue import successful
-    Given commits are imported from the repository owned by "<repoOwner>" named "<repoName>"
+    Given the repository owned by "<repoOwner>" named "<repoName>"
     When I import the issue with id "<issueId>"
     Then issue has comments check should be "<hasComments>"
     And issue total comments should be <totalComments>

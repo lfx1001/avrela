@@ -2,7 +2,7 @@ Feature: Source control management commit import
 
   Scenario Outline: Import successful
     Given a repository owned by "<repoOwner>" named "<repoName>"
-    And a commit with SHA  <sha>
+    And a commit with SHA "<sha>"
     When I import the commit
     Then total files changed should be <totalFilesChanged>
     And total additions should be <totalAdditions>
