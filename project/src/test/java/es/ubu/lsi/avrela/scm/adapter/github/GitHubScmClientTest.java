@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import es.ubu.lsi.avrela.scm.adapter.github.GitHubScmClient;
 import feign.Logger.Level;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeAll;
@@ -101,7 +100,7 @@ class GitHubScmClientTest {
       @Test
       @DisplayName("Then commit relevant info should be present")
       void commitInfoShouldBeComplete() {
-        var commit = gitHubScmClient.findCommitBySha(owner, repo, shaWithFiles);
+        var commit = gitHubScmClient.findCommit(owner, repo, shaWithFiles);
 
         assertAll("Verify relevant info is present",
             () -> assertNotNull(commit.getSha(), "SHA must be retrieved"),

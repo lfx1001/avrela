@@ -11,6 +11,6 @@ public interface CommitRepository {
    * @param sha
    * @return
    */
-  Commit findCommitBySha(String owner,String repo,String sha);
+  Commit findCommit(String owner,String repo,String sha);
 
 }

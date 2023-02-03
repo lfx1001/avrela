@@ -2,6 +2,7 @@ package es.ubu.lsi.avrela.scm.domain.model;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -30,4 +31,27 @@ public class Commit {
 
   private List<CommitFile> files;
 
+  public Long getTotalFilesChanged() {
+    if (this.files == null){
+      return 0l;
+    }
+    return Long.valueOf(files.size());
+  }
+
+  public Long getTotalAdditions() {
+    if (this.files == null){
+      return 0l;
+    }
+    return this.files.stream()
+        .collect(Collectors.summingLong(CommitFile::getAdditions));
+  }
+
+  public Long getTotalDeletions() {
+    if (this.files == null){
+      return 0l;
+    }
+    return this.files.stream()
+        .collect(Collectors.summingLong(CommitFile::getDeletions));
+
+  }
 }

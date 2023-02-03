@@ -11,45 +11,49 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 
+@Slf4j
 public class CommitImportSteps {
 
-  private String repoOwner = null;
+  private String repoOwner;
 
-  private String repoName = null;
+  private String repoName;
 
-  private String commitSha = null;
-
-  private Commit commit;
+  private Commit commitUnderTest;
 
   @Given("commits are imported from the repository owned by {string} named {string}")
   public void commitsAreImportedFromTheRepositoryOwnedByNamed(String repoOwner, String repoName) {
-    this.repoOwner = this.repoOwner;
-    this.repoName = this.repoName;
+    log.info("Finding out a commit with coordinates [{}]", repoOwner + " " + repoName);
+    this.repoOwner = repoOwner;
+    this.repoName = repoName;
   }
 
-  @And("a commit with SHA {string}")
-  public void aCommitWithSHA(String commitSha) {
-    this.commitSha = commitSha;
-  }
-
-  @When("I import the commit")
-  public void iImportTheCommit() {
+  @When("I import the commit {string}")
+  public void iImportTheCommit(String commitSha) {
     //Init GitHubClient
-    GitHubScmClient gitHubScmClient = GitHubScmClient.with(Level.BASIC);
+    GitHubScmClient gitHubScmClient = GitHubScmClient.with(Level.FULL);
     GitHubCommitMapper commitMapper = new GitHubCommitMapper( new GitHubCommitFileMapper());
     CommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, commitMapper);
+
+    commitUnderTest = commitRepository.findCommit(repoOwner, repoName, commitSha);
+
   }
 
   @Then("total files changed should be {long}")
   public void totalFilesChangedShouldBeTotalFilesChanged(Long totalFileChanged) {
+    Assertions.assertEquals(totalFileChanged, commitUnderTest.getTotalFilesChanged() );
   }
 
   @And("total additions should be {long}")
   public void totalAdditionsShouldBeTotalAdditions(Long totalAdditions) {
+    Assertions.assertEquals(totalAdditions, commitUnderTest.getTotalAdditions());
+    Assertions.assertEquals(totalAdditions, commitUnderTest.getTotalAdditions());
   }
 
   @And("total deletions should be {long}")
   public void totalDeletionsShouldBeTotalDeletions(Long totalDeletions) {
+    Assertions.assertEquals(totalDeletions, commitUnderTest.getTotalDeletions());
   }
 }
