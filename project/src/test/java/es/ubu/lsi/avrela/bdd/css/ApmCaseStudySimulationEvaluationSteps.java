@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.bdd.apm;
+package es.ubu.lsi.avrela.bdd.css;
 
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubHistoricalApmDataRepository;
