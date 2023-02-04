@@ -79,6 +79,6 @@ public interface GitHubScmClient {
    * @return
    */
   @RequestLine("GET /repos/{owner}/{repo}/commits/{sha}")
-  GitHubCommit findCommitBySha(@Param("owner") String owner, @Param("repo") String repo,@Param("sha") String sha);
+  GitHubCommit findCommit(@Param("owner") String owner, @Param("repo") String repo,@Param("sha") String sha);
 
 }

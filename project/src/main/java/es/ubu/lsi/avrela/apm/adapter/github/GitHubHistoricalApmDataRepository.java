@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GitHubHistoricalApmDataRepository implements HistoricalApmDataRepository {
 
-  private final GitHubSprintFinder sprintFinder;
+  private final GitHubSprintRepository sprintFinder;
 
   @Override
   public HistoricalApmData findByRepoOwnerAndRepoNameAndSprintDueBetween(String repoOwner,

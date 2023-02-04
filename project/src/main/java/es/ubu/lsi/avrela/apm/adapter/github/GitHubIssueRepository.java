@@ -5,7 +5,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.domain.model.Issue;
-import es.ubu.lsi.avrela.apm.port.IssueFinder;
+import es.ubu.lsi.avrela.apm.port.IssueRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
-public class GitHubIssueFinder implements IssueFinder {
+public class GitHubIssueRepository implements IssueRepository {
 
   private final GitHubApmClient gitHubApmClient;
 
