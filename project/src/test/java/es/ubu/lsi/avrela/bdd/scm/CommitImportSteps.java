@@ -56,4 +56,14 @@ public class CommitImportSteps {
   public void totalDeletionsShouldBeTotalDeletions(Long totalDeletions) {
     Assertions.assertEquals(totalDeletions, commitUnderTest.getTotalDeletions());
   }
+
+  @And("commit author should be {string}")
+  public void commitAuthorShouldBe(String author) {
+    Assertions.assertEquals(author, commitUnderTest.getAuthor());
+  }
+
+  @And("commit message should be {string}")
+  public void commitMessageShouldBe(String message) {
+    Assertions.assertEquals(message, commitUnderTest.getMessage());
+  }
 }

@@ -52,6 +52,5 @@ public class Commit {
     }
     return this.files.stream()
         .collect(Collectors.summingLong(CommitFile::getDeletions));
-
   }
 }
