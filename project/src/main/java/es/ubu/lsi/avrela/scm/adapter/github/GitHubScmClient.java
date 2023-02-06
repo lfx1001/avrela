@@ -14,7 +14,6 @@ import feign.codec.Decoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import feign.slf4j.Slf4jLogger;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -69,7 +68,7 @@ public interface GitHubScmClient {
    */
   @RequestLine("GET /repos/{owner}/{repo}/commits?sha={branch}&since={since}&until={until}&page={page}&per_page={pageSize}")
   List<GitHubCommit> findCommits(@Param("owner") String owner, @Param("repo") String repo, @Param("branch") String branch,
-      @Param("since") LocalDateTime since, @Param("until") LocalDateTime until,
+      @Param("since") ZonedDateTime since, @Param("until") ZonedDateTime until,
       @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
   /**

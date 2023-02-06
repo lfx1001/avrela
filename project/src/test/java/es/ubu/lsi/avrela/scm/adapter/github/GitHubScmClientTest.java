@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import feign.Logger.Level;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -60,7 +60,7 @@ class GitHubScmClientTest {
       @Test
       @DisplayName("Then commits should be fetched")
       void commitsShouldBeRetrieved() {
-        var commits = gitHubScmClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+        var commits = gitHubScmClient.findCommits(owner, repo, branch, null, ZonedDateTime.now(), 1,
             1);
 
         assertNotNull(commits, "Commit list must be none null.");
@@ -70,7 +70,7 @@ class GitHubScmClientTest {
       @Test
       @DisplayName("Then commit relevant info should be fetched")
       void commitsInfoShouldBeComplete() {
-        var commits = gitHubScmClient.findCommits(owner, repo, branch, null, LocalDateTime.now(), 1,
+        var commits = gitHubScmClient.findCommits(owner, repo, branch, null, ZonedDateTime.now(), 1,
             100);
 
         assertAll("Verify relevant info is present",
