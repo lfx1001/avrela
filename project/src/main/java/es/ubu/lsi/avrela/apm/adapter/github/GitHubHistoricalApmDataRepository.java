@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GitHubHistoricalApmDataRepository implements HistoricalApmDataRepository {
 
-  private final GitHubSprintRepository sprintFinder;
+  private final GitHubSprintRepository gitHubSprintRepository;
 
   @Override
   public HistoricalApmData findByRepoOwnerAndRepoNameAndSprintDueBetween(String repoOwner,
@@ -16,7 +16,7 @@ public class GitHubHistoricalApmDataRepository implements HistoricalApmDataRepos
     return HistoricalApmData.builder()
         .repoOwner(repoOwner)
         .repoName(repoName)
-        .sprints(sprintFinder.findByDueOnBetween(repoOwner, repoName,startAt, endAt))
+        .sprints(gitHubSprintRepository.findByDueOnBetween(repoOwner, repoName,startAt, endAt))
         .build();
   }
 }
