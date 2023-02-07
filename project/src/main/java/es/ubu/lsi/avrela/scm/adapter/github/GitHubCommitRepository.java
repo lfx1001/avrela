@@ -19,7 +19,6 @@ public class GitHubCommitRepository implements CommitRepository {
 
   @Override
   public Commit findCommit(String owner, String repo, String sha) {
-    log.debug("Finding out a commit with coordinates [{}]", owner + " " + repo + " " + sha);
     GitHubCommit gitHubCommit = gitHubScmClient.findCommit(owner, repo, sha);
     Commit result = commitMapper.toDomain(gitHubCommit);
     return result;
