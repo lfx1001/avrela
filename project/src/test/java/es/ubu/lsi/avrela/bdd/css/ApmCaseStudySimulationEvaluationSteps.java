@@ -14,7 +14,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -64,10 +63,10 @@ public class ApmCaseStudySimulationEvaluationSteps {
   public void aRubric(DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
     //Obtain teamwork criteria  scale
-    teamWorkCriteriaScale = toCriteriaScale(rows.get(0));
+    teamWorkCriteriaScale = Rubric.toCriteriaScale(rows.get(0));
 
     //Obtain TaskManagement Tool Learning - Description criteria scale
-    toolLearningDescriptionCriteriaScale = toCriteriaScale(rows.get(1));
+    toolLearningDescriptionCriteriaScale = Rubric.toCriteriaScale(rows.get(1));
 
   }
   @When("I apply the rubric")
@@ -77,14 +76,14 @@ public class ApmCaseStudySimulationEvaluationSteps {
         Issue.participantsGreaterThanOrEqual(simulationParticipants)).size();
     Double teamWordDivisor = simulation.countIssues().doubleValue();
     Double teamWork = teamWorkDividend / teamWordDivisor;
-    actualTeamWorkRubricValue = evaluateCriteria(teamWorkCriteriaScale, teamWork);
+    actualTeamWorkRubricValue = Rubric.evaluateCriteria(teamWorkCriteriaScale, teamWork);
 
     //Evaluate TaskManagement Tool Learning - Description criteria
     Double toolLearningDescriptionDividend = 100d * apmCaseStudySimulation.filterIssueMatchComparisons(
         null).size();
     Double toolLearningDescriptionDivisor = simulation.countIssues().doubleValue();
     Double toolLearningDescription = toolLearningDescriptionDividend / toolLearningDescriptionDivisor;
-    actualToolLearningDescriptionRubricValue = evaluateCriteria(toolLearningDescriptionCriteriaScale, toolLearningDescription);
+    actualToolLearningDescriptionRubricValue = Rubric.evaluateCriteria(toolLearningDescriptionCriteriaScale, toolLearningDescription);
     log.debug("toolLearningDescriptionDividend [{}] , toolLearningDescriptionDivisor is [{}]", toolLearningDescriptionDividend, toolLearningDescriptionDivisor);
 
     log.debug("Calculated pos for [{}] value is [{}]", teamWork, actualTeamWorkRubricValue);
@@ -94,71 +93,14 @@ public class ApmCaseStudySimulationEvaluationSteps {
   public void rubricScoreShouldBe(DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
     //Process team work criteria
-    Integer expectedTeamWorkRubricValue = getExpectedRubricValue(rows.get(0));
+    Integer expectedTeamWorkRubricValue = Rubric.getExpectedRubricValue(rows.get(0));
 
     Assertions.assertEquals(expectedTeamWorkRubricValue, actualTeamWorkRubricValue, "Teamwork rubric evaluation score mismatch");
 
     //Process tool learning description criteria
-    Integer expectedToolLearningDescriptionRubricValue = getExpectedRubricValue(rows.get(1));
+    Integer expectedToolLearningDescriptionRubricValue = Rubric.getExpectedRubricValue(rows.get(1));
 
     Assertions.assertEquals(expectedToolLearningDescriptionRubricValue , actualToolLearningDescriptionRubricValue, "Tool learning description rubric evaluation score mismatch");
-
-  }
-
-  private static Integer getExpectedRubricValue(Map<String, String> teamWorkEvaluationRow) {
-    String[] ratingScaleValues = {"0", "1", "2"};
-    Integer expectedTeamWorkRubricValue = 0;
-    for(String ratingScaleValue: ratingScaleValues){
-      if ("X".equals(teamWorkEvaluationRow.get(ratingScaleValue))){
-        break;
-      }
-      expectedTeamWorkRubricValue++;
-    }
-    return expectedTeamWorkRubricValue;
-  }
-
-  private List<Double> toCriteriaScale(Map<String, String> dataTableRow) {
-    final String[] ratingScaleValues = {"0", "1", "2"};
-    List<Double> result = new ArrayList<>();
-    for(String ratingScaleValue: ratingScaleValues){
-      if (!"None".equals(dataTableRow.get(ratingScaleValue))){
-        result.add(Double.parseDouble(dataTableRow.get(ratingScaleValue)));
-      } else {
-        result.add(Double.MIN_VALUE);
-      }
-    }
-    return result;
-  }
-
-  /**
-   *
-   * @param criteriaScale
-   * @param criteriaValue
-   * @return evaluation as criteria scale position.
-   */
-  private Integer evaluateCriteria(List<Double> criteriaScale, Double criteriaValue) {
-    Integer result = 0;
-    Integer scaleValueCurrent = 0;
-    Boolean finish = false;
-    //Get scale value
-    while(!finish && scaleValueCurrent <= criteriaScale.size()-1){
-      if(criteriaValue >= criteriaScale.get(scaleValueCurrent)){
-        if(Double.MIN_VALUE != criteriaScale.get(scaleValueCurrent)){
-          result = scaleValueCurrent;
-          if (scaleValueCurrent == criteriaScale.size()-1 ){
-            finish = true;
-          }else{
-            scaleValueCurrent++;
-          }
-        }else{
-          //None value detected
-          scaleValueCurrent++;
-        }
-      }else{
-        finish = true;
-      }
-    }
-    return result;
   }
 
 
