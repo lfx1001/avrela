@@ -5,7 +5,6 @@ import es.ubu.lsi.avrela.apm.domain.model.Issue;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.BiPredicate;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,8 +17,7 @@ public class ApmCaseStudySimulation {
 
   private HistoricalApmData simulation;
 
-  public List<Issue> filterIssueMatchComparisons(
-      BiPredicate<Issue, Issue> comparisonMatchBiPredicate) {
+  public List<Issue> filterIssueMatchComparisons() {
     //TODO explore bipredicate usage
     List<Issue> result = new ArrayList<>();
     List<Issue> caseStudyIssues = caseStudy.filterIssues( issue -> true);
