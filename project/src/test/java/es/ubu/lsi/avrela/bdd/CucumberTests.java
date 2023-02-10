@@ -20,7 +20,7 @@ import org.junit.platform.suite.api.Suite;
 public class CucumberTests {
 
   @Test
-  private void test(){
+  void test(){
     //Remove Sonar blocker issue
     Assertions.assertTrue(Boolean.TRUE);
   }
