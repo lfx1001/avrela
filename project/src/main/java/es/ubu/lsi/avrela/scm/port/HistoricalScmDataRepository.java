@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.scm.port;
 
-import es.ubu.lsi.avrela.scm.domain.model.HistoricalScmData;
+import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
 import java.time.ZonedDateTime;
 
 public interface HistoricalScmDataRepository {

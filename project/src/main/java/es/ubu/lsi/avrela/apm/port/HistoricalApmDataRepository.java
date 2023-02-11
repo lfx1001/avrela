@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.apm.port;
 
-import es.ubu.lsi.avrela.apm.domain.model.HistoricalApmData;
+import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
 import java.time.ZonedDateTime;
 
 public interface HistoricalApmDataRepository {

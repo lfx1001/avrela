@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.apm.port;
 
-import es.ubu.lsi.avrela.apm.domain.model.Sprint;
+import es.ubu.lsi.avrela.apm.model.Sprint;
 import java.time.ZonedDateTime;
 import java.util.List;
 

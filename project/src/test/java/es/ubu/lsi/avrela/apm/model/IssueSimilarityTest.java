@@ -1,6 +1,6 @@
-package es.ubu.lsi.avrela.apm.domain.model;
+package es.ubu.lsi.avrela.apm.model;
 
-import es.ubu.lsi.avrela.apm.domain.model.IssueSimilarity.Feature;
+import es.ubu.lsi.avrela.apm.model.IssueSimilarity.Feature;
 import java.util.EnumMap;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

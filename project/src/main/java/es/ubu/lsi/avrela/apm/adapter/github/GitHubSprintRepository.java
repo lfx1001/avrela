@@ -5,7 +5,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
-import es.ubu.lsi.avrela.apm.domain.model.Sprint;
+import es.ubu.lsi.avrela.apm.model.Sprint;
 import es.ubu.lsi.avrela.apm.port.SprintRepository;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;

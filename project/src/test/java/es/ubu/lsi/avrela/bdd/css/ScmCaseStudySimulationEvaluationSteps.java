@@ -5,7 +5,7 @@ import es.ubu.lsi.avrela.scm.adapter.github.GitHubHistoricalScmDataRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubScmClient;
 import es.ubu.lsi.avrela.scm.adapter.github.mapper.GitHubCommitFileMapper;
 import es.ubu.lsi.avrela.scm.adapter.github.mapper.GitHubCommitMapper;
-import es.ubu.lsi.avrela.scm.domain.model.HistoricalScmData;
+import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
 import feign.Logger.Level;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;

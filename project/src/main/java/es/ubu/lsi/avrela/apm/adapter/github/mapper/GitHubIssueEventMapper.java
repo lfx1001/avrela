@@ -1,8 +1,8 @@
 package es.ubu.lsi.avrela.apm.adapter.github.mapper;
 
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
-import es.ubu.lsi.avrela.apm.domain.model.IssueEvent;
-import es.ubu.lsi.avrela.apm.domain.model.IssueEventType;
+import es.ubu.lsi.avrela.apm.model.IssueEvent;
+import es.ubu.lsi.avrela.apm.model.IssueEventType;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.scm.port;
 
-import es.ubu.lsi.avrela.scm.domain.model.Commit;
+import es.ubu.lsi.avrela.scm.model.Commit;
 import java.time.ZonedDateTime;
 import java.util.List;
 

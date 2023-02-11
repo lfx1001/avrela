@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.apm.domain.model;
+package es.ubu.lsi.avrela.apm.model;
 
 import java.util.EnumMap;
 import java.util.HashSet;

@@ -1,8 +1,7 @@
-package es.ubu.lsi.avrela.apm.domain.model;
+package es.ubu.lsi.avrela.apm.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class IssueTest {
@@ -20,7 +19,7 @@ class IssueTest {
         .hasTaskList(Boolean.TRUE)
         .build();
 
-    Assertions.assertTrue(expected.issueDescriptionMatch(actual));
+    assertTrue(expected.issueDescriptionMatch(actual));
   }
 
   @Test
@@ -36,7 +35,7 @@ class IssueTest {
         .hasTaskList(Boolean.FALSE)
         .build();
 
-    Assertions.assertFalse(expected.issueDescriptionMatch(actual));
+    assertFalse(expected.issueDescriptionMatch(actual));
 
   }
 }

@@ -1,8 +1,8 @@
 package es.ubu.lsi.avrela.apm.adapter.github.mapper;
 
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
-import es.ubu.lsi.avrela.apm.domain.model.Sprint;
-import es.ubu.lsi.avrela.apm.domain.model.SprintState;
+import es.ubu.lsi.avrela.apm.model.Sprint;
+import es.ubu.lsi.avrela.apm.model.SprintState;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

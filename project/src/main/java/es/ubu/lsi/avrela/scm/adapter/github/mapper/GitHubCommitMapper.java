@@ -1,7 +1,7 @@
 package es.ubu.lsi.avrela.scm.adapter.github.mapper;
 
 import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
-import es.ubu.lsi.avrela.scm.domain.model.Commit;
+import es.ubu.lsi.avrela.scm.model.Commit;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

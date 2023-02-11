@@ -1,8 +1,8 @@
 package es.ubu.lsi.avrela.apm.adapter.github.mapper;
 
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
-import es.ubu.lsi.avrela.apm.domain.model.Issue;
-import es.ubu.lsi.avrela.apm.domain.model.IssueState;
+import es.ubu.lsi.avrela.apm.model.Issue;
+import es.ubu.lsi.avrela.apm.model.IssueState;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
