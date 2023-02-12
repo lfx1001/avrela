@@ -1,7 +1,7 @@
 package es.ubu.lsi.avrela.similarity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class JaroWinklerDistanceTest {
@@ -13,7 +13,7 @@ public class JaroWinklerDistanceTest {
 
     double distance = JaroWinklerDistance.getDistance(s1, s2);
 
-    assertEquals(0d, distance);
+    Assertions.assertEquals(0d, distance);
   }
 
   @Test
@@ -23,7 +23,7 @@ public class JaroWinklerDistanceTest {
 
     double distance = JaroWinklerDistance.getDistance(s1, s2);
 
-    assertEquals(1.0, distance);
+    Assertions.assertEquals(1.0, distance);
   }
 
   @Test
@@ -33,7 +33,7 @@ public class JaroWinklerDistanceTest {
 
     double distance = JaroWinklerDistance.getDistance(s1, s2);
 
-    assertEquals(0.7, distance, 0.1);
+    Assertions.assertEquals(0.7, distance, 0.1);
   }
 
   @Test
@@ -43,6 +43,6 @@ public class JaroWinklerDistanceTest {
 
     double distance = JaroWinklerDistance.getDistance(s1, s2);
 
-    assertEquals(0.9, distance, 0.1);
+    Assertions.assertEquals(0.9, distance, 0.1);
   }
 }

@@ -12,7 +12,7 @@ public class IssueSimilarityTest {
   public void whenLabelsAndStateAreConsideredIssuesShouldBeTotallySimilar(){
     Issue a = getIssue();
 
-    double result = IssueSimilarity.calculate(a,a, getFeatureWeightsConsideringLabelsAndState100());
+    double result = IssueSimilarity.similarityOf(a,a, getFeatureWeightsConsideringLabelsAndState100());
 
     Assertions.assertEquals(1.0, result, "Should be totally similar");
 
@@ -21,7 +21,7 @@ public class IssueSimilarityTest {
   public void whenLabelsAndStateAndNameAreConsideredIssuesShouldBeTotallySimilar(){
     Issue a = getIssue();
 
-    double result = IssueSimilarity.calculate(a,a, getFeatureWeightsConsideringLabelsAndStateAndIssueName100());
+    double result = IssueSimilarity.similarityOf(a,a, getFeatureWeightsConsideringLabelsAndStateAndIssueName100());
 
     Assertions.assertEquals(1.0, result, "Should be totally similar");
 
@@ -40,7 +40,7 @@ public class IssueSimilarityTest {
         .labels(List.of("label3", "label4"))
         .build();
 
-    double result = IssueSimilarity.calculate(a,b, getFeatureWeightsConsideringLabelsAndState100());
+    double result = IssueSimilarity.similarityOf(a,b, getFeatureWeightsConsideringLabelsAndState100());
 
     Assertions.assertEquals(0.0, result, "Should be totally different");
 
@@ -59,7 +59,7 @@ public class IssueSimilarityTest {
         .labels(List.of("label3", "label4"))
         .build();
 
-    double result = IssueSimilarity.calculate(a,b, getFeatureWeightsConsideringLabelsAndState100());
+    double result = IssueSimilarity.similarityOf(a,b, getFeatureWeightsConsideringLabelsAndState100());
 
     Assertions.assertEquals(0.0, result, "Should be totally different");
 
