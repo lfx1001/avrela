@@ -4,7 +4,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubIssueMapper;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssueEvent;
-import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.apm.model.Issue;
 import es.ubu.lsi.avrela.apm.port.IssueRepository;
 import java.util.ArrayList;
 import java.util.List;

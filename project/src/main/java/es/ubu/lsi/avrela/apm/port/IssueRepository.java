@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.apm.port;
 
-import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.apm.model.Issue;
 
 public interface IssueRepository {
 

@@ -9,7 +9,7 @@ import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubComment;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubItemState;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubUser;
-import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.apm.model.Issue;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;

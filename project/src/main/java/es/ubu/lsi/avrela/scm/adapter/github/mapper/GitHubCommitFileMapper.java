@@ -1,7 +1,7 @@
 package es.ubu.lsi.avrela.scm.adapter.github.mapper;
 
 import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommitFile;
-import es.ubu.lsi.avrela.scm.domain.model.CommitFile;
+import es.ubu.lsi.avrela.scm.model.CommitFile;
 import java.util.ArrayList;
 import java.util.List;
 

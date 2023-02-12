@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.apm.domain.model;
+package es.ubu.lsi.avrela.apm.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.time.ZonedDateTime;

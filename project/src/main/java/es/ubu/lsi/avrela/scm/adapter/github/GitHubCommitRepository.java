@@ -2,7 +2,7 @@ package es.ubu.lsi.avrela.scm.adapter.github;
 
 import es.ubu.lsi.avrela.scm.adapter.github.mapper.GitHubCommitMapper;
 import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
-import es.ubu.lsi.avrela.scm.domain.model.Commit;
+import es.ubu.lsi.avrela.scm.model.Commit;
 import es.ubu.lsi.avrela.scm.port.CommitRepository;
 import java.time.ZonedDateTime;
 import java.util.List;

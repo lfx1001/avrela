@@ -1,7 +1,7 @@
-package es.ubu.lsi.avrela.css.domain.model;
+package es.ubu.lsi.avrela.css.model;
 
-import es.ubu.lsi.avrela.apm.domain.model.HistoricalApmData;
-import es.ubu.lsi.avrela.apm.domain.model.Issue;
+import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
+import es.ubu.lsi.avrela.apm.model.Issue;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

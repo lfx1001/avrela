@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubIssue;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubItemState;
 import es.ubu.lsi.avrela.apm.adapter.github.model.GitHubMilestone;
-import es.ubu.lsi.avrela.apm.domain.model.Sprint;
+import es.ubu.lsi.avrela.apm.model.Sprint;
 import java.time.ZonedDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

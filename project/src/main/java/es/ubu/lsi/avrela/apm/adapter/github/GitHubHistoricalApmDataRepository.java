@@ -1,6 +1,6 @@
 package es.ubu.lsi.avrela.apm.adapter.github;
 
-import es.ubu.lsi.avrela.apm.domain.model.HistoricalApmData;
+import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
 import es.ubu.lsi.avrela.apm.port.HistoricalApmDataRepository;
 import java.time.ZonedDateTime;
 import lombok.RequiredArgsConstructor;
