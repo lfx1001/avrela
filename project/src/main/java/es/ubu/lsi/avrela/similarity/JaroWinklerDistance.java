@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.apm.model;
+package es.ubu.lsi.avrela.similarity;
 
 /**
  * Implements the Jaro-Winkler distance algorithm,

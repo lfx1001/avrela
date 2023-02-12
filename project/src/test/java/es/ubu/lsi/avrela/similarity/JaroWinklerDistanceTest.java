@@ -1,4 +1,4 @@
-package es.ubu.lsi.avrela.apm.model;
+package es.ubu.lsi.avrela.similarity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
