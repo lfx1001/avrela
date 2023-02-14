@@ -8,10 +8,14 @@ Feature: Source Control Management simulation case study evaluation
   Scenario: SCM successful evaluation
     Given a scm case study with repo owner "davidmigloz", name "go-bees", branch is "master" and time period 2017-01-25T00:00:00Z 2017-01-25T23:59:59Z
     And a scm simulation with repo owner "davidmigloz", name "go-bees", branch is "master" and time period 2017-01-25T00:00:00Z 2017-01-25T23:59:59Z and 1 participant(s)
+    And commit similarity function weights are (commit files = 50 , commit name = 50)
+    And commit similarity threshold is set at 75
     And a SCM evaluation rubric
-      | Criteria                                         | 0  | 1           | 2    |
-      | Teamwork                                         | 50 | None        | 100  |
+      | Criteria                                         | 0    | 1           | 2    |
+      | Teamwork                                         | 50   | None        | 100  |
+      | Similarity                                       | None | 75          | 100  |
     When I apply the SCM evaluation rubric
     Then SCM evaluation rubric score should be
       | Criteria                                         | 0    | 1          | 2       |
       | Teamwork                                         | None | None       | X       |
+      | Similarity                                       | None | None       | X       |
