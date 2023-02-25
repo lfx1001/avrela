@@ -1,6 +1,5 @@
 package es.ubu.lsi.avrela.bdd.css;
 
-import es.ubu.lsi.avrela.apm.model.IssueSimilarity;
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubCommitRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubHistoricalScmDataRepository;
@@ -71,11 +70,11 @@ public class ScmCaseStudySimulationEvaluationSteps {
     this.simulationParticipants = simulationParticipants;
   }
 
-  @And("commit similarity function weights are \\(commit files = {int} , commit name = {int})")
-  public void commitSimilarityFunctionWeightsAreCommitFilesCommitName(int commitFilesWeight, int commitNameWeight) {
+  @And("commit similarity function weights are \\(commit files = {double} , commit message = {double})")
+  public void commitSimilarityFunctionWeightsAreCommitFilesCommitMessage(double commitFilesWeight, double commitNameWeight) {
     this.featureWeights = new EnumMap<>(CommitSimilarity.Feature.class);
-    this.featureWeights.put(CommitSimilarity.Feature.FILES, (double) (commitFilesWeight/100));
-    this.featureWeights.put(CommitSimilarity.Feature.MESSAGE, (double) (commitNameWeight/100));
+    this.featureWeights.put(CommitSimilarity.Feature.FILES, commitFilesWeight);
+    this.featureWeights.put(CommitSimilarity.Feature.MESSAGE, commitNameWeight);
   }
 
   @And("commit similarity threshold is set at {int}")
@@ -111,9 +110,13 @@ public class ScmCaseStudySimulationEvaluationSteps {
     Assertions.assertEquals(2, teamworkGrade, "Teamwork grade");
 
     //Evaluate commit similarity
-    Double commitSimilarityDividend = 100d * scmCaseStudySimulation.filterCommitMatchComparison(this.featureWeights, this.commitSimilarityThreshold).size();
-    Double commitSimilarityDivisor = Double.valueOf(simulation.getCommits().size());
-    Double commitSimilarity = commitSimilarityDividend / commitSimilarityDivisor;
+    Integer commitSimilarityDividend = scmCaseStudySimulation.filterCommitMatchComparison(this.featureWeights, this.commitSimilarityThreshold).size();
+    log.debug( "Found [{}] similar commits", commitSimilarityDividend);
+    Integer commitSimilarityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
+
+    Double commitSimilarity = 100*Double.valueOf(commitSimilarityDividend / commitSimilarityDivisor);
+    log.debug( "Commit similarity value is [{}]", commitSimilarity);
+
     Integer actualRubricValue = Rubric.evaluateCriteria(commitSimilarityCriteriaScale, commitSimilarity);
     Integer expectedRubricValue = Rubric.getExpectedRubricValue(rows.get(1));
 
@@ -134,7 +137,6 @@ public class ScmCaseStudySimulationEvaluationSteps {
       return 0;
     }
   }
-
 
 
 }

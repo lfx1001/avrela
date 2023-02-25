@@ -4,7 +4,10 @@ import es.ubu.lsi.avrela.similarity.Jaccard;
 import es.ubu.lsi.avrela.similarity.JaroWinklerDistance;
 import java.util.EnumMap;
 import java.util.HashSet;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 public class CommitSimilarity {
 
   public enum Feature {
@@ -22,8 +25,13 @@ public class CommitSimilarity {
     // Calculate issue names similarity using Jaro-Winkler distance.
     double messageSimilarity = JaroWinklerDistance.getDistance(a.getMessage(), b.getMessage());
 
-    return ((commitFilesSimilarity*featureWeights.get(CommitSimilarity.Feature.FILES))
+
+    double result = ((commitFilesSimilarity*featureWeights.get(CommitSimilarity.Feature.FILES))
         +(messageSimilarity*featureWeights.get(Feature.MESSAGE)))/featureWeights.values().stream().mapToDouble(Double::doubleValue).sum();
+
+    log.debug("Adjusted similarity of [{}] and [{}] is [{}]",a , b, result);
+
+    return result;
   }
 
 }
