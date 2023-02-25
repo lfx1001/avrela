@@ -1,22 +1,36 @@
 package es.ubu.lsi.avrela.css.model;
 
 import es.ubu.lsi.avrela.scm.model.Commit;
+import es.ubu.lsi.avrela.scm.model.CommitSimilarity;
 import es.ubu.lsi.avrela.scm.model.CommitSimilarity.Feature;
 import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Iterator;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Builder
+@Slf4j
 public class ScmCaseStudySimulation {
 
   private HistoricalScmData caseStudy;
 
   private HistoricalScmData simulation;
   public List<Commit> filterCommitMatchComparison(EnumMap<Feature, Double> featureWeights, int commitSimilarityThreshold) {
-    return Collections.emptyList();
+    List<Commit> result = new ArrayList<>();
+    Iterator<Commit> caseStudyCommits = caseStudy.getCommits().iterator();
+    Iterator<Commit> simulationCommits = simulation.getCommits().iterator();
+    while (caseStudyCommits.hasNext() && simulationCommits.hasNext()){
+      Commit commit = caseStudyCommits.next();
+      if ( 100*CommitSimilarity.similarityOf(commit, simulationCommits.next(), featureWeights)
+          >= commitSimilarityThreshold){
+        result.add(commit);
+      }
+    }
+    return result;
   }
 }
