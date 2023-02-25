@@ -18,7 +18,6 @@ public class ApmCaseStudySimulation {
   private HistoricalApmData simulation;
 
   public List<Issue> filterIssueMatchComparisons() {
-    //TODO explore bipredicate usage
     List<Issue> result = new ArrayList<>();
     List<Issue> caseStudyIssues = caseStudy.filterIssues( issue -> true);
     List<Issue> simulationIssues = simulation.filterIssues( issue -> true);
