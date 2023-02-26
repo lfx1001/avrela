@@ -2,7 +2,6 @@ package es.ubu.lsi.avrela.scm.model;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +60,12 @@ public class HistoricalScmData {
   }
 
   public List<Commit> getCommitsWithIssueTraceability() {
-    return Collections.emptyList();
+    List<Commit> result = new ArrayList<>();
+    for(Commit commit: this.commits){
+      if (commit.hasAssociatedIssues()){
+        result.add(commit);
+      }
+    }
+    return result;
   }
 }

@@ -2,6 +2,7 @@ package es.ubu.lsi.avrela.scm.model;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,9 @@ public class Commit {
   @ToString.Include
   private String message;
 
+  /** Associated issue ids. */
+  private Set<String> associatedIssues;
+
   private List<CommitFile> files;
 
   public Long getTotalFilesChanged() {
@@ -54,5 +58,12 @@ public class Commit {
     }
     return this.files.stream()
         .collect(Collectors.summingLong(CommitFile::getDeletions));
+  }
+
+  public Boolean hasAssociatedIssues(){
+    if (this.associatedIssues == null || this.associatedIssues.isEmpty()){
+      return false;
+    }
+    return true;
   }
 }
