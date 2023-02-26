@@ -38,6 +38,8 @@ public class ScmCaseStudySimulationEvaluationSteps {
   List<Double> teamWorkCriteriaScale;
 
   List<Double> commitSimilarityCriteriaScale;
+
+  List<Double> apmIssueTraceabilityCriteriaScale;
   private int commitSimilarityThreshold;
 
   private ScmCaseStudySimulation scmCaseStudySimulation;
@@ -90,7 +92,7 @@ public class ScmCaseStudySimulationEvaluationSteps {
 
     commitSimilarityCriteriaScale = Rubric.toCriteriaScale(rows.get(1));
 
-
+    apmIssueTraceabilityCriteriaScale = Rubric.toCriteriaScale(rows.get(2));
   }
 
   @When("I apply the SCM evaluation rubric")
@@ -117,10 +119,28 @@ public class ScmCaseStudySimulationEvaluationSteps {
     Double commitSimilarity = 100*Double.valueOf(commitSimilarityDividend / commitSimilarityDivisor);
     log.debug( "Commit similarity value is [{}]", commitSimilarity);
 
-    Integer actualRubricValue = Rubric.evaluateCriteria(commitSimilarityCriteriaScale, commitSimilarity);
-    Integer expectedRubricValue = Rubric.getExpectedRubricValue(rows.get(1));
+    Integer commitSimilarityActualRubricValue = Rubric.evaluateCriteria(commitSimilarityCriteriaScale, commitSimilarity);
+    Integer commitSimilarityExpectedRubricValue = Rubric.getExpectedRubricValue(rows.get(1));
 
-    Assertions.assertEquals(expectedRubricValue, actualRubricValue);
+    Assertions.assertEquals(commitSimilarityExpectedRubricValue, commitSimilarityActualRubricValue, "Similarity evaluation should match");
+
+    //Evaluate APM Issue traceability
+    Integer commitsWithIssueTraceabilityDividend = scmCaseStudySimulation
+        .getSimulation()
+        .getCommitsWithIssueTraceability()
+        .size();
+    log.debug( "Found [{}] commits with issue traceability", commitsWithIssueTraceabilityDividend);
+    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
+
+    Double commitsWithIssueTraceability = 100*Double.valueOf(commitsWithIssueTraceabilityDividend / commitsWithIssueTraceabilityDivisor);
+
+
+    Integer commitsWithIssueTraceabilityActualRubricValue = Rubric.evaluateCriteria(apmIssueTraceabilityCriteriaScale, commitsWithIssueTraceability);
+    Integer commitsWithIssueTraceabilityExpectedRubricValue = Rubric.getExpectedRubricValue(rows.get(2));
+
+    Assertions.assertEquals(commitsWithIssueTraceabilityExpectedRubricValue, commitsWithIssueTraceabilityActualRubricValue, "APM Issue Traceability evaluation should match");
+
+
   }
 
   private Integer teamWorkEvaluation(Integer simulationParticipants, HistoricalScmData simulation) {
