@@ -1,5 +1,6 @@
 package es.ubu.lsi.avrela.bdd.css;
 
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubCommitRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubHistoricalScmDataRepository;
@@ -38,6 +39,8 @@ public class ScmCaseStudySimulationEvaluationSteps {
   List<Double> teamWorkCriteriaScale;
 
   List<Double> commitSimilarityCriteriaScale;
+
+  List<Double> apmIssueTraceabilityCriteriaScale;
   private int commitSimilarityThreshold;
 
   private ScmCaseStudySimulation scmCaseStudySimulation;
@@ -49,7 +52,9 @@ public class ScmCaseStudySimulationEvaluationSteps {
     // Init GitHubClient
     GitHubScmClient gitHubScmClient = GitHubScmClient.with(Level.FULL);
 
-    GitHubCommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, new GitHubCommitMapper(new GitHubCommitFileMapper()));
+    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.FULL);
+
+    GitHubCommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, gitHubApmClient, new GitHubCommitMapper(new GitHubCommitFileMapper()));
 
     scmHistoricalDataRepository = new GitHubHistoricalScmDataRepository(commitRepository);
 
@@ -90,7 +95,7 @@ public class ScmCaseStudySimulationEvaluationSteps {
 
     commitSimilarityCriteriaScale = Rubric.toCriteriaScale(rows.get(1));
 
-
+    apmIssueTraceabilityCriteriaScale = Rubric.toCriteriaScale(rows.get(2));
   }
 
   @When("I apply the SCM evaluation rubric")
@@ -117,11 +122,29 @@ public class ScmCaseStudySimulationEvaluationSteps {
     Double commitSimilarity = 100*Double.valueOf(commitSimilarityDividend / commitSimilarityDivisor);
     log.debug( "Commit similarity value is [{}]", commitSimilarity);
 
-    Integer actualRubricValue = Rubric.evaluateCriteria(commitSimilarityCriteriaScale, commitSimilarity);
-    Integer expectedRubricValue = Rubric.getExpectedRubricValue(rows.get(1));
+    Integer commitSimilarityActualRubricValue = Rubric.evaluateCriteria(commitSimilarityCriteriaScale, commitSimilarity);
+    Integer commitSimilarityExpectedRubricValue = Rubric.getExpectedRubricValue(rows.get(1));
 
-    Assertions.assertEquals(expectedRubricValue, actualRubricValue);
+    Assertions.assertEquals(commitSimilarityExpectedRubricValue, commitSimilarityActualRubricValue, "Similarity evaluation should match");
+
+    //Evaluate APM Issue traceability
+    Integer commitsWithIssueTraceabilityDividend = scmCaseStudySimulation
+        .getSimulation()
+        .getCommitsWithIssueTraceability()
+        .size();
+
+    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
+
+    Double commitsWithIssueTraceability = 100*Double.valueOf((double)commitsWithIssueTraceabilityDividend / commitsWithIssueTraceabilityDivisor);
+    log.debug( "Issue traceability [{}]/[{}] adjusted is [{}]", commitsWithIssueTraceabilityDividend, commitsWithIssueTraceabilityDivisor, commitsWithIssueTraceability);
+
+
+    Integer commitsWithIssueTraceabilityActualRubricValue = Rubric.evaluateCriteria(apmIssueTraceabilityCriteriaScale, commitsWithIssueTraceability);
+    Integer commitsWithIssueTraceabilityExpectedRubricValue = Rubric.getExpectedRubricValue(rows.get(2));
+
+    Assertions.assertEquals(commitsWithIssueTraceabilityExpectedRubricValue, commitsWithIssueTraceabilityActualRubricValue, "APM Issue Traceability evaluation should match");
   }
+
 
   private Integer teamWorkEvaluation(Integer simulationParticipants, HistoricalScmData simulation) {
     Set<String> participants = simulation.getParticipants();

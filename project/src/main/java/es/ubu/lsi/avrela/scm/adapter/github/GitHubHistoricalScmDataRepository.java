@@ -33,4 +33,5 @@ public class GitHubHistoricalScmDataRepository implements
         .commits(fullInfoCommits)
         .build();
   }
+
 }

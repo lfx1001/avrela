@@ -58,4 +58,14 @@ public class HistoricalScmData {
     }
     return result;
   }
+
+  public List<Commit> getCommitsWithIssueTraceability() {
+    List<Commit> result = new ArrayList<>();
+    for(Commit commit: this.commits){
+      if (commit.hasAssociatedIssues()){
+        result.add(commit);
+      }
+    }
+    return result;
+  }
 }
