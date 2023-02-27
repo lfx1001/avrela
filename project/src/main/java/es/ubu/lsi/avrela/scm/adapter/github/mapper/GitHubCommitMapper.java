@@ -4,8 +4,11 @@ import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
 import es.ubu.lsi.avrela.scm.model.Commit;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,7 +30,14 @@ public class GitHubCommitMapper {
   }
 
   public Set<String> toAssociatedIssues(String message) {
-    return Collections.emptySet();
+    Set<String> result = new HashSet<>();
+    Pattern pattern = Pattern.compile("#\\d+");
+    Matcher matcher = pattern.matcher(message);
+    int matchCount = 0;
+    while(matcher.find()){
+      result.add(matcher.group().substring(1));
+    }
+    return result;
   }
 
   public List<Commit> toDomain(List<GitHubCommit> gitCommits) {
