@@ -3,7 +3,9 @@ package es.ubu.lsi.avrela.scm.adapter.github.mapper;
 import es.ubu.lsi.avrela.scm.adapter.github.model.GitHubCommit;
 import es.ubu.lsi.avrela.scm.model.Commit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -12,6 +14,8 @@ public class GitHubCommitMapper {
   private final GitHubCommitFileMapper commitFileMapper;
 
   public Commit toDomain(GitHubCommit commit){
+    Set<String> associatedIssues = Collections.emptySet();
+    associatedIssues = toAssociatedIssues(commit.getData().getMessage());
     Commit result = Commit.builder()
         .sha(commit.getSha())
         .message(commit.getData().getMessage())
@@ -20,6 +24,10 @@ public class GitHubCommitMapper {
         .files(commitFileMapper.toDomain(commit.getFiles()))
         .build();
     return result;
+  }
+
+  public Set<String> toAssociatedIssues(String message) {
+    return Collections.emptySet();
   }
 
   public List<Commit> toDomain(List<GitHubCommit> gitCommits) {
