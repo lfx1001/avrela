@@ -14,7 +14,7 @@ Feature: Source Control Management simulation case study evaluation
       | Criteria                                         | 0    | 1           | 2    |
       | Teamwork                                         | 50   | None        | 100  |
       | Similarity                                       | None | 75          | 100  |
-      | APM Issue Traceability                           | None | 75          | 100  |
+      | APM Issue Traceability                           | None | None        | 50   |
     When I apply the SCM evaluation rubric
     Then SCM evaluation rubric score should be
       | Criteria                                         | 0    | 1          | 2       |

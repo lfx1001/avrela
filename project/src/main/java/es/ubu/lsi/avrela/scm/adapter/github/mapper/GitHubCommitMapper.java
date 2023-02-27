@@ -22,6 +22,7 @@ public class GitHubCommitMapper {
     Commit result = Commit.builder()
         .sha(commit.getSha())
         .message(commit.getData().getMessage())
+        .associatedIssues(associatedIssues)
         .author(commit.getData().getAuthor().getName())
         .date(commit.getData().getAuthor().getDate())
         .files(commitFileMapper.toDomain(commit.getFiles()))

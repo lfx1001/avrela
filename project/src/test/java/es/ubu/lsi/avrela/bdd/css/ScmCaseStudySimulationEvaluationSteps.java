@@ -1,5 +1,6 @@
 package es.ubu.lsi.avrela.bdd.css;
 
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubCommitRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubHistoricalScmDataRepository;
@@ -51,7 +52,9 @@ public class ScmCaseStudySimulationEvaluationSteps {
     // Init GitHubClient
     GitHubScmClient gitHubScmClient = GitHubScmClient.with(Level.FULL);
 
-    GitHubCommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, new GitHubCommitMapper(new GitHubCommitFileMapper()));
+    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.FULL);
+
+    GitHubCommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, gitHubApmClient, new GitHubCommitMapper(new GitHubCommitFileMapper()));
 
     scmHistoricalDataRepository = new GitHubHistoricalScmDataRepository(commitRepository);
 
@@ -129,19 +132,19 @@ public class ScmCaseStudySimulationEvaluationSteps {
         .getSimulation()
         .getCommitsWithIssueTraceability()
         .size();
-    log.debug( "Found [{}] commits with issue traceability", commitsWithIssueTraceabilityDividend);
+
     Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
 
-    Double commitsWithIssueTraceability = 100*Double.valueOf(commitsWithIssueTraceabilityDividend / commitsWithIssueTraceabilityDivisor);
+    Double commitsWithIssueTraceability = 100*Double.valueOf((double)commitsWithIssueTraceabilityDividend / commitsWithIssueTraceabilityDivisor);
+    log.debug( "Issue traceability [{}]/[{}] adjusted is [{}]", commitsWithIssueTraceabilityDividend, commitsWithIssueTraceabilityDivisor, commitsWithIssueTraceability);
 
 
     Integer commitsWithIssueTraceabilityActualRubricValue = Rubric.evaluateCriteria(apmIssueTraceabilityCriteriaScale, commitsWithIssueTraceability);
     Integer commitsWithIssueTraceabilityExpectedRubricValue = Rubric.getExpectedRubricValue(rows.get(2));
 
     Assertions.assertEquals(commitsWithIssueTraceabilityExpectedRubricValue, commitsWithIssueTraceabilityActualRubricValue, "APM Issue Traceability evaluation should match");
-
-
   }
+
 
   private Integer teamWorkEvaluation(Integer simulationParticipants, HistoricalScmData simulation) {
     Set<String> participants = simulation.getParticipants();

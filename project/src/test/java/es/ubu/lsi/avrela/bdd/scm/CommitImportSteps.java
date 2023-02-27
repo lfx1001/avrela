@@ -1,5 +1,6 @@
 package es.ubu.lsi.avrela.bdd.scm;
 
+import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubCommitRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubScmClient;
 import es.ubu.lsi.avrela.scm.adapter.github.mapper.GitHubCommitFileMapper;
@@ -34,8 +35,9 @@ public class CommitImportSteps {
   public void iImportTheCommit(String commitSha) {
     //Init GitHubClient
     GitHubScmClient gitHubScmClient = GitHubScmClient.with(Level.FULL);
+    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.FULL);
     GitHubCommitMapper commitMapper = new GitHubCommitMapper( new GitHubCommitFileMapper());
-    CommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, commitMapper);
+    CommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, gitHubApmClient, commitMapper);
 
     commitUnderTest = commitRepository.findCommit(repoOwner, repoName, commitSha);
 
