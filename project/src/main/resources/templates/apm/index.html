@@ -13,54 +13,95 @@
 </div>
 
 
+<form>
 
-<div class="row">
+<div class="row"><!-- APM Case study simulation  -->
   <div class="col"><h2>Case study</h2></div>
   <div class="col"><h2>Simulation</h2></div>
 </div>
 <div class="row">
   <div class="col">
     <label for="caseStudyStartDate" class="mr-sm-2">Start</label>
-    <input id="caseStudyStartDate" class="form-control" type="date" />
+    <input id="caseStudyStartDate" class="form-control" type="date" value="2017-01-25" />
     <span id="caseStudyStartDateSelected"></span>
   </div>
   <div class="col">
     <label for="caseStudyEndDate" class="mr-sm-2">End</label>
-    <input id="caseStudyEndDate" class="form-control" type="date" />
+    <input id="caseStudyEndDate" class="form-control" type="date" value="2017-01-25"/>
     <span id="caseStudyEndDateSelected"></span>
   </div>
   <div class="col">
     <label for="simulationStartDate" class="mr-sm-2">Start</label>
-    <input id="simulationStartDate" class="form-control" type="date" />
+    <input id="simulationStartDate" class="form-control" type="date" value="2017-01-25" />
     <span id="simulationStartDateSelected"></span>
   </div>
   <div class="col">
     <label for="simulationEndDate" class="mr-sm-2">End</label>
-    <input id="simulationEndDate" class="form-control" type="date" />
+    <input id="simulationEndDate" class="form-control" type="date" value="2017-01-25" />
     <span id="simulationEndDateSelected"></span>
   </div>
 </div>
 <div class="row">
   <div class="col">
     <label for="caseStudyRepositoryOwner" class="mr-sm-2">Repository owner</label>
-    <input id="caseStudyRepositoryOwner" class="form-control" />
+    <input id="caseStudyRepositoryOwner" class="form-control" value="davidmigloz" />
   </div>
   <div class="col">
     <label for="caseStudyRepositoryName" class="mr-sm-2">Repository name</label>
-    <input id="caseStudyRepositoryName" class="form-control" />
+    <input id="caseStudyRepositoryName" class="form-control" value="go-bees" />
   </div>
   <div class="col">
     <label for="simulationRepositoryOwner" class="mr-sm-2">Repository owner</label>
-    <input id="simulationRepositoryOwner" class="form-control" />
+    <input id="simulationRepositoryOwner" class="form-control" value="davidmigloz" />
   </div>
   <div class="col">
     <label for="simulationRepositoryName" class="mr-sm-2">Repository name</label>
-    <input id="simulationRepositoryName" class="form-control" />
+    <input id="simulationRepositoryName" class="form-control" value="go-bees" />
   </div>
 </div>
-
-
-
-
+  <hr>
+  <div class="row"><!-- Number of Participants  -->
+    <div class="col">
+      <label for="numberOfParticipants" class="mr-sm-2">Simulation participants</label>
+      <select id="numberOfParticipants" class="form-select">
+        <option selected value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="3">4</option>
+      </select>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+  <hr>
+  <div class="row"><!-- APM Case study simulation  -->
+    <div class="col"><h2>Issue similary function settings </h2></div>
+    <div class="col"></div>
+  </div>
+  <div class="row"><!-- Similarity labels, state, issue name -->
+    <div class="col">
+      <label for="labelSimilarityWeight" class="form-label">Label similarity weight</label>
+      <input id="labelSimilarityWeight" step="0.01" value="1.0" type="number" class="form-control" />
+    </div>
+    <div class="col">
+      <label for="stateSimilarityWeight" class="form-label">State similarity weight</label>
+      <input id="stateSimilarityWeight" step="0.01" value="1.0" type="number" class="form-control" />
+    </div>
+    <div class="col">
+      <label for="issueNameSimilarityWeight" class="form-label">Issue name similarity weight</label>
+      <input id="issueNameSimilarityWeight" step="0.01" value="1.0" type="number" class="form-control" />
+    </div>
+    <div class="col"></div>
+  </div>
+  <hr>
+  <div class="row"><!-- APM Case study simulation  -->
+    <div class="col">
+      <button type="button" class="btn btn-dark btn-lg">Submit</button>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+</form>
 </body>
 </html>
