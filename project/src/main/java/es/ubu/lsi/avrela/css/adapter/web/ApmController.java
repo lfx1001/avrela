@@ -28,6 +28,13 @@ public class ApmController {
             .stringifyEndAt("2017-01-25")
             .build())
         .participants(1)
+        .issueSimilarityFunctionConfig(
+            WebIssueSimilarityFunctionConfig.builder()
+                .labelWeight(1.0)
+                .stateWeight(1.0)
+                .issueNameWeight(1.0)
+                .build()
+        )
         .build();
     model.addAttribute("webApmCaseStudySimulation", result);
     return "apm/index";

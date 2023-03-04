@@ -14,4 +14,6 @@ public class WebApmCaseStudySimulation {
 
   private Integer participants;
 
+  private WebIssueSimilarityFunctionConfig issueSimilarityFunctionConfig;
+
 }
