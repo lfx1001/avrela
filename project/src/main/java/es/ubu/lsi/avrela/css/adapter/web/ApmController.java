@@ -18,13 +18,16 @@ public class ApmController {
         .caseStudy( WebHistoricalApmData.builder()
             .repoOwner("davidmigloz")
             .repoName("go-bees")
+            .stringifyStartAt("2017-01-25")
+            .stringifyEndAt("2017-01-25")
             .build())
         .simulation( WebHistoricalApmData.builder()
             .repoOwner("davidmigloz")
             .repoName("go-bees")
+            .stringifyStartAt("2017-01-25")
+            .stringifyEndAt("2017-01-25")
             .build())
         .build();
-    System.out.println(result.getCaseStudy().getRepoOwner());
     model.addAttribute("webApmCaseStudySimulation", result);
     return "apm/index";
   }

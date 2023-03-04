@@ -3,9 +3,13 @@ package es.ubu.lsi.avrela.apm.adapter.web;
 
 import es.ubu.lsi.avrela.apm.model.Issue;
 import es.ubu.lsi.avrela.apm.model.Sprint;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -13,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 
 /**
  * Historical Agile Project Management data.
@@ -29,7 +34,32 @@ public class WebHistoricalApmData {
 
   private ZonedDateTime startAt;
 
+  private String stringifyStartAt;
   private ZonedDateTime endAt;
+
+  private String stringifyEndAt;
+
+  public void setStringifyStartAt(String stringStartAt){
+    this.stringifyStartAt = stringStartAt;
+    this.startAt = this.toZonedDateTime(stringStartAt);
+  }
+
+  public void setStringifyEndAt(String stringEndAt){
+    this.stringifyEndAt = stringEndAt;
+    this.endAt = this.toZonedDateTime(stringEndAt);
+  }
+
+  @SneakyThrows
+  private ZonedDateTime toZonedDateTime(String string)  {
+    Objects.requireNonNull(string, "date string shol not be null");
+    SimpleDateFormat iso8601DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    long dateEpoch = (iso8601DateFormat.parse(string)).getTime();
+
+    return Instant
+        .ofEpochMilli(dateEpoch)
+        .atZone(ZoneId.systemDefault());
+  }
+
 
   /*
    *  Sprints ordered by date desc.
