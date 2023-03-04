@@ -27,6 +27,7 @@ public class ApmController {
             .stringifyStartAt("2017-01-25")
             .stringifyEndAt("2017-01-25")
             .build())
+        .participants(1)
         .build();
     model.addAttribute("webApmCaseStudySimulation", result);
     return "apm/index";

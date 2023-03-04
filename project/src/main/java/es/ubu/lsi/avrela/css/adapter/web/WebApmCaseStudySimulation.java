@@ -12,4 +12,6 @@ public class WebApmCaseStudySimulation {
 
   private WebHistoricalApmData simulation;
 
+  private Integer participants;
+
 }
