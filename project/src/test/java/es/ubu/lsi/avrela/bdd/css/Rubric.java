@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Rubric {
 
+
   public static Integer getExpectedRubricValue(Map<String, String> teamWorkEvaluationRow) {
     String[] ratingScaleValues = {"0", "1", "2"};
     Integer expectedTeamWorkRubricValue = 0;
