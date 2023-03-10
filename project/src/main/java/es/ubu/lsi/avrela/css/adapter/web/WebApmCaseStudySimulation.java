@@ -16,4 +16,6 @@ public class WebApmCaseStudySimulation {
 
   private WebIssueSimilarityFunctionConfig issueSimilarityFunctionConfig;
 
+  private WebRubricEvaluation  rubricEvaluation;
+
 }

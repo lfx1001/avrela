@@ -7,6 +7,12 @@
   <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
 </head>
 <body>
+<style>
+  #criteria_mark {
+    background-color: #559542;
+    color: #FFFFFF;
+  }
+</style>
 
 <div class="container-fluid p-5 text-center">
   <h1>Agile project management case study simulation evaluation</h1>
@@ -98,7 +104,7 @@
   </div>
 </form>
 <div class="row"><!-- APM Case study simulation  -->
-  <div class="col"><h2>Evaluation result</h2></div>
+  <div class="col"><h2>Evaluation result : <strong th:text="${webApmCaseStudySimulation.rubricEvaluation.mark}"></strong></h2></div>
   <div class="col"></div>
 </div>
 <div class="table-responsive">
@@ -114,9 +120,15 @@
     <tbody>
     <tr>
       <th scope="row">Teamwork</th>
-      <td>[0,50)</td>
+      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.teamWork.mark}">
+        <td id="criteria_mark" th:case="0">[0,50)</td>
+        <td th:case="*">[0,50)</td>
+      </div>
       <td>-</td>
-      <td>[100,100]</td>
+      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.ttlOrganization.mark}">
+        <td id="criteria_mark" th:case="2">[100,100]</td>
+        <td th:case="*">[100,100]</td>
+      </div>
     </tr>
     <tr>
       <th scope="row">TaskManagement tool learning  - Description</th>
