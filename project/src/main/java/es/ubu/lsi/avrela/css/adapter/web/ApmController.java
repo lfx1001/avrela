@@ -35,6 +35,13 @@ public class ApmController {
                 .issueNameWeight(1.0)
                 .build()
         )
+        .rubricEvaluation(
+          WebRubricEvaluation.builder()
+              .teamWork( new WebRubricCriteriaEvaluation( 100d, 2))
+              .ttlDescription( new WebRubricCriteriaEvaluation( 100d, 1))
+              .ttlOrganization( new WebRubricCriteriaEvaluation( 100d, 1))
+              .build()
+        )
         .build();
     model.addAttribute("webApmCaseStudySimulation", result);
     return "apm/index";
