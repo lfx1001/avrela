@@ -39,7 +39,7 @@ public class ApmController {
           WebRubricEvaluation.builder()
               .teamWork( new WebRubricCriteriaEvaluation( 100d, 2))
               .ttlDescription( new WebRubricCriteriaEvaluation( 100d, 1))
-              .ttlOrganization( new WebRubricCriteriaEvaluation( 100d, 2))
+              .ttlOrganization( new WebRubricCriteriaEvaluation( 100d, 1))
               .build()
         )
         .build();
