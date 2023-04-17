@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Slf4j
 public class ApmController {
 
-  @GetMapping("/css-apm")
+  @GetMapping("/apm-css")
   public String index(Model model){
     WebApmCaseStudySimulation result = WebApmCaseStudySimulation.builder()
         .caseStudy( WebHistoricalApmData.builder()
@@ -74,13 +74,13 @@ public class ApmController {
         )
         .build();
     model.addAttribute("webApmCaseStudySimulation", result);
-    return "pages/css-apm";
+    return "pages/apm-css";
   }
 
-  @PostMapping("/css-apm")
+  @PostMapping("/apm-css")
   public String create(@ModelAttribute WebApmCaseStudySimulation sim, Model model){
     model.addAttribute("webApmCaseStudySimulation", sim);
-    return "pages/css-apm";
+    return "pages/apm-css";
   }
 
 }
