@@ -74,13 +74,13 @@ public class ApmController {
         )
         .build();
     model.addAttribute("webApmCaseStudySimulation", result);
-    return "apm/index";
+    return "pages/css-apm";
   }
 
   @PostMapping("/css-apm")
   public String create(@ModelAttribute WebApmCaseStudySimulation sim, Model model){
     model.addAttribute("webApmCaseStudySimulation", sim);
-    return "apm/index";
+    return "pages/css-apm";
   }
 
 }
