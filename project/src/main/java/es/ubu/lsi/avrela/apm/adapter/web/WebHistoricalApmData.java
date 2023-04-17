@@ -109,4 +109,8 @@ public class WebHistoricalApmData {
         .collect(Collectors.toList());
   }
 
+  public List<Issue> issues(){
+    return this.filterIssues(issue -> true);
+  }
+
 }
