@@ -17,23 +17,11 @@
       </div>
     </li>
     <li class="list-group-item">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="hasImagesCheck" disabled>
-        <label class="form-check-label" for="hasImagesCheck">
-          Has image
-        </label>
+      <div th:replace="fragments/form-check-disabled.html :: form-check-disabled(value=${issue.hasImages}, id='hasImagesCheck', text='Has image')">
       </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="hasLinkCheck" checked disabled>
-        <label class="form-check-label" for="hasLinkCheck">
-          Has link
-        </label>
+      <div th:replace="fragments/form-check-disabled.html :: form-check-disabled(value=${issue.hasLink}, id='hasLinkCheck', text='Has link')">
       </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="hasTasklist" checked disabled>
-        <label class="form-check-label" for="hasTasklist">
-          Has taskList
-        </label>
+      <div th:replace="fragments/form-check-disabled.html :: form-check-disabled(value=${issue.hasTaskList}, id='hasTaskListCheck', text='Has task list')">
       </div>
     </li>
   </ul>

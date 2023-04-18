@@ -65,9 +65,9 @@ public class ApmCssDataGenerator {
                                         "label3"
                                     )
                                 )
-                                .hasImages(Boolean.TRUE)
+                                .hasImages(Boolean.FALSE)
                                 .hasLink(Boolean.TRUE)
-                                .hasTaskList(Boolean.TRUE)
+                                .hasTaskList(Boolean.FALSE)
                                 .build()
                         )
                     )
