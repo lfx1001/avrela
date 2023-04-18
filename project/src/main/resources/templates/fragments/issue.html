@@ -1,15 +1,15 @@
 <div th:fragment="issue (issue)" class="card">
   <div class="card-header">
-    <strong th:text="${issue.name}"></strong>
+    <strong th:text="${issue?.name}"></strong>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">State
       <span class="badge bg-secondary">
-        <small th:text="${issue.state}"></small>
+        <small th:text="${issue?.state}"></small>
       </span>
     </li>
     <li class="list-group-item">Labels
-      <div th:each="label : ${issue.labels}">
+      <div th:each="label : ${issue?.labels}">
            <span class="badge bg-secondary">
              <small th:text="${label}"></small>
              &nbsp;
