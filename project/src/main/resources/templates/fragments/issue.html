@@ -4,7 +4,9 @@
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">State
-      <span class="badge bg-secondary">State</span>
+      <span class="badge bg-secondary">
+        <small th:text="${issue.state}"></small>
+      </span>
     </li>
     <li class="list-group-item">Labels
       <div th:each="label : ${issue.labels}">
