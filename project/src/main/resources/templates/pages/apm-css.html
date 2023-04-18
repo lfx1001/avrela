@@ -189,7 +189,7 @@
 <span class="separator"/>
 <!-- commit details goes here -->
 
-<div th:each="issue : ${webApmCaseStudySimulation.caseStudy.issues}" class="row"><!-- APM Case study simulation  -->
+<div th:each="issue, issueStatus : ${webApmCaseStudySimulation.caseStudy.issues}" class="row"><!-- APM Case study simulation  -->
   <div class="col">
     <div th:replace="fragments/issue.html :: issue(issue=${issue})">
     </div>
@@ -197,8 +197,10 @@
   <div class="col">
   </div>
   <div class="col">
+    <div th:if="${webApmCaseStudySimulation.simulation.issues ne null and issueStatus.index le webApmCaseStudySimulation.simulation.issues.size()}" th:replace="fragments/issue.html :: issue(issue=${webApmCaseStudySimulation.simulation.issues().get(issueStatus.index)})">
+    </div>
   </div>
-  </div> <!-- row -->
+</div> <!-- row -->
 
 </body>
 </html>
