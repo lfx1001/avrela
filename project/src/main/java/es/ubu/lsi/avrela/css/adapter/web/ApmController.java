@@ -1,5 +1,6 @@
 package es.ubu.lsi.avrela.css.adapter.web;
 
+import es.ubu.lsi.avrela.css.port.ApmCssEvaluationService;
 import es.ubu.lsi.avrela.css.util.ApmCssDataGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,9 @@ public class ApmController {
 
   @PostMapping("/apm-css")
   public String create(@ModelAttribute WebApmCaseStudySimulation sim, Model model){
-    model.addAttribute("webApmCaseStudySimulation", sim);
+    ApmCssEvaluationService apmCssEvaluationService = new ApmCssEvaluationService();
+    WebApmCaseStudySimulation result = apmCssEvaluationService.evaluate(sim);
+    model.addAttribute("webApmCaseStudySimulation", result);
     return "pages/apm-css";
   }
 

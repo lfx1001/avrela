@@ -47,7 +47,7 @@ public class ApmCssDataGenerator {
         .repoOwner("davidmigloz")
         .repoName("go-bees")
         .stringifyStartAt("2017-01-25")
-        .stringifyEndAt("2017-01-25")
+        .stringifyEndAt("2017-01-26")
         .sprints(
             List.of(
                 Sprint.builder()

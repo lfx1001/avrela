@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -102,6 +103,9 @@ public class WebHistoricalApmData {
    * @return filtered issues
    */
   public List<Issue> filterIssues(Predicate<Issue> filter){
+    if (this.sprints == null){
+      return Collections.emptyList();
+    }
     return sprints.stream()
         .flatMap( sprint -> sprint.getIssues().stream()
             .filter(filter)
