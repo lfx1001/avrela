@@ -6,13 +6,14 @@ import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
 public class WebHistoricalApmDataMapper {
 
   public WebHistoricalApmData toDto(HistoricalApmData domain){
-    return WebHistoricalApmData.builder()
+    WebHistoricalApmData result = WebHistoricalApmData.builder()
         .repoOwner(domain.getRepoOwner())
         .repoName(domain.getRepoName())
-        .startAt(domain.getStartAt())
-        .endAt(domain.getEndAt())
         .sprints(domain.getSprints())
         .build();
+    result.setStartAt(domain.getStartAt());
+    result.setEndAt(domain.getEndAt());
+    return result;
   }
 
 }

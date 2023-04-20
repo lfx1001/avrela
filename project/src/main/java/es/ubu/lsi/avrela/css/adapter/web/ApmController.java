@@ -15,7 +15,7 @@ public class ApmController {
 
   @GetMapping("/apm-css")
   public String index(Model model){
-    WebApmCaseStudySimulation result = ApmCssDataGenerator.getWebApmCaseStudySimulation();
+    WebApmCaseStudySimulation result = ApmCssDataGenerator.webApmCaseStudySimulationBeforeEvaluation();
     model.addAttribute("webApmCaseStudySimulation", result);
     return "pages/apm-css";
   }
@@ -23,7 +23,10 @@ public class ApmController {
   @PostMapping("/apm-css")
   public String create(@ModelAttribute WebApmCaseStudySimulation sim, Model model){
     ApmCssEvaluationService apmCssEvaluationService = new ApmCssEvaluationService();
+    WebApmCaseStudySimulation aux = ApmCssDataGenerator.getWebApmCaseStudySimulation();
     WebApmCaseStudySimulation result = apmCssEvaluationService.evaluate(sim);
+    //TODO: remove
+    result.setRubricEvaluation(aux.getRubricEvaluation());
     model.addAttribute("webApmCaseStudySimulation", result);
     return "pages/apm-css";
   }

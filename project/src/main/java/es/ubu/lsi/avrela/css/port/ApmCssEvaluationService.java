@@ -26,6 +26,8 @@ public class ApmCssEvaluationService {
             caseStudyRequest.getRepoName(),
             caseStudyRequest.getStartAt(),
             caseStudyRequest.getEndAt());
+    caseStudy.setStartAt(caseStudyRequest.getStartAt());
+    caseStudy.setEndAt(caseStudyRequest.getEndAt());
 
     //Get simulation commits
     WebHistoricalApmData simulationRequest = apmCss.getSimulation();
@@ -35,6 +37,8 @@ public class ApmCssEvaluationService {
             simulationRequest.getRepoName(),
             simulationRequest.getStartAt(),
             simulationRequest.getEndAt());
+    simulation.setStartAt(simulationRequest.getStartAt());
+    simulation.setEndAt(simulationRequest.getEndAt());
 
     WebHistoricalApmDataMapper webHistoricalApmDataMapper = new WebHistoricalApmDataMapper();
     //Results

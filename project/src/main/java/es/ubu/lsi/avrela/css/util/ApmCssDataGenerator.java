@@ -76,4 +76,10 @@ public class ApmCssDataGenerator {
         )
         .build();
   }
+
+  public static WebApmCaseStudySimulation webApmCaseStudySimulationBeforeEvaluation(){
+    WebApmCaseStudySimulation result = getWebApmCaseStudySimulation();
+    result.setRubricEvaluation(null);
+    return result;
+  }
 }
