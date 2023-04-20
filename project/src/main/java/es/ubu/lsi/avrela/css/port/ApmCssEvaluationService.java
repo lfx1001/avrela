@@ -18,7 +18,7 @@ public class ApmCssEvaluationService {
     GitHubMilestoneMapper milestoneMapper = GitHubMilestoneMapper.build();
     GitHubSprintRepository sprintFinder = new GitHubSprintRepository(gitHubApmClient, milestoneMapper);
     GitHubHistoricalApmDataRepository apmDataRepository = new GitHubHistoricalApmDataRepository(sprintFinder);
-
+    //Get case study commits
     WebHistoricalApmData caseStudyRequest = apmCss.getCaseStudy();
     HistoricalApmData caseStudy =
         apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(
@@ -27,11 +27,20 @@ public class ApmCssEvaluationService {
             caseStudyRequest.getStartAt(),
             caseStudyRequest.getEndAt());
 
+    //Get simulation commits
+    WebHistoricalApmData simulationRequest = apmCss.getSimulation();
+    HistoricalApmData simulation =
+        apmDataRepository.findByRepoOwnerAndRepoNameAndSprintDueBetween(
+            simulationRequest.getRepoOwner(),
+            simulationRequest.getRepoName(),
+            simulationRequest.getStartAt(),
+            simulationRequest.getEndAt());
+
     WebHistoricalApmDataMapper webHistoricalApmDataMapper = new WebHistoricalApmDataMapper();
     //Results
     WebApmCaseStudySimulation result = WebApmCaseStudySimulation.builder()
         .caseStudy(webHistoricalApmDataMapper.toDto(caseStudy))
-        .simulation(apmCss.getSimulation()) //TODO: replace
+        .simulation(webHistoricalApmDataMapper.toDto(simulation))
         .rubricEvaluation(apmCss.getRubricEvaluation()) // TODO: replace
         .issueSimilarityFunctionConfig(apmCss.getIssueSimilarityFunctionConfig()) // TODO: replace
         .participants(apmCss.getParticipants())
