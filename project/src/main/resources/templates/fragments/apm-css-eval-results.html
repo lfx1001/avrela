@@ -87,10 +87,10 @@
     <div class="col">
     </div>
     <div class="col">
-      <div th:if="${webApmCaseStudySimulation?.simulation?.issues?.size() gt 0 and issueStatus?.index le webApmCaseStudySimulation?.simulation?.issues?.size()}">
+      <span th:if="${webApmCaseStudySimulation?.simulation?.issues?.size() gt 0 and issueStatus?.index lt webApmCaseStudySimulation?.simulation?.issues?.size()}">
         <div th:replace="fragments/issue.html :: issue(issue=${webApmCaseStudySimulation?.simulation?.issues()?.get(issueStatus?.index)})">
         </div>
-      </div>
+      </span>
     </div>
   </div> <!-- row -->
 </div><!-- Evaluation results -->
