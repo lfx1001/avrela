@@ -1,6 +1,7 @@
 package es.ubu.lsi.avrela.bdd.css;
 
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
+import es.ubu.lsi.avrela.css.model.Rubric;
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubCommitRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubHistoricalScmDataRepository;
