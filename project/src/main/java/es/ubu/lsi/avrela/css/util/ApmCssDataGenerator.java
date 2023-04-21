@@ -26,7 +26,7 @@ public class ApmCssDataGenerator {
         .build();
   }
 
-  private static WebRubricEvaluation getWebRubricEvaluation() {
+  public static WebRubricEvaluation getWebRubricEvaluation() {
     return WebRubricEvaluation.builder()
         .teamWork(new WebRubricCriteriaEvaluation(100d, 2))
         .ttlDescription(new WebRubricCriteriaEvaluation(100d, 1))
@@ -34,7 +34,7 @@ public class ApmCssDataGenerator {
         .build();
   }
 
-  private static WebIssueSimilarityFunctionConfig getSimilarityFunctionConfig() {
+  public static WebIssueSimilarityFunctionConfig getSimilarityFunctionConfig() {
     return WebIssueSimilarityFunctionConfig.builder()
         .labelWeight(1.0)
         .stateWeight(1.0)

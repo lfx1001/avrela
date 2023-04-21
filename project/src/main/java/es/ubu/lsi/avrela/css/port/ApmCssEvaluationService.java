@@ -8,9 +8,19 @@ import es.ubu.lsi.avrela.apm.adapter.web.WebHistoricalApmData;
 import es.ubu.lsi.avrela.apm.adapter.web.mapper.WebHistoricalApmDataMapper;
 import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
 import es.ubu.lsi.avrela.css.adapter.web.WebApmCaseStudySimulation;
+import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
+import es.ubu.lsi.avrela.css.adapter.web.WebRubricEvaluation;
+import es.ubu.lsi.avrela.css.model.ApmCriteriaScalesConfig;
+import es.ubu.lsi.avrela.css.model.Rubric;
+import es.ubu.lsi.avrela.css.util.ApmCssDataGenerator;
+import es.ubu.lsi.avrela.css.util.RubricDataGenerator;
 import feign.Logger.Level;
 
 public class ApmCssEvaluationService {
+
+  ApmCriteriaService criteriaService = new ApmCriteriaService();
+
+  WebHistoricalApmDataMapper webHistoricalApmDataMapper = new WebHistoricalApmDataMapper();
 
   public WebApmCaseStudySimulation evaluate (WebApmCaseStudySimulation apmCss){
     //Init services
@@ -40,13 +50,29 @@ public class ApmCssEvaluationService {
     simulation.setStartAt(simulationRequest.getStartAt());
     simulation.setEndAt(simulationRequest.getEndAt());
 
-    WebHistoricalApmDataMapper webHistoricalApmDataMapper = new WebHistoricalApmDataMapper();
+    //calculations
+    ApmCriteriaScalesConfig apmScales = RubricDataGenerator.apmCriteria();
+    //teamwork
+    Double teamWorkValue = criteriaService.getTeamWorkValue(simulation, apmCss.getParticipants());
+    Integer teamWorkMark = Rubric.evaluateCriteria(apmScales.getTeamWorkCriteriaScale() ,teamWorkValue);
+
+    WebRubricEvaluation webRubricEvaluation = WebRubricEvaluation.builder()
+        .teamWork(
+            new WebRubricCriteriaEvaluation(teamWorkValue , teamWorkMark )
+        )
+        .ttlDescription(ApmCssDataGenerator.getWebRubricEvaluation().getTtlDescription()) //TODO: replace
+        .ttlOrganization(ApmCssDataGenerator.getWebRubricEvaluation().getTtlOrganization()) // TODO: calculate & replace
+        .build();
+    //ttl - description
+
+    //ttl - other
+
     //Results
     WebApmCaseStudySimulation result = WebApmCaseStudySimulation.builder()
         .caseStudy(webHistoricalApmDataMapper.toDto(caseStudy))
         .simulation(webHistoricalApmDataMapper.toDto(simulation))
-        .rubricEvaluation(apmCss.getRubricEvaluation()) // TODO: replace
-        .issueSimilarityFunctionConfig(apmCss.getIssueSimilarityFunctionConfig()) // TODO: replace
+        .rubricEvaluation(webRubricEvaluation) // TODO: replace
+        .issueSimilarityFunctionConfig(apmCss.getIssueSimilarityFunctionConfig()) // TODO: implement
         .participants(apmCss.getParticipants())
         .build();
 
