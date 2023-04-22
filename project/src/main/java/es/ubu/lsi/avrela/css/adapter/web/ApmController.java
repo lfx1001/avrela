@@ -25,8 +25,6 @@ public class ApmController {
     ApmCssEvaluationService apmCssEvaluationService = new ApmCssEvaluationService();
     WebApmCaseStudySimulation aux = ApmCssDataGenerator.getWebApmCaseStudySimulation();
     WebApmCaseStudySimulation result = apmCssEvaluationService.evaluate(sim);
-    //TODO: remove
-    result.setRubricEvaluation(aux.getRubricEvaluation());
     model.addAttribute("webApmCaseStudySimulation", result);
     return "pages/apm-css";
   }

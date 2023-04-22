@@ -99,5 +99,4 @@ public class ApmCaseStudySimulationEvaluationSteps {
     Assertions.assertEquals(expectedToolLearningDescriptionRubricValue , actualToolLearningDescriptionRubricValue, "Tool learning description rubric evaluation score mismatch");
   }
 
-
 }

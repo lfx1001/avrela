@@ -10,6 +10,7 @@ import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
 import es.ubu.lsi.avrela.css.adapter.web.WebApmCaseStudySimulation;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricEvaluation;
+import es.ubu.lsi.avrela.css.model.ApmCaseStudySimulation;
 import es.ubu.lsi.avrela.css.model.ApmCriteriaScalesConfig;
 import es.ubu.lsi.avrela.css.model.Rubric;
 import es.ubu.lsi.avrela.css.util.ApmCssDataGenerator;
@@ -55,17 +56,24 @@ public class ApmCssEvaluationService {
     //teamwork
     Double teamWorkValue = criteriaService.getTeamWorkValue(simulation, apmCss.getParticipants());
     Integer teamWorkMark = Rubric.evaluateCriteria(apmScales.getTeamWorkCriteriaScale() ,teamWorkValue);
+    // ttl - description
+    Double ttlDescriptionValue = criteriaService.getTtlDescriptionValue(
+        ApmCaseStudySimulation.builder()
+            .caseStudy(caseStudy)
+            .simulation(simulation)
+            .build()
 
+    );
+    Integer ttlDescriptionMark = Rubric.evaluateCriteria(apmScales.getToolLearningDescriptionCriteriaScale() ,ttlDescriptionValue);
     WebRubricEvaluation webRubricEvaluation = WebRubricEvaluation.builder()
         .teamWork(
             new WebRubricCriteriaEvaluation(teamWorkValue , teamWorkMark )
         )
-        .ttlDescription(ApmCssDataGenerator.getWebRubricEvaluation().getTtlDescription()) //TODO: replace
+        .ttlDescription(
+            new WebRubricCriteriaEvaluation(ttlDescriptionValue , ttlDescriptionMark )
+        )
         .ttlOrganization(ApmCssDataGenerator.getWebRubricEvaluation().getTtlOrganization()) // TODO: calculate & replace
         .build();
-    //ttl - description
-
-    //ttl - other
 
     //Results
     WebApmCaseStudySimulation result = WebApmCaseStudySimulation.builder()
