@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -49,15 +51,31 @@ public class WebHistoricalApmData {
     this.endAt = this.toZonedDateTime(stringEndAt);
   }
 
+  public void setStartAt(ZonedDateTime pStartAt){
+    this.startAt = pStartAt;
+    this.stringifyStartAt = this.toStringifyDate(pStartAt);
+  }
+
+  public void setEndAt(ZonedDateTime pEndAt){
+    this.endAt = pEndAt;
+    this.stringifyEndAt = this.toStringifyDate(pEndAt);
+  }
+
   @SneakyThrows
   private ZonedDateTime toZonedDateTime(String string)  {
-    Objects.requireNonNull(string, "date string shol not be null");
+    Objects.requireNonNull(string, "date string should not be null");
     SimpleDateFormat iso8601DateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long dateEpoch = (iso8601DateFormat.parse(string)).getTime();
 
     return Instant
         .ofEpochMilli(dateEpoch)
         .atZone(ZoneId.systemDefault());
+  }
+
+  private String toStringifyDate(ZonedDateTime zonedDateTime){
+    Objects.requireNonNull(zonedDateTime, "date should not be null");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    return zonedDateTime.format(formatter);
   }
 
 
@@ -102,6 +120,9 @@ public class WebHistoricalApmData {
    * @return filtered issues
    */
   public List<Issue> filterIssues(Predicate<Issue> filter){
+    if (this.sprints == null){
+      return Collections.emptyList();
+    }
     return sprints.stream()
         .flatMap( sprint -> sprint.getIssues().stream()
             .filter(filter)

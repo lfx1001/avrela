@@ -5,8 +5,9 @@ import es.ubu.lsi.avrela.apm.adapter.github.GitHubHistoricalApmDataRepository;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubSprintRepository;
 import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
-import es.ubu.lsi.avrela.apm.model.Issue;
 import es.ubu.lsi.avrela.css.model.ApmCaseStudySimulation;
+import es.ubu.lsi.avrela.css.model.Rubric;
+import es.ubu.lsi.avrela.css.port.ApmCriteriaService;
 import feign.Logger.Level;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -26,6 +27,8 @@ public class ApmCaseStudySimulationEvaluationSteps {
   HistoricalApmData caseStudy;
   HistoricalApmData simulation;
   ApmCaseStudySimulation apmCaseStudySimulation;
+
+  ApmCriteriaService apmCriteriaService = new ApmCriteriaService();
 
   Integer simulationParticipants;
   List<Double> teamWorkCriteriaScale;
@@ -72,19 +75,12 @@ public class ApmCaseStudySimulationEvaluationSteps {
   @When("I apply the rubric")
   public void iApplyTheRubric() {
     //Evaluate Teamwork criteria
-    Double teamWorkDividend = 100d *  simulation.filterIssues(
-        Issue.participantsGreaterThanOrEqual(simulationParticipants)).size();
-    Double teamWordDivisor = simulation.countIssues().doubleValue();
-    Double teamWork = teamWorkDividend / teamWordDivisor;
+    Double teamWork = apmCriteriaService.getTeamWorkValue(simulation, simulationParticipants);
     actualTeamWorkRubricValue = Rubric.evaluateCriteria(teamWorkCriteriaScale, teamWork);
 
     //Evaluate TaskManagement Tool Learning - Description criteria
-    Double toolLearningDescriptionDividend = 100d * apmCaseStudySimulation.filterIssueMatchComparisons(
-    ).size();
-    Double toolLearningDescriptionDivisor = simulation.countIssues().doubleValue();
-    Double toolLearningDescription = toolLearningDescriptionDividend / toolLearningDescriptionDivisor;
+    Double toolLearningDescription = apmCriteriaService.getTtlDescriptionValue(apmCaseStudySimulation);
     actualToolLearningDescriptionRubricValue = Rubric.evaluateCriteria(toolLearningDescriptionCriteriaScale, toolLearningDescription);
-    log.debug("toolLearningDescriptionDividend [{}] , toolLearningDescriptionDivisor is [{}]", toolLearningDescriptionDividend, toolLearningDescriptionDivisor);
 
     log.debug("Calculated pos for [{}] value is [{}]", teamWork, actualTeamWorkRubricValue);
   }
@@ -102,6 +98,5 @@ public class ApmCaseStudySimulationEvaluationSteps {
 
     Assertions.assertEquals(expectedToolLearningDescriptionRubricValue , actualToolLearningDescriptionRubricValue, "Tool learning description rubric evaluation score mismatch");
   }
-
 
 }

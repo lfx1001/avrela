@@ -1,11 +1,10 @@
-package es.ubu.lsi.avrela.bdd.css;
+package es.ubu.lsi.avrela.css.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Rubric {
-
 
   public static Integer getExpectedRubricValue(Map<String, String> teamWorkEvaluationRow) {
     String[] ratingScaleValues = {"0", "1", "2"};
@@ -19,7 +18,7 @@ public class Rubric {
     return expectedTeamWorkRubricValue;
   }
 
-  static List<Double> toCriteriaScale(Map<String, String> dataTableRow) {
+  public static List<Double> toCriteriaScale(Map<String, String> dataTableRow) {
     final String[] ratingScaleValues = {"0", "1", "2"};
     List<Double> result = new ArrayList<>();
     for(String ratingScaleValue: ratingScaleValues){
@@ -38,7 +37,7 @@ public class Rubric {
    * @param criteriaValue
    * @return evaluation as criteria scale position.
    */
-  static Integer evaluateCriteria(List<Double> criteriaScale, Double criteriaValue) {
+  public static Integer evaluateCriteria(List<Double> criteriaScale, Double criteriaValue) {
     Integer result = 0;
     Integer scaleValueCurrent = 0;
     Boolean finish = false;

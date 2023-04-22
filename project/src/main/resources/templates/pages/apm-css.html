@@ -22,47 +22,8 @@
 
 
 <form th:action="@{/apm-css}" th:object="${webApmCaseStudySimulation}" method="post">
-
-<div class="row"><!-- APM Case study simulation  -->
-  <div class="col"><h2>Case study</h2></div>
-  <div class="col"><h2>Simulation</h2></div>
-</div>
-<div class="row">
-  <div class="col">
-    <label for="caseStudyStartDate" class="mr-sm-2">Start</label>
-    <input id="caseStudyStartDate" class="form-control" type="date" th:field="*{caseStudy.stringifyStartAt}" />
+  <div th:replace="fragments/css-sim.html"><!-- Case study, simulation input parameters  -->
   </div>
-  <div class="col">
-    <label for="caseStudyEndDate" class="mr-sm-2">End</label>
-    <input id="caseStudyEndDate" class="form-control" type="date" th:field="*{caseStudy.stringifyEndAt}" />
-  </div>
-  <div class="col">
-    <label for="simulationStartDate" class="mr-sm-2">Start</label>
-    <input id="simulationStartDate" class="form-control" type="date" th:field="*{simulation.stringifyStartAt}" />
-  </div>
-  <div class="col">
-    <label for="simulationEndDate" class="mr-sm-2">End</label>
-    <input id="simulationEndDate" class="form-control" type="date" th:field="*{simulation.stringifyEndAt}" />
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <label for="caseStudyRepositoryOwner" class="mr-sm-2">Repository owner</label>
-    <input id="caseStudyRepositoryOwner" class="form-control" th:field="*{caseStudy.repoOwner}"/>
-  </div>
-  <div class="col">
-    <label for="caseStudyRepositoryName" class="mr-sm-2">Repository name</label>
-    <input id="caseStudyRepositoryName" class="form-control" th:field="*{caseStudy.repoName}" />
-  </div>
-  <div class="col">
-    <label for="simulationRepositoryOwner" class="mr-sm-2">Repository owner</label>
-    <input id="simulationRepositoryOwner" class="form-control" th:field="*{simulation.repoOwner}" />
-  </div>
-  <div class="col">
-    <label for="simulationRepositoryName" class="mr-sm-2">Repository name</label>
-    <input id="simulationRepositoryName" class="form-control" th:field="*{simulation.repoName}" />
-  </div>
-</div>
   <span class="separator"></span>
   <div class="row"><!-- Number of Participants  -->
     <div class="col">
@@ -77,24 +38,7 @@
     <div class="col"></div>
   </div>
   <span class="separator"></span>
-  <div class="row"><!-- APM Case study simulation  -->
-    <div class="col"><h2>Issue similary function settings </h2></div>
-    <div class="col"></div>
-  </div>
-  <div class="row"><!-- Similarity labels, state, issue name -->
-    <div class="col">
-      <label for="labelSimilarityWeight" class="form-label">Label similarity weight</label>
-      <input id="labelSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.labelWeight}" />
-    </div>
-    <div class="col">
-      <label for="stateSimilarityWeight" class="form-label">State similarity weight</label>
-      <input id="stateSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.stateWeight}" />
-    </div>
-    <div class="col">
-      <label for="issueNameSimilarityWeight" class="form-label">Issue name similarity weight</label>
-      <input id="issueNameSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.issueNameWeight}" />
-    </div>
-    <div class="col"></div>
+  <div th:replace="fragments/apm-similarity-function.html"><!-- Issue similarity function  -->
   </div>
   <span class="separator"></span>
   <div class="row"><!-- APM Case study simulation  -->
@@ -109,96 +53,9 @@
 
 <span class="separator"/>
 
-<div class="row"><!-- APM Case study simulation  -->
-  <div class="col"><h2>Evaluation result : <mark><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.getMark()}"></strong></mark></h2>
-  </div>
-  <div class="col">
-  </div>
-</div>
-<div class="table-responsive">
-  <table class="table text-center">
-    <thead>
-    <tr>
-      <th style="width: 34%;"></th>
-      <th style="width: 22%;">0</th>
-      <th style="width: 22%;">1</th>
-      <th style="width: 22%;">2</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">Teamwork</th>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.teamWork.mark}">
-        <td class="table-success" th:case="0"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.teamWork.value}"/> [0,50)</td>
-        <td th:case="*">[0,50)</td>
-      </div>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.teamWork.mark}">
-        <td class="table-success" th:case="1"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.teamWork.value}"/> -</td>
-        <td th:case="*">-</td>
-      </div>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.teamWork.mark}">
-        <td class="table-success" th:case="2"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.teamWork.value}"/> [100,100]</td>
-        <td th:case="*">[100,100]</td>
-      </div>
-    </tr>
-    <tr>
-      <th scope="row">TaskManagement tool learning  - Description</th>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.ttlDescription.mark}">
-        <td class="table-success" th:case="0"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.ttlDescription.value}"/> [0,100)</td>
-        <td th:case="*">[0,100)</td>
-      </div>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.ttlDescription.mark}">
-        <td class="table-success" th:case="1"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.ttlDescription.value}"/> [100,100]</td>
-        <td th:case="*">[100,100]</td>
-      </div>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.ttlDescription.mark}">
-        <td class="table-success" th:case="2"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.ttlDescription.value}"/> -</td>
-        <td th:case="*">-</td>
-      </div>
-    </tr>
-    <tr>
-      <th scope="row">Task management toolLearning  - Organization</th>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.ttlOrganization.mark}">
-        <td class="table-success" th:case="0"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.ttlOrganization.value}"/> [0,100)</td>
-        <td th:case="*">[0,100)</td>
-      </div>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.ttlOrganization.mark}">
-        <td class="table-success" th:case="1"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.ttlOrganization.value}"/> [100,100]</td>
-        <td th:case="*">[100,100]</td>
-      </div>
-      <div th:switch="${webApmCaseStudySimulation.rubricEvaluation.ttlOrganization.mark}">
-        <td class="table-success" th:case="2"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation.ttlOrganization.value}"/> -</td>
-        <td th:case="*">-</td>
-      </div>
-    </tr>
-    </tbody>
-  </table>
-</div>
-
-<span class="separator"/>
-
-<div class="row"><!-- APM Case study simulation  -->
-  <div class="col"><h2>Issue comparison</h2>
-  </div>
-  <div class="col">
-  </div>
-</div>
-
-<span class="separator"/>
-
-<span class="separator"/>
-<!-- commit details goes here -->
-
-<div th:each="issue : ${webApmCaseStudySimulation.caseStudy.issues}" class="row"><!-- APM Case study simulation  -->
-  <div class="col">
-    <div th:replace="fragments/issue.html :: issue(issue=${issue})">
-    </div>
-  </div>
-  <div class="col">
-  </div>
-  <div class="col">
-  </div>
-  </div> <!-- row -->
+<span th:if="${webApmCaseStudySimulation.rubricEvaluation != null}">
+ <div th:replace="fragments/apm-css-eval-results.html"></div>
+</span>
 
 </body>
 </html>
