@@ -15,13 +15,17 @@ Go on the project's root folder, then type:
 
     $ mvn spring-boot:run 
 
+#### Build a packaged jar
+
+    $ mvn package 
+
 #### Run from a packaged jar
 
 Go on the packaged jar folder, then type:
 
     $ java - jar <application>.jar 
 
-#### Envirnonment variables
+#### Environment variables
 
 - GITHUB_TOKEN : Use a GitHub token to avoid anoymous usage rate limits
 
