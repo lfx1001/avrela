@@ -1,0 +1,21 @@
+<div><!-- Issue similarity function  -->
+  <div class="row">
+    <div class="col"><h2>Issue similarity function settings </h2></div>
+    <div class="col"></div>
+  </div>
+  <div class="row"><!-- Similarity labels, state, issue name -->
+    <div class="col">
+      <label for="labelSimilarityWeight" class="form-label">Label similarity weight</label>
+      <input id="labelSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.labelWeight}" />
+    </div>
+    <div class="col">
+      <label for="stateSimilarityWeight" class="form-label">State similarity weight</label>
+      <input id="stateSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.stateWeight}" />
+    </div>
+    <div class="col">
+      <label for="issueNameSimilarityWeight" class="form-label">Issue name similarity weight</label>
+      <input id="issueNameSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.issueNameWeight}" />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
