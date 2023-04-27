@@ -4,9 +4,9 @@ import es.ubu.lsi.avrela.apm.adapter.web.WebHistoricalApmData;
 import es.ubu.lsi.avrela.apm.model.Issue;
 import es.ubu.lsi.avrela.apm.model.IssueState;
 import es.ubu.lsi.avrela.apm.model.Sprint;
+import es.ubu.lsi.avrela.css.adapter.web.ScmWebRubricEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebCommitSimilarityFunctionConfig;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
-import es.ubu.lsi.avrela.css.adapter.web.WebRubricEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebScmCaseStudySimulation;
 import java.util.List;
 
@@ -16,17 +16,18 @@ public class ScmCssDataGenerator {
     return WebScmCaseStudySimulation.builder()
         .caseStudy(getWebHistoricalApmData())
         .simulation(getWebHistoricalApmData())
+        .rubricEvaluation(getWebRubricEvaluation())
         .commitSimilarityFunctionConfig(
             getSimilarityFunctionConfig()
         )
         .build();
   }
 
-  public static WebRubricEvaluation getWebRubricEvaluation() {
-    return WebRubricEvaluation.builder()
+  public static ScmWebRubricEvaluation getWebRubricEvaluation() {
+    return ScmWebRubricEvaluation.builder()
         .teamWork(new WebRubricCriteriaEvaluation(100d, 2))
-        .ttlDescription(new WebRubricCriteriaEvaluation(100d, 1))
-        .ttlOrganization(new WebRubricCriteriaEvaluation(100d, 1))
+        .similarity(new WebRubricCriteriaEvaluation(78d, 1))
+        .issueTraceability(new WebRubricCriteriaEvaluation(90d, 2))
         .build();
   }
 
