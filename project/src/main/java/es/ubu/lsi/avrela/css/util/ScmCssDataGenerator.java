@@ -4,24 +4,20 @@ import es.ubu.lsi.avrela.apm.adapter.web.WebHistoricalApmData;
 import es.ubu.lsi.avrela.apm.model.Issue;
 import es.ubu.lsi.avrela.apm.model.IssueState;
 import es.ubu.lsi.avrela.apm.model.Sprint;
-import es.ubu.lsi.avrela.css.adapter.web.WebApmCaseStudySimulation;
-import es.ubu.lsi.avrela.css.adapter.web.WebIssueSimilarityFunctionConfig;
+import es.ubu.lsi.avrela.css.adapter.web.WebCommitSimilarityFunctionConfig;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricEvaluation;
+import es.ubu.lsi.avrela.css.adapter.web.WebScmCaseStudySimulation;
 import java.util.List;
 
 public class ScmCssDataGenerator {
 
-  public static WebApmCaseStudySimulation getWebScmCaseStudySimulation() {
-    return WebApmCaseStudySimulation.builder()
+  public static WebScmCaseStudySimulation getWebScmCaseStudySimulation() {
+    return WebScmCaseStudySimulation.builder()
         .caseStudy(getWebHistoricalApmData())
         .simulation(getWebHistoricalApmData())
-        .participants(1)
-        .issueSimilarityFunctionConfig(
+        .commitSimilarityFunctionConfig(
             getSimilarityFunctionConfig()
-        )
-        .rubricEvaluation(
-            getWebRubricEvaluation()
         )
         .build();
   }
@@ -34,11 +30,10 @@ public class ScmCssDataGenerator {
         .build();
   }
 
-  public static WebIssueSimilarityFunctionConfig getSimilarityFunctionConfig() {
-    return WebIssueSimilarityFunctionConfig.builder()
-        .labelWeight(1.0)
-        .stateWeight(1.0)
-        .issueNameWeight(1.0)
+  public static WebCommitSimilarityFunctionConfig getSimilarityFunctionConfig() {
+    return WebCommitSimilarityFunctionConfig.builder()
+        .messageWeight(1.0)
+        .filesWeight(1.0)
         .build();
   }
 
@@ -77,8 +72,8 @@ public class ScmCssDataGenerator {
         .build();
   }
 
-  public static WebApmCaseStudySimulation webApmCaseStudySimulationBeforeEvaluation(){
-    WebApmCaseStudySimulation result = getWebScmCaseStudySimulation();
+  public static WebScmCaseStudySimulation webScmCaseStudySimulationBeforeEvaluation(){
+    WebScmCaseStudySimulation result = getWebScmCaseStudySimulation();
     result.setRubricEvaluation(null);
     return result;
   }

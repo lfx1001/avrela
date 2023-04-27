@@ -14,7 +14,7 @@ public class WebScmCaseStudySimulation {
 
   private Integer participants;
 
-  private WebIssueSimilarityFunctionConfig issueSimilarityFunctionConfig;
+  private WebCommitSimilarityFunctionConfig commitSimilarityFunctionConfig;
 
   private WebRubricEvaluation  rubricEvaluation;
 
