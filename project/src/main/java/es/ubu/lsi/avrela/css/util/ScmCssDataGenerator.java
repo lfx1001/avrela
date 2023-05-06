@@ -16,6 +16,7 @@ public class ScmCssDataGenerator {
     return WebScmCaseStudySimulation.builder()
         .caseStudy(getWebHistoricalApmData())
         .simulation(getWebHistoricalApmData())
+        .participants(1)
         .rubricEvaluation(getWebRubricEvaluation())
         .similarityThreshold(75)
         .commitSimilarityFunctionConfig(
