@@ -126,16 +126,7 @@ public class ScmCaseStudySimulationEvaluationSteps {
 
     Assertions.assertEquals(commitSimilarityExpectedRubricValue, commitSimilarityActualRubricValue, "Similarity evaluation should match");
 
-    //Evaluate APM Issue traceability
-    Integer commitsWithIssueTraceabilityDividend = scmCaseStudySimulation
-        .getSimulation()
-        .getCommitsWithIssueTraceability()
-        .size();
-
-    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
-
-    Double commitsWithIssueTraceability = 100*Double.valueOf((double)commitsWithIssueTraceabilityDividend / commitsWithIssueTraceabilityDivisor);
-    log.debug( "Issue traceability [{}]/[{}] adjusted is [{}]", commitsWithIssueTraceabilityDividend, commitsWithIssueTraceabilityDivisor, commitsWithIssueTraceability);
+    Double commitsWithIssueTraceability = scmCriteriaService.getCommitsWithIssueTraceability(scmCaseStudySimulation);
 
 
     Integer commitsWithIssueTraceabilityActualRubricValue = Rubric.evaluateCriteria(apmIssueTraceabilityCriteriaScale, commitsWithIssueTraceability);

@@ -35,4 +35,17 @@ public class ScmCriteriaService {
     log.debug( "Commit similarity value is [{}]", result);
     return result;
   }
+
+  public Double getCommitsWithIssueTraceability(ScmCaseStudySimulation scmCaseStudySimulation){
+    Integer commitsWithIssueTraceabilityDividend = scmCaseStudySimulation
+        .getSimulation()
+        .getCommitsWithIssueTraceability()
+        .size();
+
+    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
+
+    Double result = 100*Double.valueOf((double)commitsWithIssueTraceabilityDividend / commitsWithIssueTraceabilityDivisor);
+    log.debug( "Issue traceability [{}]/[{}] adjusted is [{}]", commitsWithIssueTraceabilityDividend, commitsWithIssueTraceabilityDivisor, result);
+    return result;
+  }
 }
