@@ -3,6 +3,7 @@ package es.ubu.lsi.avrela.bdd.css;
 import es.ubu.lsi.avrela.apm.adapter.github.GitHubApmClient;
 import es.ubu.lsi.avrela.css.model.Rubric;
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
+import es.ubu.lsi.avrela.css.port.ScmCriteriaService;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubCommitRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubHistoricalScmDataRepository;
 import es.ubu.lsi.avrela.scm.adapter.github.GitHubScmClient;
@@ -21,7 +22,6 @@ import java.time.ZonedDateTime;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 
@@ -47,6 +47,8 @@ public class ScmCaseStudySimulationEvaluationSteps {
   private ScmCaseStudySimulation scmCaseStudySimulation;
 
   private EnumMap<Feature, Double> featureWeights;
+
+  private ScmCriteriaService scmCriteriaService = new ScmCriteriaService();
 
   @Given("a scm case study with repo owner {string}, name {string}, branch is {string} and time period {zoneddatetime} {zoneddatetime}")
   public void aScmCaseStudyWithRepoOwnerNameBranchIsAndTimePeriod(String repoOwner, String repoName, String branch, ZonedDateTime startAt, ZonedDateTime endAt) {
@@ -112,7 +114,7 @@ public class ScmCaseStudySimulationEvaluationSteps {
     List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
     //Evaluate Teamwork: criteria won't apply as it is defined.
     //TODO: redefine as a numeric measure in order to consider evaluation scale
-    Integer teamworkGrade = teamWorkEvaluation(simulationParticipants, simulation);
+    Integer teamworkGrade = scmCriteriaService.teamWorkEvaluation(simulation, simulationParticipants);
     Assertions.assertEquals(2, teamworkGrade, "Teamwork grade");
 
     //Evaluate commit similarity
@@ -144,22 +146,6 @@ public class ScmCaseStudySimulationEvaluationSteps {
     Integer commitsWithIssueTraceabilityExpectedRubricValue = Rubric.getExpectedRubricValue(rows.get(2));
 
     Assertions.assertEquals(commitsWithIssueTraceabilityExpectedRubricValue, commitsWithIssueTraceabilityActualRubricValue, "APM Issue Traceability evaluation should match");
-  }
-
-
-  private Integer teamWorkEvaluation(Integer simulationParticipants, HistoricalScmData simulation) {
-    Set<String> participants = simulation.getParticipants();
-    log.debug("Total participants [{}]", participants.size());
-    //Evaluate agile fidelity (authors alternate commits)
-    if (simulationParticipants.equals(simulation.getParticipants().size())){
-      if (simulation.alternativeCommits(simulationParticipants)){
-        return 2;
-      } else {
-        return 1;
-      }
-    }else {
-      return 0;
-    }
   }
 
 
