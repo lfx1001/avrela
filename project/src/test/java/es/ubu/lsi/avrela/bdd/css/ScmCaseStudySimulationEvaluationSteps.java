@@ -118,11 +118,7 @@ public class ScmCaseStudySimulationEvaluationSteps {
     Assertions.assertEquals(2, teamworkGrade, "Teamwork grade");
 
     //Evaluate commit similarity
-    Integer commitSimilarityDividend = scmCaseStudySimulation.filterCommitMatchComparison(this.featureWeights, this.commitSimilarityThreshold).size();
-    log.debug( "Found [{}] similar commits", commitSimilarityDividend);
-    Integer commitSimilarityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
-
-    Double commitSimilarity = 100*Double.valueOf(commitSimilarityDividend / commitSimilarityDivisor);
+    Double commitSimilarity = scmCriteriaService.getCommitSimilarity(scmCaseStudySimulation, featureWeights, commitSimilarityThreshold);
     log.debug( "Commit similarity value is [{}]", commitSimilarity);
 
     Integer commitSimilarityActualRubricValue = Rubric.evaluateCriteria(commitSimilarityCriteriaScale, commitSimilarity);

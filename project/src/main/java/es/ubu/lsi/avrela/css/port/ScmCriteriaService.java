@@ -1,8 +1,14 @@
 package es.ubu.lsi.avrela.css.port;
 
+import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
+import es.ubu.lsi.avrela.scm.model.CommitSimilarity.Feature;
 import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
+import java.util.EnumMap;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 public class ScmCriteriaService {
 
   public Integer teamWorkEvaluation(HistoricalScmData simulation, Integer simulationParticipants) {
@@ -17,5 +23,16 @@ public class ScmCriteriaService {
     }else {
       return 0;
     }
+  }
+
+  public Double getCommitSimilarity(ScmCaseStudySimulation scmCaseStudySimulation, EnumMap<Feature, Double> featureWeights, int similarityThreshold){
+    Double result;
+    Integer commitSimilarityDividend = scmCaseStudySimulation.filterCommitMatchComparison(featureWeights, similarityThreshold).size();
+    log.debug( "Found [{}] similar commits", commitSimilarityDividend);
+    Integer commitSimilarityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
+
+    result = 100*Double.valueOf(commitSimilarityDividend / commitSimilarityDivisor);
+    log.debug( "Commit similarity value is [{}]", result);
+    return result;
   }
 }
