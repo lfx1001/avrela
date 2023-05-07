@@ -2,6 +2,7 @@ package es.ubu.lsi.avrela.css.util;
 
 import es.ubu.lsi.avrela.css.model.ApmCriteriaScalesConfig;
 import es.ubu.lsi.avrela.css.model.Rubric;
+import es.ubu.lsi.avrela.css.model.ScmCriteriaScalesConfig;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,5 +32,31 @@ public class RubricDataGenerator {
 
     return result;
   }
+
+  public static ScmCriteriaScalesConfig scmCriteria(){
+    // teamwork criteria
+    Map<String, String> scmTeamWorkCriteriaDefinition = new HashMap<>();
+    scmTeamWorkCriteriaDefinition.put("0", "50");
+    scmTeamWorkCriteriaDefinition.put("1", "None");
+    scmTeamWorkCriteriaDefinition.put("2", "100");
+    // Task management tool - description
+    Map<String, String> commitSimilarityCriteriaDefinition = new HashMap<>();
+    commitSimilarityCriteriaDefinition.put("0", "None");
+    commitSimilarityCriteriaDefinition.put("1", "75");
+    commitSimilarityCriteriaDefinition.put("2", "100");
+    // Task management tool - organization
+    Map<String, String> apmIssueTraceabilityCriteriaDefinition = new HashMap<>();
+    apmIssueTraceabilityCriteriaDefinition.put("0", "None");
+    apmIssueTraceabilityCriteriaDefinition.put("1", "None");
+    apmIssueTraceabilityCriteriaDefinition.put("2", "50");
+
+    ScmCriteriaScalesConfig result = new ScmCriteriaScalesConfig();
+    result.setTeamWorkCriteriaScale(Rubric.toCriteriaScale(scmTeamWorkCriteriaDefinition));
+    result.setCommitSimilarityCriteriaScale(Rubric.toCriteriaScale(commitSimilarityCriteriaDefinition));
+    result.setApmIssueTraceabilityCriteriaScale(Rubric.toCriteriaScale(apmIssueTraceabilityCriteriaDefinition));
+
+    return result;
+  }
+
 
 }

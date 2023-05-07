@@ -1,6 +1,5 @@
 package es.ubu.lsi.avrela.css.adapter.web;
 
-import es.ubu.lsi.avrela.apm.adapter.web.WebHistoricalApmData;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,9 +7,9 @@ import lombok.Data;
 @Data
 public class WebScmCaseStudySimulation {
 
-  private WebHistoricalApmData caseStudy;
+  private WebHistoricalScmData caseStudy;
 
-  private WebHistoricalApmData simulation;
+  private WebHistoricalScmData simulation;
 
   private Integer participants;
 

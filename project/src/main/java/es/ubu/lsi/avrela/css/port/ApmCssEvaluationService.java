@@ -19,9 +19,9 @@ import feign.Logger.Level;
 
 public class ApmCssEvaluationService {
 
-  ApmCriteriaService criteriaService = new ApmCriteriaService();
+  private ApmCriteriaService criteriaService = new ApmCriteriaService();
 
-  WebHistoricalApmDataMapper webHistoricalApmDataMapper = new WebHistoricalApmDataMapper();
+  private WebHistoricalApmDataMapper webHistoricalApmDataMapper = new WebHistoricalApmDataMapper();
 
   public WebApmCaseStudySimulation evaluate (WebApmCaseStudySimulation apmCss){
     //Init services

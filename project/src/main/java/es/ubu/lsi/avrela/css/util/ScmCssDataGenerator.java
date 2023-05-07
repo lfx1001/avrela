@@ -1,23 +1,19 @@
 package es.ubu.lsi.avrela.css.util;
 
-import es.ubu.lsi.avrela.apm.adapter.web.WebHistoricalApmData;
-import es.ubu.lsi.avrela.apm.model.Issue;
-import es.ubu.lsi.avrela.apm.model.IssueState;
-import es.ubu.lsi.avrela.apm.model.Sprint;
 import es.ubu.lsi.avrela.css.adapter.web.ScmWebRubricEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebCommitSimilarityFunctionConfig;
+import es.ubu.lsi.avrela.css.adapter.web.WebHistoricalScmData;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebScmCaseStudySimulation;
-import java.util.List;
+import java.util.Collections;
 
 public class ScmCssDataGenerator {
 
   public static WebScmCaseStudySimulation getWebScmCaseStudySimulation() {
     return WebScmCaseStudySimulation.builder()
-        .caseStudy(getWebHistoricalApmData())
-        .simulation(getWebHistoricalApmData())
+        .caseStudy(getWebHistoricalScmData())
+        .simulation(getWebHistoricalScmData())
         .participants(1)
-        .rubricEvaluation(getWebRubricEvaluation())
         .similarityThreshold(75)
         .commitSimilarityFunctionConfig(
             getSimilarityFunctionConfig()
@@ -40,38 +36,14 @@ public class ScmCssDataGenerator {
         .build();
   }
 
-  private static WebHistoricalApmData getWebHistoricalApmData() {
-    return WebHistoricalApmData.builder()
+  private static WebHistoricalScmData getWebHistoricalScmData() {
+    return WebHistoricalScmData.builder()
         .repoOwner("davidmigloz")
         .repoName("go-bees")
+        .branch("master")
         .stringifyStartAt("2017-01-25")
-        .stringifyEndAt("2017-01-26")
-        .sprints(
-            List.of(
-                Sprint.builder()
-                    .issues(
-                        List.of(
-                            Issue.builder()
-                                .id("Id")
-                                .name("Issue Name")
-                                .state(IssueState.OPEN)
-                                .body("Loren ipsum, loren ipsum, loren ipsum, loren ipsum ...")
-                                .labels(
-                                    List.of(
-                                        "label1",
-                                        "label2",
-                                        "label3"
-                                    )
-                                )
-                                .hasImages(Boolean.FALSE)
-                                .hasLink(Boolean.TRUE)
-                                .hasTaskList(Boolean.FALSE)
-                                .build()
-                        )
-                    )
-                    .build()
-            )
-        )
+        .stringifyEndAt("2017-01-25")
+        .commits(Collections.emptyList())
         .build();
   }
 
