@@ -18,14 +18,15 @@ public class ScmCssDataGenerator {
         .commitSimilarityFunctionConfig(
             getSimilarityFunctionConfig()
         )
+        .rubricEvaluation(getScmWebRubricEvaluation())
         .build();
   }
 
-  public static ScmWebRubricEvaluation getWebRubricEvaluation() {
+  public static ScmWebRubricEvaluation getScmWebRubricEvaluation() {
     return ScmWebRubricEvaluation.builder()
         .teamWork(new WebRubricCriteriaEvaluation(100d, 2))
-        .similarity(new WebRubricCriteriaEvaluation(78d, 1))
-        .issueTraceability(new WebRubricCriteriaEvaluation(90d, 2))
+        .similarity(new WebRubricCriteriaEvaluation(100d, 2))
+        .issueTraceability(new WebRubricCriteriaEvaluation(50d, 2))
         .build();
   }
 
