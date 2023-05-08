@@ -1,6 +1,6 @@
 <div><!-- Issue similarity function  -->
   <div class="row">
-    <div class="col"><h2>Issue similarity function settings </h2></div>
+    <div class="col"><h2>Commit similarity function settings </h2></div>
     <div class="col"></div>
   </div>
   <div class="row"><!-- Similarity labels, state, issue name -->
@@ -10,7 +10,7 @@
     </div>
     <div class="col">
       <label for="messageSimilarityWeight" class="form-label">Message similarity weight</label>
-      <input id="messageSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{commitSimilarityFunctionConfig.filesWeight}" />
+      <input id="messageSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{commitSimilarityFunctionConfig.messageWeight}" />
     </div>
     <div class="col"></div>
     <div class="col"></div>

@@ -1,0 +1,19 @@
+<div th:fragment="commit (commit)" class="card">
+  <div class="card-header">
+    <strong th:text="${commit?.sha}"></strong>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Message
+      <span class="badge bg-secondary">
+        <small th:text="${commit?.message}"></small>
+      </span>
+    </li>
+    <li class="list-group-item">Commit files
+      <div th:each="file : ${commit?.files}">
+           <span class="badge bg-secondary">
+             <small th:text="${file.name}"></small>&nbsp;
+          </span>
+      </div>
+    </li>
+  </ul>
+</div>

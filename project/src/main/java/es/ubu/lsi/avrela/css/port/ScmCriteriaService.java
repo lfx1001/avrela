@@ -30,7 +30,9 @@ public class ScmCriteriaService {
     Integer commitSimilarityDividend = scmCaseStudySimulation.filterCommitMatchComparison(featureWeights, similarityThreshold).size();
     log.debug( "Found [{}] similar commits", commitSimilarityDividend);
     Integer commitSimilarityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
-
+    if (commitSimilarityDivisor == 0){
+      return 0d;
+    }
     result = 100*Double.valueOf(commitSimilarityDividend / commitSimilarityDivisor);
     log.debug( "Commit similarity value is [{}]", result);
     return result;

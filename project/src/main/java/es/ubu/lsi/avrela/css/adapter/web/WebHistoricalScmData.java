@@ -8,12 +8,16 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class WebHistoricalScmData {
 
   private String repoOwner;

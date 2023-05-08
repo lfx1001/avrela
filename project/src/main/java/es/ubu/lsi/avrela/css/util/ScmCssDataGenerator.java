@@ -5,7 +5,9 @@ import es.ubu.lsi.avrela.css.adapter.web.WebCommitSimilarityFunctionConfig;
 import es.ubu.lsi.avrela.css.adapter.web.WebHistoricalScmData;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebScmCaseStudySimulation;
-import java.util.Collections;
+import es.ubu.lsi.avrela.scm.model.Commit;
+import es.ubu.lsi.avrela.scm.model.CommitFile;
+import java.util.List;
 
 public class ScmCssDataGenerator {
 
@@ -44,7 +46,22 @@ public class ScmCssDataGenerator {
         .branch("master")
         .stringifyStartAt("2017-01-25")
         .stringifyEndAt("2017-01-25")
-        .commits(Collections.emptyList())
+        .commits(
+            List.of(
+                Commit.builder()
+                    .sha("Sha")
+                    .message("Message")
+                    .author("Author")
+                    .files( List.of(
+                        CommitFile.builder()
+                            .name("file1")
+                            .build(),
+                        CommitFile.builder()
+                            .name("file2")
+                            .build()
+                    ))
+                    .build()
+            ))
         .build();
   }
 
