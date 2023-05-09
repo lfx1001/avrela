@@ -32,33 +32,33 @@
         </div>
       </tr>
       <tr>
-        <th scope="row">TaskManagement tool learning  - Description</th>
-        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.ttlDescription?.mark}">
-          <td class="table-success" th:case="0"><strong th:text="${webScmCaseStudySimulation.rubricEvaluation?.ttlDescription?.value}"/> [0,100)</td>
-          <td th:case="*">[0,100)</td>
-        </div>
-        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.ttlDescription?.mark}">
-          <td class="table-success" th:case="1"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.ttlDescription?.value}"/> [100,100]</td>
-          <td th:case="*">[100,100]</td>
-        </div>
-        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.ttlDescription?.mark}">
-          <td class="table-success" th:case="2"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.ttlDescription?.value}"/> -</td>
+        <th scope="row">Similarity</th>
+        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.similarity?.mark}">
+          <td class="table-success" th:case="0"><strong th:text="${webScmCaseStudySimulation.rubricEvaluation?.similarity?.value}"/> [0,100)</td>
           <td th:case="*">-</td>
+        </div>
+        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.similarity?.mark}">
+          <td class="table-success" th:case="1"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.similarity?.value}"/> [100,100]</td>
+          <td th:case="*">[75,100)</td>
+        </div>
+        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.similarity?.mark}">
+          <td class="table-success" th:case="2"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.similarity?.value}"/>-</td>
+          <td th:case="*">[100,100]</td>
         </div>
       </tr>
       <tr>
-        <th scope="row">Task management toolLearning  - Organization</th>
-        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.mark}">
-          <td class="table-success" th:case="0"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.value}"/> [0,100)</td>
-          <td th:case="*">[0,100)</td>
-        </div>
-        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.mark}">
-          <td class="table-success" th:case="1"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.value}"/> [100,100]</td>
-          <td th:case="*">[100,100]</td>
-        </div>
-        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.mark}">
-          <td class="table-success" th:case="2"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.value}"/> -</td>
+        <th scope="row">APM Issue Traceability</th>
+        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.mark}">
+          <td class="table-success" th:case="0"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.value}"/>-</td>
           <td th:case="*">-</td>
+        </div>
+        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.mark}">
+          <td class="table-success" th:case="1"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.value}"/>-</td>
+          <td th:case="*">-</td>
+        </div>
+        <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.mark}">
+          <td class="table-success" th:case="2"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.value}"/>[50,100)</td>
+          <td th:case="*">[50,100]</td>
         </div>
       </tr>
       </tbody>
@@ -67,8 +67,8 @@
 
   <span class="separator"/>
 
-  <div class="row"><!-- APM Case study simulation  -->
-    <div class="col"><h2>Issue comparison</h2>
+  <div class="row"><!-- SCM Case study simulation  -->
+    <div class="col"><h2>Commit comparison</h2>
     </div>
     <div class="col">
     </div>
@@ -79,16 +79,16 @@
   <span class="separator"/>
   <!-- commit details goes here -->
 
-  <div th:each="issue, issueStatus : ${webScmCaseStudySimulation?.caseStudy?.issues}" class="row"><!-- APM Case study simulation  -->
+  <div th:each="commit, commitStatus : ${webScmCaseStudySimulation?.caseStudy?.commits}" class="row"><!-- APM Case study simulation  -->
     <div class="col">
-      <div th:replace="fragments/issue.html :: issue(issue=${issue})">
+      <div th:replace="fragments/commit.html :: commit(commit=${commit})">
       </div>
     </div>
     <div class="col">
     </div>
     <div class="col">
-      <span th:if="${webScmCaseStudySimulation?.simulation?.issues?.size() gt 0 and issueStatus?.index lt webScmCaseStudySimulation?.simulation?.issues?.size()}">
-        <div th:replace="fragments/issue.html :: issue(issue=${webScmCaseStudySimulation?.simulation?.issues()?.get(issueStatus?.index)})">
+      <span th:if="${webScmCaseStudySimulation?.simulation?.commits?.size() gt 0 and commitStatus?.index lt webScmCaseStudySimulation?.simulation?.commits?.size()}">
+        <div th:replace="fragments/commit.html :: commit(commit=${webScmCaseStudySimulation?.simulation?.getCommits()?.get(commitStatus?.index)})">
         </div>
       </span>
     </div>

@@ -1,21 +1,31 @@
 <div><!-- Issue similarity function  -->
   <div class="row">
-    <div class="col"><h2>Issue similarity function settings </h2></div>
+    <div class="col"><h2>Commit similarity function settings </h2></div>
     <div class="col"></div>
   </div>
   <div class="row"><!-- Similarity labels, state, issue name -->
     <div class="col">
-      <label for="labelSimilarityWeight" class="form-label">Label similarity weight</label>
-      <input id="labelSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.labelWeight}" />
+      <label for="labelFilesWeight" class="form-label">Files similarity weight</label>
+      <input id="labelFilesWeight" step="0.01" type="number" class="form-control" th:field="*{commitSimilarityFunctionConfig.filesWeight}" />
     </div>
     <div class="col">
-      <label for="stateSimilarityWeight" class="form-label">State similarity weight</label>
-      <input id="stateSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.stateWeight}" />
-    </div>
-    <div class="col">
-      <label for="issueNameSimilarityWeight" class="form-label">Issue name similarity weight</label>
-      <input id="issueNameSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.issueNameWeight}" />
+      <label for="messageSimilarityWeight" class="form-label">Message similarity weight</label>
+      <input id="messageSimilarityWeight" step="0.01" type="number" class="form-control" th:field="*{commitSimilarityFunctionConfig.messageWeight}" />
     </div>
     <div class="col"></div>
+    <div class="col"></div>
+  </div>
+  <span class="separator"></span>
+  <div><!-- Similarity threshold  -->
+    <div class="row"><!-- Similarity threshold -->
+      <div class="col">
+        <label for="similarityThreshold" class="form-label">Similarity threshold</label>
+        <input id="similarityThreshold" min="1" max="100" step="1" type="number" class="form-control" th:field="*{similarityThreshold}" />
+      </div>
+      <div class="col">
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
   </div>
 </div>

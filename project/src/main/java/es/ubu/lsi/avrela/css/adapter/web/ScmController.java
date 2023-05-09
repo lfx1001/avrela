@@ -1,7 +1,7 @@
 package es.ubu.lsi.avrela.css.adapter.web;
 
-import es.ubu.lsi.avrela.css.port.ApmCssEvaluationService;
-import es.ubu.lsi.avrela.css.util.ApmCssDataGenerator;
+import es.ubu.lsi.avrela.css.port.ScmEvaluationService;
+import es.ubu.lsi.avrela.css.util.ScmCssDataGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +15,16 @@ public class ScmController {
 
   @GetMapping("/scm-css")
   public String index(Model model){
-    WebApmCaseStudySimulation result = ApmCssDataGenerator.getWebApmCaseStudySimulation();
+    WebScmCaseStudySimulation result = ScmCssDataGenerator.getWebScmCaseStudySimulation();
     model.addAttribute("webScmCaseStudySimulation", result);
     return "pages/scm-css";
   }
 
   @PostMapping("/scm-css")
-  public String create(@ModelAttribute WebApmCaseStudySimulation sim, Model model){
-    ApmCssEvaluationService apmCssEvaluationService = new ApmCssEvaluationService();
-    WebApmCaseStudySimulation aux = ApmCssDataGenerator.getWebApmCaseStudySimulation();
-    WebApmCaseStudySimulation result = apmCssEvaluationService.evaluate(sim);
+  public String create(@ModelAttribute WebScmCaseStudySimulation sim, Model model){
+    ScmEvaluationService scmCssEvaluationService = new ScmEvaluationService();
+    WebScmCaseStudySimulation aux = ScmCssDataGenerator.getWebScmCaseStudySimulation();
+    WebScmCaseStudySimulation result = scmCssEvaluationService.evaluate(sim);
     model.addAttribute("webScmCaseStudySimulation", result);
     return "pages/scm-css";
   }

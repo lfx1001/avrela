@@ -1,84 +1,72 @@
 package es.ubu.lsi.avrela.css.util;
 
-import es.ubu.lsi.avrela.apm.adapter.web.WebHistoricalApmData;
-import es.ubu.lsi.avrela.apm.model.Issue;
-import es.ubu.lsi.avrela.apm.model.IssueState;
-import es.ubu.lsi.avrela.apm.model.Sprint;
-import es.ubu.lsi.avrela.css.adapter.web.WebApmCaseStudySimulation;
-import es.ubu.lsi.avrela.css.adapter.web.WebIssueSimilarityFunctionConfig;
+import es.ubu.lsi.avrela.css.adapter.web.ScmWebRubricEvaluation;
+import es.ubu.lsi.avrela.css.adapter.web.WebCommitSimilarityFunctionConfig;
+import es.ubu.lsi.avrela.css.adapter.web.WebHistoricalScmData;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
-import es.ubu.lsi.avrela.css.adapter.web.WebRubricEvaluation;
+import es.ubu.lsi.avrela.css.adapter.web.WebScmCaseStudySimulation;
+import es.ubu.lsi.avrela.scm.model.Commit;
+import es.ubu.lsi.avrela.scm.model.CommitFile;
 import java.util.List;
 
 public class ScmCssDataGenerator {
 
-  public static WebApmCaseStudySimulation getWebScmCaseStudySimulation() {
-    return WebApmCaseStudySimulation.builder()
-        .caseStudy(getWebHistoricalApmData())
-        .simulation(getWebHistoricalApmData())
+  public static WebScmCaseStudySimulation getWebScmCaseStudySimulation() {
+    return WebScmCaseStudySimulation.builder()
+        .caseStudy(getWebHistoricalScmData())
+        .simulation(getWebHistoricalScmData())
         .participants(1)
-        .issueSimilarityFunctionConfig(
+        .similarityThreshold(75)
+        .commitSimilarityFunctionConfig(
             getSimilarityFunctionConfig()
         )
-        .rubricEvaluation(
-            getWebRubricEvaluation()
-        )
+        .rubricEvaluation(getScmWebRubricEvaluation())
         .build();
   }
 
-  public static WebRubricEvaluation getWebRubricEvaluation() {
-    return WebRubricEvaluation.builder()
+  public static ScmWebRubricEvaluation getScmWebRubricEvaluation() {
+    return ScmWebRubricEvaluation.builder()
         .teamWork(new WebRubricCriteriaEvaluation(100d, 2))
-        .ttlDescription(new WebRubricCriteriaEvaluation(100d, 1))
-        .ttlOrganization(new WebRubricCriteriaEvaluation(100d, 1))
+        .similarity(new WebRubricCriteriaEvaluation(100d, 2))
+        .issueTraceability(new WebRubricCriteriaEvaluation(50d, 2))
         .build();
   }
 
-  public static WebIssueSimilarityFunctionConfig getSimilarityFunctionConfig() {
-    return WebIssueSimilarityFunctionConfig.builder()
-        .labelWeight(1.0)
-        .stateWeight(1.0)
-        .issueNameWeight(1.0)
+  public static WebCommitSimilarityFunctionConfig getSimilarityFunctionConfig() {
+    return WebCommitSimilarityFunctionConfig.builder()
+        .messageWeight(1.0)
+        .filesWeight(1.0)
         .build();
   }
 
-  private static WebHistoricalApmData getWebHistoricalApmData() {
-    return WebHistoricalApmData.builder()
+  private static WebHistoricalScmData getWebHistoricalScmData() {
+    return WebHistoricalScmData.builder()
         .repoOwner("davidmigloz")
         .repoName("go-bees")
+        .branch("master")
         .stringifyStartAt("2017-01-25")
-        .stringifyEndAt("2017-01-26")
-        .sprints(
+        .stringifyEndAt("2017-01-25")
+        .commits(
             List.of(
-                Sprint.builder()
-                    .issues(
-                        List.of(
-                            Issue.builder()
-                                .id("Id")
-                                .name("Issue Name")
-                                .state(IssueState.OPEN)
-                                .body("Loren ipsum, loren ipsum, loren ipsum, loren ipsum ...")
-                                .labels(
-                                    List.of(
-                                        "label1",
-                                        "label2",
-                                        "label3"
-                                    )
-                                )
-                                .hasImages(Boolean.FALSE)
-                                .hasLink(Boolean.TRUE)
-                                .hasTaskList(Boolean.FALSE)
-                                .build()
-                        )
-                    )
+                Commit.builder()
+                    .sha("Sha")
+                    .message("Message")
+                    .author("Author")
+                    .files( List.of(
+                        CommitFile.builder()
+                            .name("file1")
+                            .build(),
+                        CommitFile.builder()
+                            .name("file2")
+                            .build()
+                    ))
                     .build()
-            )
-        )
+            ))
         .build();
   }
 
-  public static WebApmCaseStudySimulation webApmCaseStudySimulationBeforeEvaluation(){
-    WebApmCaseStudySimulation result = getWebScmCaseStudySimulation();
+  public static WebScmCaseStudySimulation webScmCaseStudySimulationBeforeEvaluation(){
+    WebScmCaseStudySimulation result = getWebScmCaseStudySimulation();
     result.setRubricEvaluation(null);
     return result;
   }
