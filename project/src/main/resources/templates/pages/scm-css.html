@@ -16,16 +16,17 @@
   }
 </style>
 
-<div class="container-fluid p-5 text-center">
+<div class="container-fluid p-5 text-lg-start ">
   <h1>Source control management case study simulation evaluation</h1>
 </div>
 
+<div class="container-fluid p-5 text-lg-start">
 
 <form th:action="@{/scm-css}" th:object="${webScmCaseStudySimulation}" method="post">
   <div th:replace="fragments/scm-css-sim.html"><!-- Case study, simulation input parameters  -->
   </div>
   <span class="separator"></span>
-  <div class="row"><!-- Number of Participants  -->
+  <div class="row mb-4 gx-5"><!-- Number of Participants  -->
     <div class="col">
       <label for="participants" class="mr-sm-2">Simulation participants</label>
       <select id="participants" name="participants" th:field="*{participants}" class="form-select">
@@ -41,7 +42,7 @@
   <div th:replace="fragments/scm-similarity-function.html"><!-- Issue similarity function  -->
   </div>
   <span class="separator"></span>
-  <div class="row"><!-- Case study simulation  -->
+  <div class="row mb-4 gx-5"><!-- Case study simulation  -->
     <div class="col">
       <button type="submit" class="btn btn-dark btn-lg">Submit</button>
     </div>
@@ -57,5 +58,6 @@
  <div th:replace="fragments/scm-css-eval-results.html"></div>
 </span>
 
+</div>
 </body>
 </html>
