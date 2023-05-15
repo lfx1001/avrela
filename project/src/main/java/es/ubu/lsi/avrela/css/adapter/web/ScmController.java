@@ -23,9 +23,14 @@ public class ScmController {
   @PostMapping("/scm-css")
   public String create(@ModelAttribute WebScmCaseStudySimulation sim, Model model){
     ScmEvaluationService scmCssEvaluationService = new ScmEvaluationService();
-    WebScmCaseStudySimulation aux = ScmCssDataGenerator.getWebScmCaseStudySimulation();
-    WebScmCaseStudySimulation result = scmCssEvaluationService.evaluate(sim);
-    model.addAttribute("webScmCaseStudySimulation", result);
+    try {
+      WebScmCaseStudySimulation aux = ScmCssDataGenerator.getWebScmCaseStudySimulation();
+      WebScmCaseStudySimulation result = scmCssEvaluationService.evaluate(sim);
+      model.addAttribute("webScmCaseStudySimulation", result);
+    } catch (Exception exception){
+      log.error("During scm evaluation");
+      model.addAttribute("exception", exception);
+    }
     return "pages/scm-css";
   }
 
