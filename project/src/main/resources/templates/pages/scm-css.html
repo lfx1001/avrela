@@ -28,17 +28,18 @@
   </div>
 </nav>
 
-<div class="container-fluid p-5 text-lg-start ">
-  <h1>Source control management case study simulation evaluation</h1>
-</div>
-
 <span th:if="${exception != null}">
  <div th:replace="fragments/error.html"></div>
 </span>
 
-
-
 <div class="container-fluid p-5 text-lg-start">
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Source control management case study simulation evaluation</li>
+  </ol>
+</nav>
 
 <form th:action="@{/scm-css}" th:object="${webScmCaseStudySimulation}" method="post">
   <div th:replace="fragments/scm-css-sim.html"><!-- Case study, simulation input parameters  -->
