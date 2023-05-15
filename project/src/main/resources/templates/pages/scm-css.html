@@ -20,6 +20,12 @@
   <h1>Source control management case study simulation evaluation</h1>
 </div>
 
+<span th:if="${exception != null}">
+ <div th:replace="fragments/error.html"></div>
+</span>
+
+
+
 <div class="container-fluid p-5 text-lg-start">
 
 <form th:action="@{/scm-css}" th:object="${webScmCaseStudySimulation}" method="post">
@@ -60,4 +66,5 @@
 
 </div>
 </body>
+
 </html>

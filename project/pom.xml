@@ -83,13 +83,6 @@
 			<artifactId>bootstrap</artifactId>
 			<version>5.2.3</version>
 		</dependency>
-		<!--Dev Tools. See https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using.devtools -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
