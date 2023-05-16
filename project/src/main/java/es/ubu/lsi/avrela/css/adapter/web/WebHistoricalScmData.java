@@ -41,12 +41,12 @@ public class WebHistoricalScmData {
 
   public void setStringifyStartAt(String stringStartAt){
     this.stringifyStartAt = stringStartAt;
-    this.startAt = this.toZonedDateTime(stringStartAt);
+    this.startAt = this.toZonedDateTime(stringStartAt).plusSeconds(1);
   }
 
   public void setStringifyEndAt(String stringEndAt){
     this.stringifyEndAt = stringEndAt;
-    this.endAt = this.toZonedDateTime(stringEndAt);
+    this.endAt = this.toZonedDateTime(stringEndAt).plusHours(23).plusMinutes(59).plusSeconds(59);
   }
 
   public void setStartAt(ZonedDateTime pStartAt){
