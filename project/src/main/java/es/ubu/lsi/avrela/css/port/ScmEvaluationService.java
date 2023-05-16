@@ -55,8 +55,8 @@ public class ScmEvaluationService {
         simulationRequest.getBranch(),
         simulationRequest.getStartAt(),
         simulationRequest.getEndAt());
-    simulation.setStartAt(caseStudyRequest.getStartAt());
-    simulation.setEndAt(caseStudyRequest.getEndAt());
+    simulation.setStartAt(simulationRequest.getStartAt());
+    simulation.setEndAt(simulationRequest.getEndAt());
 
     //Features-weight mapping
     EnumMap<Feature, Double> featureWeights = new EnumMap<>(CommitSimilarity.Feature.class);
