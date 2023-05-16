@@ -25,6 +25,12 @@ Go on the packaged jar folder, then type:
 
     $ java - jar <application>.jar 
 
+#### Build a packaged war
+
+Change the pom.xml packaging section from *jar* to *war*.
+
+    $ mvn package 
+
 #### Environment variables
 
 - GITHUB_TOKEN : Use a GitHub token to avoid anoymous usage rate limits
