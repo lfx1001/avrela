@@ -16,7 +16,7 @@ public class ScmCssDataGenerator {
         .caseStudy(getWebHistoricalScmData())
         .simulation(getWebHistoricalScmData())
         .participants(1)
-        .similarityThreshold(75)
+        .similarityThreshold(0.75d)
         .commitSimilarityFunctionConfig(
             getSimilarityFunctionConfig()
         )

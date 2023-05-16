@@ -71,10 +71,11 @@ public class ScmEvaluationService {
     //teamwork
     Integer teamworkGrade = scmCriteriaService.teamWorkEvaluation(simulation, scmCss.getParticipants());
     //commitSimilarity
+    Integer similarityThreshold = (int) Math.round(scmCss.getSimilarityThreshold()*100);
     Double commitSimilarity = scmCriteriaService.getCommitSimilarity(
             ScmCaseStudySimulation.builder().caseStudy(caseStudy).simulation(simulation).build(),
           featureWeights,
-          scmCss.getSimilarityThreshold());
+          similarityThreshold);
     Integer commitSimilarityMark = Rubric.evaluateCriteria(RubricDataGenerator.scmCriteria()
         .getCommitSimilarityCriteriaScale(), commitSimilarity);
     //issueTraceability

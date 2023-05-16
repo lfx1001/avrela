@@ -15,7 +15,7 @@ public class WebScmCaseStudySimulation {
 
   private WebCommitSimilarityFunctionConfig commitSimilarityFunctionConfig;
 
-  private Integer similarityThreshold;
+  private Double similarityThreshold;
 
   private ScmWebRubricEvaluation  rubricEvaluation;
 
