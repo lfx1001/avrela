@@ -21,7 +21,7 @@ public class ScmCaseStudySimulation {
 
   private HistoricalScmData simulation;
   public List<Commit> filterCommitMatchComparison(EnumMap<Feature, Double> featureWeights, int commitSimilarityThreshold) {
-    log.debug( "Similartiy threshold is [{}]", commitSimilarityThreshold);
+    log.debug( "Similarity threshold is [{}]", commitSimilarityThreshold);
     List<Commit> result = new ArrayList<>();
     Iterator<Commit> caseStudyCommits = caseStudy.getCommits().iterator();
     Iterator<Commit> simulationCommits = simulation.getCommits().iterator();

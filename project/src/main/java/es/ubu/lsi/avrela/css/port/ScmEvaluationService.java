@@ -5,6 +5,7 @@ import es.ubu.lsi.avrela.css.adapter.web.ScmWebRubricEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebHistoricalScmData;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebScmCaseStudySimulation;
+import es.ubu.lsi.avrela.css.model.CommitComparison;
 import es.ubu.lsi.avrela.css.model.Rubric;
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
 import es.ubu.lsi.avrela.css.util.RubricDataGenerator;
@@ -18,6 +19,7 @@ import es.ubu.lsi.avrela.scm.model.CommitSimilarity.Feature;
 import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
 import feign.Logger.Level;
 import java.util.EnumMap;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -78,10 +80,14 @@ public class ScmEvaluationService {
           similarityThreshold);
     Integer commitSimilarityMark = Rubric.evaluateCriteria(RubricDataGenerator.scmCriteria()
         .getCommitSimilarityCriteriaScale(), commitSimilarity);
+
+    List<CommitComparison> commitComparisons = ScmCaseStudySimulation.builder().caseStudy(caseStudy).simulation(simulation).build().compare(featureWeights, similarityThreshold);
     //issueTraceability
     Double issueTraceability = scmCriteriaService.getCommitsWithIssueTraceability(ScmCaseStudySimulation.builder().caseStudy(caseStudy).simulation(simulation).build());
     Integer issueTraceabilityMark = Rubric.evaluateCriteria(RubricDataGenerator.scmCriteria()
         .getApmIssueTraceabilityCriteriaScale(), issueTraceability);
+
+
 
     ScmWebRubricEvaluation evaluation = ScmWebRubricEvaluation.builder()
         .teamWork(
@@ -100,6 +106,7 @@ public class ScmEvaluationService {
         .simulation(webHistorialScmDataMapper.toDto(simulation))
         .participants(scmCss.getParticipants())
         .commitSimilarityFunctionConfig(scmCss.getCommitSimilarityFunctionConfig())
+        .commitComparisons(commitComparisons)
         .similarityThreshold(scmCss.getSimilarityThreshold())
         .rubricEvaluation(evaluation)
         .build();
