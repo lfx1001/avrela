@@ -34,4 +34,46 @@ public class ScmCaseStudySimulation {
     }
     return result;
   }
+
+  public List<CommitComparison> compare(EnumMap<Feature, Double> featureWeights, double commitSimilarityThreshold){
+    //first take the commits
+    log.debug( "Similarity threshold is [{}]", commitSimilarityThreshold);
+    List<CommitComparison> result = new ArrayList<>();
+    Iterator<Commit> caseStudyCommits = caseStudy.getCommits().iterator();
+    Iterator<Commit> simulationCommits = simulation.getCommits().iterator();
+    Commit caseStudyCommit = null;
+    Commit simulationCommit = null;
+    while (caseStudyCommits.hasNext() && simulationCommits.hasNext()){
+      caseStudyCommit = caseStudyCommits.next();
+      simulationCommit = simulationCommits.next();
+        result.add(
+            CommitComparison.builder()
+                .caseStudy(caseStudyCommit)
+                .simulation(simulationCommit)
+                .similarity(CommitSimilarity.similarityDetailOf(caseStudyCommit, simulationCommit, featureWeights))
+                .build()
+        );
+    }
+    if (caseStudyCommits.hasNext()) {
+      caseStudyCommit = caseStudyCommits.next();
+      result.add(
+          CommitComparison.builder()
+              .caseStudy(caseStudyCommit)
+              .simulation(Commit.emptyCommit())
+              .similarity(CommitSimilarityResult.emptyResult())
+              .build()
+      );
+    }
+    if (simulationCommits.hasNext()) {
+      simulationCommit = simulationCommits.next();
+      result.add(
+          CommitComparison.builder()
+              .caseStudy(Commit.emptyCommit())
+              .simulation(simulationCommit)
+              .similarity(CommitSimilarityResult.emptyResult())
+              .build()
+      );
+    }
+    return result;
+  }
 }
