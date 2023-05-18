@@ -81,7 +81,7 @@
 
   <div th:each="commitComparison, commitStatus : ${webScmCaseStudySimulation?.commitComparisons}" class="row"><!-- APM Case study simulation  -->
     <div class="col">
-      <div th:replace="fragments/commit.html :: commit(commit=${commitComparison.caseStudy})">
+      <div th:replace="fragments/commit.html :: commit(commit=${commitComparison.caseStudy}, owner=${webScmCaseStudySimulation.caseStudy.repoOwner}, repository=${webScmCaseStudySimulation.caseStudy.repoName})">
       </div>
     </div>
     <div class="col">
@@ -104,7 +104,7 @@
       </div>
     </div>
     <div class="col">
-        <div th:replace="fragments/commit.html :: commit(commit=${commitComparison?.simulation})">
+        <div th:replace="fragments/commit.html :: commit(commit=${commitComparison?.simulation}, owner=${webScmCaseStudySimulation.simulation.repoOwner}, repository=${webScmCaseStudySimulation.simulation.repoName})">
         </div>
     </div>
   </div> <!-- row -->
