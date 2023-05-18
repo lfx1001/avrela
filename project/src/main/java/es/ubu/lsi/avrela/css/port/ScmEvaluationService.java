@@ -31,8 +31,8 @@ public class ScmEvaluationService {
 
   public WebScmCaseStudySimulation evaluate (WebScmCaseStudySimulation  scmCss){
     // Init GitHubClient
-    GitHubScmClient gitHubScmClient = GitHubScmClient.with(Level.FULL);
-    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.FULL);
+    GitHubScmClient gitHubScmClient = GitHubScmClient.with(Level.BASIC);
+    GitHubApmClient gitHubApmClient = GitHubApmClient.with(Level.BASIC);
 
     GitHubCommitRepository commitRepository = new GitHubCommitRepository(gitHubScmClient, gitHubApmClient, new GitHubCommitMapper(new GitHubCommitFileMapper()));
 
