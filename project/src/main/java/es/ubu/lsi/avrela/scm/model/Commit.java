@@ -70,8 +70,8 @@ public class Commit {
 
   public static Commit emptyCommit(){
     return Commit.builder()
-        .sha("No commit")
-        .message("No commit")
+        .sha("No commit to compare")
+        .message("No commit to compare")
         .files(Collections.emptyList())
         .build();
   }
