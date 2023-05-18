@@ -54,7 +54,7 @@ public class ScmCaseStudySimulation {
                 .build()
         );
     }
-    if (caseStudyCommits.hasNext()) {
+    while (caseStudyCommits.hasNext()) {
       caseStudyCommit = caseStudyCommits.next();
       result.add(
           CommitComparison.builder()
@@ -64,7 +64,7 @@ public class ScmCaseStudySimulation {
               .build()
       );
     }
-    if (simulationCommits.hasNext()) {
+    while (simulationCommits.hasNext()) {
       simulationCommit = simulationCommits.next();
       result.add(
           CommitComparison.builder()
