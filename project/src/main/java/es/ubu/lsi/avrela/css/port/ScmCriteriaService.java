@@ -1,9 +1,12 @@
 package es.ubu.lsi.avrela.css.port;
 
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
+import es.ubu.lsi.avrela.scm.model.Commit;
 import es.ubu.lsi.avrela.scm.model.CommitSimilarity.Feature;
 import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
+import java.util.Collections;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +27,30 @@ public class ScmCriteriaService {
       return 0;
     }
   }
+
+  public Integer teamWorkEvaluationBasedOnAlternativeCommits(HistoricalScmData simulation, Integer simulationParticipants) {
+    List<String> currentStreakAuthors = Collections.emptyList();
+    String lastAuthor = null;
+    //Evaluate agile fidelity (authors alternate commits)
+    Integer result = 0;
+    if(simulationParticipants == 1) {
+      return simulation.getCommits().size(); // Tg
+    }
+    for (Commit commit : simulation.getCommits()){
+      if (currentStreakAuthors.isEmpty()){
+        currentStreakAuthors.add(commit.getAuthor());
+        result++;
+      }else{
+        if (currentStreakAuthors.contains(commit.getAuthor())){
+
+        }
+      }
+      currentStreakAuthors.add(commit.getAuthor());
+    }
+    return result;
+  }
+
+
 
   public Double getCommitSimilarity(ScmCaseStudySimulation scmCaseStudySimulation, EnumMap<Feature, Double> featureWeights, int similarityThreshold){
     Double result;
