@@ -71,7 +71,10 @@ public class ScmEvaluationService {
         .getMessageWeight());
     //calculations
     //teamwork
-    Integer teamworkGrade = scmCriteriaService.teamWorkEvaluation(simulation, scmCss.getParticipants());
+    Double teamWork = Double.valueOf(
+        scmCriteriaService.teamWorkEvaluationBasedOnAlternativeCommits(simulation, scmCss.getParticipants()/simulation.getCommits().size()))*100;
+    Integer teamworkGrade = Rubric.evaluateCriteria(RubricDataGenerator.scmCriteria()
+        .getTeamWorkCriteriaScale(), teamWork);
     //commitSimilarity
     Integer similarityThreshold = (int) Math.round(scmCss.getSimilarityThreshold()*100);
     Double commitSimilarity = scmCriteriaService.getCommitSimilarity(
@@ -91,7 +94,7 @@ public class ScmEvaluationService {
 
     ScmWebRubricEvaluation evaluation = ScmWebRubricEvaluation.builder()
         .teamWork(
-            new WebRubricCriteriaEvaluation(0d, teamworkGrade)
+            new WebRubricCriteriaEvaluation(teamWork, teamworkGrade)
         )
         .similarity(
             new WebRubricCriteriaEvaluation(commitSimilarity,commitSimilarityMark)

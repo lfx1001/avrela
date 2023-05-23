@@ -4,7 +4,7 @@ import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
 import es.ubu.lsi.avrela.scm.model.Commit;
 import es.ubu.lsi.avrela.scm.model.CommitSimilarity.Feature;
 import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Set;
@@ -29,25 +29,28 @@ public class ScmCriteriaService {
   }
 
   public Integer teamWorkEvaluationBasedOnAlternativeCommits(HistoricalScmData simulation, Integer simulationParticipants) {
-    List<String> currentStreakAuthors = Collections.emptyList();
-    String lastAuthor = null;
+    List<String> currentStreakAuthors = new ArrayList<>();
     //Evaluate agile fidelity (authors alternate commits)
     Integer result = 0;
     if(simulationParticipants == 1) {
-      return simulation.getCommits().size(); // Tg
+      return simulation.getCommits().size();
     }
     for (Commit commit : simulation.getCommits()){
-      if (currentStreakAuthors.isEmpty()){
-        currentStreakAuthors.add(commit.getAuthor());
-        result++;
-      }else{
         if (currentStreakAuthors.contains(commit.getAuthor())){
-
+          // a new streak may start
+          currentStreakAuthors = new ArrayList<>();
+          currentStreakAuthors.add(commit.getAuthor());
+        } else {
+          currentStreakAuthors.add(commit.getAuthor());
+          if (currentStreakAuthors.size() == simulationParticipants){
+            //count the streak
+            result =  result + simulationParticipants;
+            //new streak starts
+            currentStreakAuthors = new ArrayList<>();
+          }
         }
-      }
-      currentStreakAuthors.add(commit.getAuthor());
     }
-    return result;
+    return result + currentStreakAuthors.size();
   }
 
 
