@@ -17,7 +17,7 @@
       </thead>
       <tbody>
       <tr>
-        <th scope="row">Teamwork</th>
+        <th scope="row"><a href="#" data-bs-toggle="tooltip" data-bs-title="Evaluates that the commits of the simulation are carried out alternately between the members of the team.">Teamwork</a></th>
         <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.teamWork?.mark}">
           <td class="table-success" th:case="0"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.teamWork?.value}"/> [0,50)</td>
           <td th:case="*">[0,50)</td>
@@ -32,7 +32,7 @@
         </div>
       </tr>
       <tr>
-        <th scope="row">Similarity</th>
+        <th scope="row"><a href="#" data-bs-toggle="tooltip" data-bs-title="Evaluates the percentage of commits in the simulation that are similar to the commits in the case study.">Similarity</a></th>
         <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.similarity?.mark}">
           <td class="table-success" th:case="0"><strong th:text="${webScmCaseStudySimulation.rubricEvaluation?.similarity?.value}"/> [0,100)</td>
           <td th:case="*">-</td>
@@ -47,7 +47,7 @@
         </div>
       </tr>
       <tr>
-        <th scope="row">APM Issue Traceability</th>
+        <th scope="row"><a href="#" data-bs-toggle="tooltip" data-bs-title="The percentage of simulation commits that have a task established in the agile project management tool is valued.">APM Issue Traceability</a></th>
         <div th:switch="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.mark}">
           <td class="table-success" th:case="0"><strong th:text="${webScmCaseStudySimulation?.rubricEvaluation?.issueTraceability?.value}"/>-</td>
           <td th:case="*">-</td>
