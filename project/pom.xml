@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.ubu.lsi</groupId>
 	<artifactId>avrela</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>avrela</name>
 	<description>Automated virtual repository lab assesment.</description>
 	<properties>
