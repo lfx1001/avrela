@@ -77,8 +77,14 @@
   <span class="separator"/>
 
   <span class="separator"/>
-  <!-- commit details goes here -->
 
+  <div class="row mb-4 gx-5"><!-- Row header  -->
+    <div class="col"><h6>Original commit</h6></div>
+    <div class="col"><h6>Similarity</h6></div>
+    <div class="col"><h6>Simulation commit</h6></div>
+  </div> <!-- row -->
+
+  <!-- commit details goes here -->
   <div th:each="commitComparison, commitStatus : ${webScmCaseStudySimulation?.commitComparisons}" class="row mb-4 gx-5"><!-- APM Case study simulation  -->
     <div class="col">
       <div th:replace="fragments/commit.html :: commit(commit=${commitComparison.caseStudy}, owner=${webScmCaseStudySimulation.caseStudy.repoOwner}, repository=${webScmCaseStudySimulation.caseStudy.repoName})">
