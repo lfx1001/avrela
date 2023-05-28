@@ -1,9 +1,12 @@
 package es.ubu.lsi.avrela.css.port;
 
 import es.ubu.lsi.avrela.css.model.ScmCaseStudySimulation;
+import es.ubu.lsi.avrela.scm.model.Commit;
 import es.ubu.lsi.avrela.scm.model.CommitSimilarity.Feature;
 import es.ubu.lsi.avrela.scm.model.HistoricalScmData;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +28,33 @@ public class ScmCriteriaService {
     }
   }
 
+  public Integer teamWorkEvaluationBasedOnAlternativeCommits(HistoricalScmData simulation, Integer simulationParticipants) {
+    List<String> currentStreakAuthors = new ArrayList<>();
+    //Evaluate agile fidelity (authors alternate commits)
+    Integer result = 0;
+    if(simulationParticipants == 1) {
+      return simulation.getCommits().size();
+    }
+    for (Commit commit : simulation.getCommits()){
+        if (currentStreakAuthors.contains(commit.getAuthor())){
+          // a new streak may start
+          currentStreakAuthors = new ArrayList<>();
+          currentStreakAuthors.add(commit.getAuthor());
+        } else {
+          currentStreakAuthors.add(commit.getAuthor());
+          if (currentStreakAuthors.size() == simulationParticipants){
+            //count the streak
+            result =  result + simulationParticipants;
+            //new streak starts
+            currentStreakAuthors = new ArrayList<>();
+          }
+        }
+    }
+    return result + currentStreakAuthors.size();
+  }
+
+
+
   public Double getCommitSimilarity(ScmCaseStudySimulation scmCaseStudySimulation, EnumMap<Feature, Double> featureWeights, int similarityThreshold){
     Double result;
     Integer commitSimilarityDividend = scmCaseStudySimulation.filterCommitMatchComparison(featureWeights, similarityThreshold).size();
@@ -44,7 +74,16 @@ public class ScmCriteriaService {
         .getCommitsWithIssueTraceability()
         .size();
 
-    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
+    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getSimulation().getCommits().size();
+
+
+    if( commitsWithIssueTraceabilityDividend > commitsWithIssueTraceabilityDivisor){
+      return 100d;
+    }
+
+    if( commitsWithIssueTraceabilityDivisor == 0){
+      return 0d;
+    }
 
     Double result = 100*Double.valueOf((double)commitsWithIssueTraceabilityDividend / commitsWithIssueTraceabilityDivisor);
     log.debug( "Issue traceability [{}]/[{}] adjusted is [{}]", commitsWithIssueTraceabilityDividend, commitsWithIssueTraceabilityDivisor, result);

@@ -67,7 +67,7 @@
 
   <span class="separator"/>
 
-  <div class="row"><!-- SCM Case study simulation  -->
+  <div class="row mb-4 gx-5" ><!-- SCM Case study simulation  -->
     <div class="col"><h5>Commit comparison</h5>
     </div>
     <div class="col">
@@ -79,18 +79,33 @@
   <span class="separator"/>
   <!-- commit details goes here -->
 
-  <div th:each="commit, commitStatus : ${webScmCaseStudySimulation?.caseStudy?.commits}" class="row"><!-- APM Case study simulation  -->
+  <div th:each="commitComparison, commitStatus : ${webScmCaseStudySimulation?.commitComparisons}" class="row mb-4 gx-5"><!-- APM Case study simulation  -->
     <div class="col">
-      <div th:replace="fragments/commit.html :: commit(commit=${commit})">
+      <div th:replace="fragments/commit.html :: commit(commit=${commitComparison.caseStudy}, owner=${webScmCaseStudySimulation.caseStudy.repoOwner}, repository=${webScmCaseStudySimulation.caseStudy.repoName})">
       </div>
     </div>
     <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <strong th:text="${commitComparison?.similarity?.result}"></strong>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Message similarity
+            <span class="badge bg-secondary">
+        <small th:text="${commitComparison?.similarity?.messageSimilarity}"></small>
+          </span>
+          </li>
+          <li class="list-group-item">Commit files similarity
+            <span class="badge bg-secondary">
+        <small th:text="${commitComparison?.similarity?.commitFilesSimilarity}"></small>
+          </span>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="col">
-      <span th:if="${webScmCaseStudySimulation?.simulation?.commits?.size() gt 0 and commitStatus?.index lt webScmCaseStudySimulation?.simulation?.commits?.size()}">
-        <div th:replace="fragments/commit.html :: commit(commit=${webScmCaseStudySimulation?.simulation?.getCommits()?.get(commitStatus?.index)})">
+        <div th:replace="fragments/commit.html :: commit(commit=${commitComparison?.simulation}, owner=${webScmCaseStudySimulation.simulation.repoOwner}, repository=${webScmCaseStudySimulation.simulation.repoName})">
         </div>
-      </span>
     </div>
   </div> <!-- row -->
 </div><!-- Evaluation results -->

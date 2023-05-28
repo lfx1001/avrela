@@ -21,7 +21,7 @@ public class ScmCaseStudySimulation {
 
   private HistoricalScmData simulation;
   public List<Commit> filterCommitMatchComparison(EnumMap<Feature, Double> featureWeights, int commitSimilarityThreshold) {
-    log.debug( "Similartiy threshold is [{}]", commitSimilarityThreshold);
+    log.debug( "Similarity threshold is [{}]", commitSimilarityThreshold);
     List<Commit> result = new ArrayList<>();
     Iterator<Commit> caseStudyCommits = caseStudy.getCommits().iterator();
     Iterator<Commit> simulationCommits = simulation.getCommits().iterator();
@@ -31,6 +31,48 @@ public class ScmCaseStudySimulation {
           >= commitSimilarityThreshold){
         result.add(commit);
       }
+    }
+    return result;
+  }
+
+  public List<CommitComparison> compare(EnumMap<Feature, Double> featureWeights, double commitSimilarityThreshold){
+    //first take the commits
+    log.debug( "Similarity threshold is [{}]", commitSimilarityThreshold);
+    List<CommitComparison> result = new ArrayList<>();
+    Iterator<Commit> caseStudyCommits = caseStudy.getCommits().iterator();
+    Iterator<Commit> simulationCommits = simulation.getCommits().iterator();
+    Commit caseStudyCommit = null;
+    Commit simulationCommit = null;
+    while (caseStudyCommits.hasNext() && simulationCommits.hasNext()){
+      caseStudyCommit = caseStudyCommits.next();
+      simulationCommit = simulationCommits.next();
+        result.add(
+            CommitComparison.builder()
+                .caseStudy(caseStudyCommit)
+                .simulation(simulationCommit)
+                .similarity(CommitSimilarity.similarityDetailOf(caseStudyCommit, simulationCommit, featureWeights))
+                .build()
+        );
+    }
+    while (caseStudyCommits.hasNext()) {
+      caseStudyCommit = caseStudyCommits.next();
+      result.add(
+          CommitComparison.builder()
+              .caseStudy(caseStudyCommit)
+              .simulation(Commit.emptyCommit())
+              .similarity(CommitSimilarityResult.emptyResult())
+              .build()
+      );
+    }
+    while (simulationCommits.hasNext()) {
+      simulationCommit = simulationCommits.next();
+      result.add(
+          CommitComparison.builder()
+              .caseStudy(Commit.emptyCommit())
+              .simulation(simulationCommit)
+              .similarity(CommitSimilarityResult.emptyResult())
+              .build()
+      );
     }
     return result;
   }

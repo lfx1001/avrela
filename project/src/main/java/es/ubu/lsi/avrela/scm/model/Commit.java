@@ -1,6 +1,7 @@
 package es.ubu.lsi.avrela.scm.model;
 
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,5 +66,13 @@ public class Commit {
       return false;
     }
     return true;
+  }
+
+  public static Commit emptyCommit(){
+    return Commit.builder()
+        .sha("No commit to compare")
+        .message("No commit to compare")
+        .files(Collections.emptyList())
+        .build();
   }
 }

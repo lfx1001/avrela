@@ -36,8 +36,8 @@ public class RubricDataGenerator {
   public static ScmCriteriaScalesConfig scmCriteria(){
     // teamwork criteria
     Map<String, String> scmTeamWorkCriteriaDefinition = new HashMap<>();
-    scmTeamWorkCriteriaDefinition.put("0", "50");
-    scmTeamWorkCriteriaDefinition.put("1", "None");
+    scmTeamWorkCriteriaDefinition.put("0", "0");
+    scmTeamWorkCriteriaDefinition.put("1", "50");
     scmTeamWorkCriteriaDefinition.put("2", "100");
     // Task management tool - description
     Map<String, String> commitSimilarityCriteriaDefinition = new HashMap<>();
