@@ -47,7 +47,7 @@
   <span class="separator"></span>
   <div class="row mb-4 gx-5"><!-- Number of Participants  -->
     <div class="col">
-      <label for="participants" class="mr-sm-2"><a href="#" data-bs-toggle="tooltip" data-bs-title="Default tooltip">Simulation participants</a></label>
+      <label for="participants" class="mr-sm-2"><a href="#" data-bs-toggle="tooltip" data-bs-title="Number of participants">Simulation participants</a></label>
       <select id="participants" name="participants" th:field="*{participants}" class="form-select">
         <option th:each="i : ${#numbers.sequence(1, 4)}" th:value="${i}" th:text="${i}"
                 th:selected="${i} == ${webScmCaseStudySimulation.participants}"></option>
@@ -57,11 +57,6 @@
     <div class="col"></div>
     <div class="col"></div>
   </div>
-  <script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-
-  </script>
   <span class="separator"></span>
   <div th:replace="fragments/scm-similarity-function.html"><!-- Issue similarity function  -->
   </div>
@@ -84,5 +79,9 @@
 
 </div>
 </body>
+<script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+</script>
 
 </html>
