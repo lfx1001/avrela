@@ -20,7 +20,7 @@ public class ScmCssDataGenerator {
         .commitSimilarityFunctionConfig(
             getSimilarityFunctionConfig()
         )
-        .rubricEvaluation(getScmWebRubricEvaluation())
+        .rubricEvaluation(null)
         .build();
   }
 
