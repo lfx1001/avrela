@@ -74,7 +74,7 @@ public class ScmCriteriaService {
         .getCommitsWithIssueTraceability()
         .size();
 
-    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getCaseStudy().getCommits().size();
+    Integer commitsWithIssueTraceabilityDivisor = scmCaseStudySimulation.getSimulation().getCommits().size();
 
 
     if( commitsWithIssueTraceabilityDividend > commitsWithIssueTraceabilityDivisor){
