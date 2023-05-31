@@ -71,8 +71,8 @@ public class ScmEvaluationService {
         .getMessageWeight());
     //calculations
     //teamwork
-    Double teamWork = Double.valueOf(
-        scmCriteriaService.teamWorkEvaluationBasedOnAlternativeCommits(simulation, scmCss.getParticipants()/simulation.getCommits().size()))*100;
+    Double teamWork = 100*Double.valueOf(
+        scmCriteriaService.teamWorkEvaluationBasedOnAlternativeCommits(simulation, scmCss.getParticipants())/(simulation.getCommits().size()));
     Integer teamworkGrade = Rubric.evaluateCriteria(RubricDataGenerator.scmCriteria()
         .getTeamWorkCriteriaScale(), teamWork);
     //commitSimilarity
