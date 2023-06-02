@@ -16,16 +16,36 @@
   }
 </style>
 
-<div class="container-fluid p-5 text-center">
-  <h1>Agile project management case study simulation evaluation</h1>
-</div>
+<nav class="navbar bg-secondary">
+  <div class="container-fluid p-5 text-lg-start ">
+    <a class="navbar-brand" href="#">
+      <img src="check-logo.svg" alt="Avrela logo" width="50" height="50">
+      Automated Virtual REpository Lab Assesment
+    </a>
+    <a class="navbar-brand" href="#">
+      <img src="ubu.png" alt="Ubu logo" width="156" height="59">
+    </a>
+  </div>
+</nav>
 
+<span th:if="${exception != null}">
+ <div th:replace="fragments/error.html"></div>
+</span>
+
+<div class="container-fluid p-5 text-lg-start">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Agile project management case study simulation evaluation</li>
+    </ol>
+  </nav>
 
 <form th:action="@{/apm-css}" th:object="${webApmCaseStudySimulation}" method="post">
   <div th:replace="fragments/css-sim.html"><!-- Case study, simulation input parameters  -->
   </div>
   <span class="separator"></span>
-  <div class="row"><!-- Number of Participants  -->
+  <div class="row mb-4 gx-5"><!-- Number of Participants  -->
     <div class="col">
       <label for="participants" class="mr-sm-2">Simulation participants</label>
       <select id="participants" name="participants" th:field="*{participants}" class="form-select">
@@ -41,7 +61,7 @@
   <div th:replace="fragments/apm-similarity-function.html"><!-- Issue similarity function  -->
   </div>
   <span class="separator"></span>
-  <div class="row"><!-- APM Case study simulation  -->
+  <div class="row mb-4 gx-5"><!-- APM Case study simulation  -->
     <div class="col">
       <button type="submit" class="btn btn-dark btn-lg">Submit</button>
     </div>
@@ -57,5 +77,10 @@
  <div th:replace="fragments/apm-css-eval-results.html"></div>
 </span>
 
+</div>
 </body>
+<script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+</script>
 </html>

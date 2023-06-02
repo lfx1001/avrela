@@ -1,9 +1,9 @@
 <div><!-- Issue similarity function  -->
-  <div class="row">
+  <div class="row mb-4 gx-5">
     <div class="col"><h2>Issue similarity function settings </h2></div>
     <div class="col"></div>
   </div>
-  <div class="row"><!-- Similarity labels, state, issue name -->
+  <div class="row mb-4 gx-5"><!-- Similarity labels, state, issue name -->
     <div class="col">
       <label for="labelSimilarityWeight" class="form-label">Label similarity weight</label>
       <input id="labelSimilarityWeight" min="0.01" max="1" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.labelWeight}" />
@@ -17,5 +17,18 @@
       <input id="issueNameSimilarityWeight" min="0.01" max="1" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.issueNameWeight}" />
     </div>
     <div class="col"></div>
+  </div>
+  <span class="separator"></span>
+  <div><!-- Similarity threshold  -->
+    <div class="row mb-4 gx-5"><!-- Similarity threshold -->
+      <div class="col">
+        <label for="similarityThreshold" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="Minimal overall similarity value to consider two commits as equal">Similarity threshold</a></label>
+        <input id="similarityThreshold" min="0.01" max="1" step="0.01" type="number" class="form-control" th:field="*{similarityThreshold}" />
+      </div>
+      <div class="col">
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
   </div>
 </div>
