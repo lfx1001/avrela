@@ -50,7 +50,7 @@ public class ScmCriteriaService {
           }
         }
     }
-    return result + currentStreakAuthors.size();
+    return result;
   }
 
 

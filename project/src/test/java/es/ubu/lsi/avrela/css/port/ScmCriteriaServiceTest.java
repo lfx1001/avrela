@@ -30,7 +30,7 @@ class ScmCriteriaServiceTest {
   }
 
   @Test
-  void whenAllCommitsHasSameAuthorAnd3ParticipantsShouldReturnAllCommits() {
+  void whenAllCommitsHasSameAuthorAnd3ParticipantsShouldReturnNoCommits() {
     HistoricalScmData scmData = HistoricalScmData.builder()
         .commits(List.of(
             getCommitWithAuthor("A"),
@@ -38,14 +38,14 @@ class ScmCriteriaServiceTest {
             getCommitWithAuthor("A"),
             getCommitWithAuthor("A"),
             getCommitWithAuthor("A"),
-            getCommitWithAuthor("B")
+            getCommitWithAuthor("A")
 
         ))
         .build();
 
     Integer result = scmCriteriaService.teamWorkEvaluationBasedOnAlternativeCommits(scmData, 3);
 
-    Assertions.assertEquals(6, result);
+    Assertions.assertEquals(0, result);
   }
 
   @Test
