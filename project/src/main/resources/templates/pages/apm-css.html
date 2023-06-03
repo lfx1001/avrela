@@ -4,8 +4,7 @@
   <meta charset="UTF-8"/>
   <title>AVRELA - Automated virtual repository lab assesment </title>
   <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
-  <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
-</head>
+  <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"></script></head>
 <body>
 <style>
   span.separator {
@@ -47,7 +46,7 @@
   <span class="separator"></span>
   <div class="row mb-4 gx-5"><!-- Number of Participants  -->
     <div class="col">
-      <label for="participants" class="mr-sm-2">Simulation participants</label>
+      <label for="participants" class="mr-sm-2"><a href="#" data-bs-toggle="tooltip" data-bs-title="Number of participants">Simulation participants</a></label>
       <select id="participants" name="participants" th:field="*{participants}" class="form-select">
         <option th:each="i : ${#numbers.sequence(1, 4)}" th:value="${i}" th:text="${i}"
                 th:selected="${i} == ${webApmCaseStudySimulation.participants}"></option>
