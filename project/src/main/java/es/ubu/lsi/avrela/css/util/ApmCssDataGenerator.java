@@ -16,6 +16,7 @@ public class ApmCssDataGenerator {
     return WebApmCaseStudySimulation.builder()
         .caseStudy(getWebHistoricalApmData())
         .simulation(getWebHistoricalApmData())
+        .similarityThreshold(0.75)
         .participants(1)
         .issueSimilarityFunctionConfig(
             getSimilarityFunctionConfig()

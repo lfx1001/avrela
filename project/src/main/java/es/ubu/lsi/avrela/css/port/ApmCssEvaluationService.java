@@ -79,8 +79,9 @@ public class ApmCssEvaluationService {
     WebApmCaseStudySimulation result = WebApmCaseStudySimulation.builder()
         .caseStudy(webHistoricalApmDataMapper.toDto(caseStudy))
         .simulation(webHistoricalApmDataMapper.toDto(simulation))
-        .rubricEvaluation(webRubricEvaluation) // TODO: replace
-        .issueSimilarityFunctionConfig(apmCss.getIssueSimilarityFunctionConfig()) // TODO: implement
+        .rubricEvaluation(webRubricEvaluation)
+        .similarityThreshold(apmCss.getSimilarityThreshold())
+        .issueSimilarityFunctionConfig(apmCss.getIssueSimilarityFunctionConfig())
         .participants(apmCss.getParticipants())
         .build();
 
