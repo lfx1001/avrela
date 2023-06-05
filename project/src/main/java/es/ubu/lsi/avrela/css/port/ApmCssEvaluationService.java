@@ -7,16 +7,23 @@ import es.ubu.lsi.avrela.apm.adapter.github.mapper.GitHubMilestoneMapper;
 import es.ubu.lsi.avrela.apm.adapter.web.WebHistoricalApmData;
 import es.ubu.lsi.avrela.apm.adapter.web.mapper.WebHistoricalApmDataMapper;
 import es.ubu.lsi.avrela.apm.model.HistoricalApmData;
+import es.ubu.lsi.avrela.apm.model.IssueSimilarity;
+import es.ubu.lsi.avrela.apm.model.IssueSimilarity.Feature;
 import es.ubu.lsi.avrela.css.adapter.web.WebApmCaseStudySimulation;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricCriteriaEvaluation;
 import es.ubu.lsi.avrela.css.adapter.web.WebRubricEvaluation;
 import es.ubu.lsi.avrela.css.model.ApmCaseStudySimulation;
 import es.ubu.lsi.avrela.css.model.ApmCriteriaScalesConfig;
+import es.ubu.lsi.avrela.css.model.IssueComparison;
 import es.ubu.lsi.avrela.css.model.Rubric;
 import es.ubu.lsi.avrela.css.util.ApmCssDataGenerator;
 import es.ubu.lsi.avrela.css.util.RubricDataGenerator;
 import feign.Logger.Level;
+import java.util.EnumMap;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ApmCssEvaluationService {
 
   private ApmCriteriaService criteriaService = new ApmCriteriaService();
@@ -51,6 +58,20 @@ public class ApmCssEvaluationService {
     simulation.setStartAt(simulationRequest.getStartAt());
     simulation.setEndAt(simulationRequest.getEndAt());
 
+    //Features-weight mapping
+    EnumMap<IssueSimilarity.Feature, Double> featureWeights = new EnumMap<>(IssueSimilarity.Feature.class);
+    log.debug("labels {}  states {} name {} ",
+        apmCss.getIssueSimilarityFunctionConfig().getLabelWeight(),
+        apmCss.getIssueSimilarityFunctionConfig().getStateWeight(),
+        apmCss.getIssueSimilarityFunctionConfig().getIssueNameWeight());
+
+    featureWeights.put(IssueSimilarity.Feature.LABELS,  apmCss.getIssueSimilarityFunctionConfig()
+        .getLabelWeight());
+    featureWeights.put(Feature.STATE, apmCss.getIssueSimilarityFunctionConfig()
+        .getStateWeight());
+    featureWeights.put(Feature.ISSUE_NAME, apmCss.getIssueSimilarityFunctionConfig()
+        .getIssueNameWeight());
+
     //calculations
     ApmCriteriaScalesConfig apmScales = RubricDataGenerator.apmCriteria();
     //teamwork
@@ -74,6 +95,8 @@ public class ApmCssEvaluationService {
         )
         .ttlOrganization(ApmCssDataGenerator.getWebRubricEvaluation().getTtlOrganization()) // TODO: calculate & replace
         .build();
+
+    List<IssueComparison> issueComparisons = ApmCaseStudySimulation.builder().caseStudy(caseStudy).simulation(simulation).build().compare(featureWeights, apmCss.getSimilarityThreshold());
 
     //Results
     WebApmCaseStudySimulation result = WebApmCaseStudySimulation.builder()
