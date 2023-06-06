@@ -74,7 +74,7 @@ public class ApmCaseStudySimulation {
       );
     }
     while (simulationIssues.hasNext()) {
-      simulationIssue = caseStudyIssues.next();
+      simulationIssue = simulationIssues.next();
       result.add(
           IssueComparison.builder()
               .caseStudy(Issue.emptyIssue())

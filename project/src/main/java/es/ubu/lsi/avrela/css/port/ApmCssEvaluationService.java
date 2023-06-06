@@ -106,6 +106,7 @@ public class ApmCssEvaluationService {
         .similarityThreshold(apmCss.getSimilarityThreshold())
         .issueSimilarityFunctionConfig(apmCss.getIssueSimilarityFunctionConfig())
         .participants(apmCss.getParticipants())
+        .issueComparisons(issueComparisons)
         .build();
 
     return result;

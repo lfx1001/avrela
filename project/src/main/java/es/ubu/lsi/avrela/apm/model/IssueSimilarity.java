@@ -57,6 +57,7 @@ public class IssueSimilarity {
        .stateSimilarityWeighted(stateSimilarityWeighted)
        .nameSimilarity(issueNameSimilarity)
        .nameSimilarityWeighted(issueNameSimilarityWeighted)
+       .result(result)
        .build();
   }
 }
