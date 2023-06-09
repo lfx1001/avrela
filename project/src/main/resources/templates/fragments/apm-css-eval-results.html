@@ -17,7 +17,7 @@
       </thead>
       <tbody>
       <tr>
-        <th scope="row">Teamwork</th>
+        <th scope="row"><a href="#" data-bs-toggle="tooltip" data-bs-title="It is based on the average percentage of participation of the group of students in the tasks">Teamwork</a></th>
         <div th:switch="${webApmCaseStudySimulation?.rubricEvaluation?.teamWork?.mark}">
           <td class="table-success" th:case="0"><strong th:text="${webApmCaseStudySimulation?.rubricEvaluation?.teamWork?.value}"/> [0,50)</td>
           <td th:case="*">[0,50)</td>
@@ -32,7 +32,7 @@
         </div>
       </tr>
       <tr>
-        <th scope="row">TaskManagement tool learning  - Description</th>
+        <th scope="row"><a href="#" data-bs-toggle="tooltip" data-bs-title="Evaluates the fidelity of the simulation issue description compared to the equivalent task in the case study">TaskManagement tool learning  - Description</a></th>
         <div th:switch="${webApmCaseStudySimulation?.rubricEvaluation?.ttlDescription?.mark}">
           <td class="table-success" th:case="0"><strong th:text="${webApmCaseStudySimulation.rubricEvaluation?.ttlDescription?.value}"/> [0,100)</td>
           <td th:case="*">[0,100)</td>
@@ -47,7 +47,7 @@
         </div>
       </tr>
       <tr>
-        <th scope="row">Task management toolLearning  - Organization</th>
+        <th scope="row"><a href="#" data-bs-toggle="tooltip" data-bs-title="Evaluates the fidelity of the simulation issue labels and sprint assignation compared to the equivalent task in the case study">Task management toolLearning  - Organization</a></th>
         <div th:switch="${webApmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.mark}">
           <td class="table-success" th:case="0"><strong th:text="${webApmCaseStudySimulation?.rubricEvaluation?.ttlOrganization?.value}"/> [0,100)</td>
           <td th:case="*">[0,100)</td>
