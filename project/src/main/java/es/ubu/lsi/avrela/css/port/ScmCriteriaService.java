@@ -63,7 +63,7 @@ public class ScmCriteriaService {
     if (commitSimilarityDivisor == 0){
       return 0d;
     }
-    result = 100*Double.valueOf(commitSimilarityDividend / commitSimilarityDivisor);
+    result = 100*Double.valueOf(commitSimilarityDividend / (double)commitSimilarityDivisor);
     log.debug( "Commit similarity value is [{}]", result);
     return result;
   }
