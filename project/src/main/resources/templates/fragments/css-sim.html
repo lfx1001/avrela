@@ -5,19 +5,19 @@
   </div>
   <div class="row">
     <div class="col">
-      <label for="caseStudyStartDate" class="mr-sm-2">Start</label>
+      <label for="caseStudyStartDate" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="Date BEFORE first Sprint due date to be imported">Start</a></label>
       <input id="caseStudyStartDate" class="form-control" type="date" th:field="*{caseStudy.stringifyStartAt}" />
     </div>
     <div class="col">
-      <label for="caseStudyEndDate" class="mr-sm-2">End</label>
+      <label for="caseStudyEndDate" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="Date AFTER last Sprint due date to be imported">End</a></label>
       <input id="caseStudyEndDate" class="form-control" type="date" th:field="*{caseStudy.stringifyEndAt}" />
     </div>
     <div class="col">
-      <label for="simulationStartDate" class="mr-sm-2">Start</label>
+      <label for="simulationStartDate" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="Date BEFORE first Sprint due date to be imported">Start</a></label>
       <input id="simulationStartDate" class="form-control" type="date" th:field="*{simulation.stringifyStartAt}" />
     </div>
     <div class="col">
-      <label for="simulationEndDate" class="mr-sm-2">End</label>
+      <label for="simulationEndDate" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="Date AFTER last Sprint due date to be imported">End</a></label>
       <input id="simulationEndDate" class="form-control" type="date" th:field="*{simulation.stringifyEndAt}" />
     </div>
   </div>
