@@ -13,6 +13,7 @@
 	<version>0.0.3-SNAPSHOT</version>
 	<name>avrela</name>
 	<description>Automated virtual repository lab assesment.</description>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.4</spring-cloud.version>
