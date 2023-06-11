@@ -72,10 +72,11 @@ public interface GitHubScmClient {
       @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
   /**
-   * Find specific commit.
-   *
+   * Get a commit
+   * @param owner
+   * @param repo
    * @param sha
-   * @return
+   * @return the commit
    */
   @RequestLine("GET /repos/{owner}/{repo}/commits/{sha}")
   GitHubCommit findCommit(@Param("owner") String owner, @Param("repo") String repo,@Param("sha") String sha);
