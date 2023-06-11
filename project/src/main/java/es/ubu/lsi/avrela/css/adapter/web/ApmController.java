@@ -23,9 +23,13 @@ public class ApmController {
   @PostMapping("/apm-css")
   public String create(@ModelAttribute WebApmCaseStudySimulation sim, Model model){
     ApmCssEvaluationService apmCssEvaluationService = new ApmCssEvaluationService();
-    WebApmCaseStudySimulation aux = ApmCssDataGenerator.getWebApmCaseStudySimulation();
-    WebApmCaseStudySimulation result = apmCssEvaluationService.evaluate(sim);
-    model.addAttribute("webApmCaseStudySimulation", result);
+    try{
+      WebApmCaseStudySimulation result = apmCssEvaluationService.evaluate(sim);
+      model.addAttribute("webApmCaseStudySimulation", result);
+    }catch (Exception exception){
+      log.error("During APM evaluation", exception);
+      model.addAttribute("exception", exception);
+    }
     return "pages/apm-css";
   }
 

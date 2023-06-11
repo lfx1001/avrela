@@ -24,11 +24,10 @@ public class ScmController {
   public String create(@ModelAttribute WebScmCaseStudySimulation sim, Model model){
     ScmEvaluationService scmCssEvaluationService = new ScmEvaluationService();
     try {
-      WebScmCaseStudySimulation aux = ScmCssDataGenerator.getWebScmCaseStudySimulation();
       WebScmCaseStudySimulation result = scmCssEvaluationService.evaluate(sim);
       model.addAttribute("webScmCaseStudySimulation", result);
     } catch (Exception exception){
-      log.error("During scm evaluation");
+      log.error("During SCM evaluation", exception);
       model.addAttribute("exception", exception);
     }
     return "pages/scm-css";

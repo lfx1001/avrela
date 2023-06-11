@@ -65,6 +65,14 @@ public class Issue {
   /** Images. */
   private Boolean hasImages;
 
+  public static Issue emptyIssue() {
+    return Issue.builder()
+        .name("No issue to compare")
+        .labels(List.of("No labels to compare"))
+        .state(null)
+        .build();
+  }
+
   public Long countByEventType(IssueEventType eventType) {
     if (this.events == null ) {return 0L;};
     return this.events.stream()

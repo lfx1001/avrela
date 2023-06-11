@@ -73,4 +73,8 @@ public class HistoricalApmData {
         .collect(Collectors.toList());
   }
 
+  public List<Issue> getIssues(){
+    return this.filterIssues( issue -> true);
+  }
+
 }

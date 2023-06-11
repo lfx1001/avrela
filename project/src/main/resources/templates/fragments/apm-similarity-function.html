@@ -1,19 +1,19 @@
 <div><!-- Issue similarity function  -->
   <div class="row mb-4 gx-5">
-    <div class="col"><h2>Issue similarity function settings </h2></div>
+    <div class="col"><h5>Issue similarity function settings </h5></div>
     <div class="col"></div>
   </div>
   <div class="row mb-4 gx-5"><!-- Similarity labels, state, issue name -->
     <div class="col">
-      <label for="labelSimilarityWeight" class="form-label">Label similarity weight</label>
+      <label for="labelSimilarityWeight" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="Labels similarity takes into account the set of labels using Jaccard index">Label similarity weight</a></label>
       <input id="labelSimilarityWeight" min="0.01" max="1" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.labelWeight}" />
     </div>
     <div class="col">
-      <label for="stateSimilarityWeight" class="form-label">State similarity weight</label>
+      <a for="stateSimilarityWeight" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="State similarity takes into account the state using Jaccard index">State similarity weight</a></label>
       <input id="stateSimilarityWeight" min="0.01" max="1" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.stateWeight}" />
     </div>
     <div class="col">
-      <label for="issueNameSimilarityWeight" class="form-label">Issue name similarity weight</label>
+      <a for="issueNameSimilarityWeight" class="form-label"><a href="#" data-bs-toggle="tooltip" data-bs-title="Issue name similarity use Jaro-Winckler similarity">Issue name similarity weight</a></label>
       <input id="issueNameSimilarityWeight" min="0.01" max="1" step="0.01" type="number" class="form-control" th:field="*{issueSimilarityFunctionConfig.issueNameWeight}" />
     </div>
     <div class="col"></div>

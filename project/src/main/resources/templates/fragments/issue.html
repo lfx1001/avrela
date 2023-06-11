@@ -1,6 +1,6 @@
-<div th:fragment="issue (issue)" class="card">
+<div th:fragment="issue (issue, owner, repository)" class="card">
   <div class="card-header">
-    <strong th:text="${issue?.name}"></strong>
+    <a th:href="'https://github.com/' + ${owner} + '/' + ${repository} + '/issues/' + ${issue?.id}" target=”_blank”><span th:text="${issue?.name}"></span></a>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">State
