@@ -37,6 +37,10 @@ Change the pom.xml packaging section from *jar* to *war*.
 
 ### Usage
 
-- Launch the application and go on http://localhost:8080/
+- Launch the application and navigate to http://localhost:8080/
 
+### Authors
+
+- Licinio Fernández Maurelo, student.
+- Carlos López Nozal, tutor.
 
